@@ -1,0 +1,322 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "object",
+  "description": "this is a formalization of the application requirements",
+  "properties": {
+    "functionalRequirements": {
+      "type": "object",
+      "properties": {
+        "keywords": {
+          "type": "array",
+          "items":{
+              "type":"string"
+          }
+        },
+        "schema":{
+          "type": "object",
+          "properties": {
+             "attributes": {
+                "type": "array",
+                "items":{
+                    "type":"string"
+                    }
+             }    
+           }
+        }
+      }
+    },
+    "goalTrees": {
+      "type": "object",
+	  "description": "goal trees",
+      "properties": {
+        "dataUtility": {
+          "type": "object",
+          "description": "data utility goal tree",
+		  "properties": {
+            "goals": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "goal definition",
+				"properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "id of the goal"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of the goal"
+                  },
+                  "weight": {
+                    "type": "string",
+                    "description": "weight assigned to the goal"
+                  },
+                  "metrics": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+					  "description": "definition of the metric",
+                      "properties": {
+                        "id":{
+							"description": "id of the metric",
+							"type": "string"
+						},
+						"name":{
+							"description": "name of the metric",
+							"type": "string"
+						},
+						"type":{
+							"description": "type of the metric",
+							"type": "string"
+						},
+						"properties":{
+							"description": "properties related to the metric",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name":{
+										"description": "name of the property",
+										"type": "string"
+									},
+									"unit":{
+										"description": "unit of measure of the property",
+										"type": "string"
+									},
+									"maximum":{
+										"description": "lower limit of the offered property",
+										"type": "number"
+									},
+									"minimum":{
+										"description": "upper limit of the offered property",
+										"type": "number"
+									},
+									"value":{
+										"description": "value of the property",
+										"type": "string"
+									}
+								}
+							}
+						}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "treeStructure": {
+				"type": "object",
+				"properties":{
+					"type":{
+						"description": "type of node (AND or OR)",
+						"type": "string"
+					},
+					"children": {
+						"type": "array",
+						"items": { 
+							"$ref": "#/properties/goalTrees/properties/dataUtility/properties/treeStructure"
+						}
+					},
+					"leaves": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+            }
+          }
+        },
+        "security": {
+          "type": "object",
+		  "description": "security goal tree",
+          "properties": {
+            "goals": {
+              "type": "array",
+              "items": {
+                "type": "object",
+				"description": "goal definition",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "id of the goal"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of the goal"
+                  },
+                  "metrics": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "description": "definition of the property",
+					  "properties": {
+                        "id":{
+							"description": "id of the metric",
+							"type": "string"
+						},
+						"name":{
+							"description": "name of the metric",
+							"type": "string"
+						},
+						"type":{
+							"description": "type of the metric",
+							"type": "string"
+						},
+						"properties":{
+							"description": "properties related to the metric",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name":{
+										"description": "name of the property",
+										"type": "string"
+									},
+									"unit":{
+										"description": "unit of measure of the property",
+										"type": "string"
+									},
+									"maximum":{
+										"description": "lower limit of the offered property",
+										"type": "number"
+									},
+									"minimum":{
+										"description": "upper limit of the offered property",
+										"type": "number"
+									},
+									"value":{
+										"description": "value of the property",
+										"type": "string"
+									}
+								}
+							}
+						}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "treeStructure": {
+				"type": "object",
+				"properties":{
+					"type":{
+						"description": "type of node (AND or OR)",
+						"type": "string"
+					},
+					"children": {
+						"type": "array",
+						"items": { 
+							"$ref": "#/properties/goalTrees/properties/security/properties/treeStructure"
+						}
+					},
+					"leaves": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+            }
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "description": "privacy goal tree",
+		  "properties": {
+            "goals": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "goal definition",
+				"properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "id of the goal"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of the goal"
+                  },
+                  "metrics": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "description": "definition of the property",
+					  "properties": {
+                        "id":{
+							"description": "id of the metric",
+							"type": "string"
+						},
+						"name":{
+							"description": "name of the metric",
+							"type": "string"
+						},
+						"type":{
+							"description": "type of the metric",
+							"type": "string"
+						},
+						"properties":{
+							"description": "properties related to the metric",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name":{
+										"description": "name of the property",
+										"type": "string"
+									},
+									"unit":{
+										"description": "unit of measure of the property",
+										"type": "string"
+									},
+									"maximum":{
+										"description": "lower limit of the offered property",
+										"type": "number"
+									},
+									"minimum":{
+										"description": "upper limit of the offered property",
+										"type": "number"
+									},
+									"value":{
+										"description": "value of the property",
+										"type": "string"
+									}
+								}
+							}
+						}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "treeStructure": {
+				"type": "object",
+				"properties":{
+					"type":{
+						"description": "type of node (AND or OR)",
+						"type": "string"
+					},
+					"children": {
+						"type": "array",
+						"items": { 
+							"$ref": "#/properties/goalTrees/properties/privacy/properties/treeStructure"
+						}
+					},
+					"leaves": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
