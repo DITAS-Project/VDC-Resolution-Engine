@@ -1,0 +1,315 @@
+{
+    "functionalRequirements":
+    {
+        "keywords": ["Restaurant in Milan","Milan","Restaurant"],
+        "schema":
+        {
+            "attributes": ["city","date","state"]
+        }
+        
+    },
+	"goalTrees":
+    {
+        "dataUtility":
+        {
+            "goals":
+            [
+                {
+                    "id": "1",
+                    "name": "Service available", 
+                    "weight":"1",
+                    "metrics": 
+                    [
+                        {
+                            "id": "1",
+							"name":"Availability 95-99",
+							"type":"Availability",
+							"properties": [
+								{
+									"name":"Availability",
+									"unit": "percentage",
+									"minimum":95,
+									"maximum":99
+								}
+							]
+                        }
+                    ]
+                },
+                {
+                    "id": "2",
+                    "name": "Fast data process",
+                    "weight":"1",
+                    "metrics":
+                    [
+                        {
+                            "id": "2",
+							"name": "ResponseTime 1",
+							"type": "ResponseTime",
+							"properties": [
+								{
+									"name": "ResponseTime",
+									"maximum":1,
+									"unit": "second"
+								}
+							]
+                        }
+                    ]
+                },
+                {
+                    "id": "3",
+                    "name": "Data volume",
+                    "weight":"1",
+                    "metrics":
+                    [
+                        {
+                            "id": "3",
+							"name": "volume 10000",
+							"type": "volume",
+							"properties": [
+								{
+									"name": "volume",
+									"value":"10000",
+									"unit": "tuple"
+								}
+							]
+                        }
+                    ]
+                },
+                {
+                    "id": "4",
+                    "name": "Temporal validity",
+                    "weight":"1",
+                    "metrics":
+                    [
+                        {
+                            "id": "4",
+							"name": "Timeliness 0.6",
+							"type": "Timeliness",
+							"properties": [
+								{
+									"name": "Timeliness",
+									"maximum":0.6,
+									"unit": "NONE"
+								}
+							]
+                        }
+                    ]                
+                },
+                {
+                    "id": "5",
+                    "name": "Amount of Data",
+                    "weight":"1",
+                    "metrics":
+                    [
+                        {
+                            "id": "5",
+							"name": "Process completeness 90",
+							"type": "Process completeness",
+							"properties": [
+								{
+									"name": "Process completeness",
+									"minimum":90,
+									"unit": "percentage"
+								}
+							]
+                        }
+                    ]                
+                }
+            ],
+            "treeStructure":
+            {
+                "type":"AND",
+                "children":
+                [
+                    {
+                        "type":"OR",
+                        "leaves":["1","4"]
+                    },
+                    {
+                        "type":"AND",
+                        "children":
+                        [
+                            {
+                                "type":"OR",
+                                "leaves":
+                                [
+                                    "3",
+                                    "5"
+                                ]
+                            }
+                        ],
+						"leaves":
+						[
+							"2"
+						]
+                    }
+                ]
+            }      
+        },
+        "security":
+        {
+            "goals":
+            [   
+               {
+                   "id": "1",
+                   "name": "Encryption",
+                   "metrics":[
+						{
+							"id": "1",
+						    "name": "Encryption AES 128",
+						    "type": "Encryption",
+						    "properties":[
+								{
+									"name":"Algorithm",
+									"unit":"enum",
+									"value":"AES"
+								},
+								{
+									"name":"Keylength",
+									"unit":"number",
+									"minimum":128
+								}  
+							]
+						}  
+                   ]
+               },
+               {
+                   "id": "2",
+                   "name": "Tracing",
+                   "metrics":
+                   [
+                       {
+							"id": "2",
+							"name": "Tracing",
+							"type": "Tracing",
+							"properties":
+							[
+								{
+								   "name":"Level",
+								   "unit":"enum",
+								   "value":"datasource"
+								},
+								{
+								   "name":"SampleRate",
+								   "unit":"percentage",
+								   "minimum":99,
+								   "maximum":100
+								}  
+							]
+                       }  
+                   ]
+               },
+               {
+                   "id": "3",
+                   "name": "ACL rolebased readOnly",
+                   "metrics":
+                   [
+                       {
+							"id": "3",
+							"name": "ACL rolebased readOnly",
+							"type": "ACL",
+							"properties":
+							[
+								{
+								   "name":"Kind",
+								   "unit":"enum",
+								   "value":"rolebased"
+								},
+								{
+								   "name":"Role",
+								   "unit":"enum",
+								   "value":"readOnly"
+								}
+							]
+                       } 
+                   ]
+               },
+			   {
+                   "id": "4",
+                   "name": "ACL rolebased readNonPersonal",
+                   "metrics":
+                   [
+                       {
+							"id": "4",
+							"name": "ACL rolebased readNonPersonal",
+							"type": "ACL",
+							"properties":
+							[
+								{
+								   "name":"Kind",
+								   "unit":"enum",
+								   "value":"rolebased"
+								},
+								{
+								   "name":"Role",
+								   "unit":"enum",
+								   "value":"readNonPersonal"
+								} 
+							]
+                       } 
+                   ]
+               }
+			],
+            "treeStructure":
+            {
+                "type":"AND",
+                "children":
+                [
+                    {
+                        "type":"OR",
+                        "leaves":
+						[
+							"1",
+							"2"
+						]
+                    }
+                ],
+				"leaves":[
+					"3",
+					"4"
+				]
+            }
+        },
+		"privacy":
+        {
+           "goals":
+           [   
+               {
+                   "id": "1",
+                   "name": "PurposeControl",
+                   "metrics":[
+                       {
+                           "id": "1",
+						   "name": "PurposeControl NonCommercial Government",
+						   "type": "PurposeControl",
+						   "properties":
+							[
+								{
+								   "name":"AllowedPurpose",
+								   "unit":"enum",
+								   "value":"NonCommercial"
+								},
+								{
+								   "name":"AllowedGuarantor",
+								   "unit":"enum",
+								   "value":"Government"
+								}  
+							]
+                       } 
+                   ]
+               }
+			],
+           "treeStructure":
+            {
+                "type":"OR",
+				"leaves":
+				[
+					"1"
+				]
+			}
+        }
+
+    }
+}
+
+
