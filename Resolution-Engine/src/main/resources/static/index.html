@@ -5,19 +5,78 @@
 <title>DITAS</title>
 <link rel="stylesheet"
 	href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+<style>
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak,
+	.x-ng-cloak {
+	display: none !important;
+}
+</style>
+
 </head>
 <body ng-app="app">
-	HELLO
+
+	<div style="margin-top: 3%;">
+		<center>
+
+			<a href="https://www.ditas-project.eu/"> <img
+				src="https://pbs.twimg.com/profile_images/831807429872594944/xOxMQeoy.jpg"
+				width="15%" height="15%">
+			</a>
+		</center>
+	</div>
+	<div ng-controller="searchController">
+
+		<div class="col-md-4 col-md-offset-4">
+			<div>
+				<input type="text" class="form-control" name="searchText"
+					placeholder="Search..." ng-model="searchText"
+					style="width: 100%; margin-top: 20%; font-size: 20px; height: 45px">
+				<div class="col-md-4 col-md-offset-4">
+					<button class="btn btn-primary mb-2" ng-click="search()"
+						style="width: 100%; margin-top: 8%; background-color: #006400">Search</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 col-md-offset-3"
+		style="margin-top: 5%; margin-bottom: 10%; height: 500px; overflow-y: auto;">
+		<center>
+			<h1 style="color: #006400; font-weight: 700; margin-bottom: 5%"
+				ng-show="search">Results</h1>
+		</center>
+		<div class="row">
+			<ul style="list-style-type: none" ng-repeat="x in results">
+				<li><a target="_blank"
+					ng-href="http://31.171.245.137:8080/ditas/blueprints/{{x.id}}">
+						<div class="col-md-10 col-md-offset-1"
+							style="border-style: solid; border-color: lightgrey; border-width: 1px; border-radius: 3px; color: black; margin-bottom: 3%">
+							<div style="margin-bottom: 3%; margin-top: 3%">
+
+								<h3>{{x.description}}</h3>
+								<p>
+									<strong>Related methods: </strong>{{x.methods}}
+								<p>
+							</div>
+						</div>
+				</a></li>
+			</ul>
+
+
+		</div>
+	</div>
 </body>
 
 <!-- jquery, angularjs, bootstrap scripts-->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
-<script src="https://code.angularjs.org/1.6.6/angular.js"></script> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.angularjs.org/1.6.6/angular.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-<!-- angularjs application --> 
+<!-- angularjs application -->
 <script src="app.js"></script>
 
 </html>
