@@ -9,6 +9,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.support.QueryInnerHitBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ditas.resolutionengine.Configurations.ElasticSearchConfig;
@@ -18,6 +19,12 @@ public class EsSearchService {
 	
 	@Autowired
 	ElasticSearchConfig config;
+	
+	@Value("${elasticsearch.index}")
+    private String EsIndex;
+	
+	@Value("${elasticsearch.type}")
+    private String EsType;
 	
 	public String blueprintSearch(String searchText) {
 		try {
@@ -29,8 +36,8 @@ public class EsSearchService {
 							.innerHit(new QueryInnerHitBuilder().setFetchSource("method_name", null))
 					);
 			
-			SearchResponse response = client.prepareSearch("ditas")
-					.setTypes("blueprints")
+			SearchResponse response = client.prepareSearch(EsIndex)
+					.setTypes(EsType)
 					.setQuery(qb)
 					.execute().actionGet();
 			
