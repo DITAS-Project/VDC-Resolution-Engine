@@ -1,0 +1,91 @@
+swagger: '2.0'
+info:
+  title: VDC Blueprint Resolution Engine
+  version: 0.0.1
+paths:
+  /searchBlueprint:
+    post:
+      description: Blueprint Filtering
+      consumes:
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - name: searchText
+          in: body
+          required: true
+          schema: {}
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ElasticSearchResponse'
+definitions:
+  ElasticSearchResponse:
+    type: object
+    properties:
+      hits:
+        type: object
+        properties:
+          total:
+            type: integer
+          max_score:
+            type: number
+          hits:
+            type: array
+            items:
+              type: object
+              properties:
+                _index:
+                  type: string
+                _type:
+                  type: string
+                _id:
+                  type: string
+                _score:
+                  type: number
+                _source:
+                  type: object
+                  properties:
+                    description:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          method_name:
+                            type: string
+                          tags:
+                            type: array
+                            items:
+                              type: string
+                            minItems: 1
+                            uniqueItems: true
+                inner_hits:
+                  type: object
+                  properties:
+                    tags:
+                      type: object
+                      properties:
+                        hits:
+                          type: object
+                          properties:
+                            total:
+                              type: integer
+                            max_score:
+                              type: number
+                            hits:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  _id:
+                                    type: string
+                                  _score:
+                                    type: number
+                                  _source:
+                                    type: object
+                                    properties:
+                                      method_name:
+                                        type: string
