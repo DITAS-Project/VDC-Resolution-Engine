@@ -10,7 +10,7 @@ pipeline {
             steps {
 		// Build 
                 // sh 'gradle whatever'
-		    
+		echo "Building..."    
 		// Test	
                 // sh 'gradle whatever'
 				
