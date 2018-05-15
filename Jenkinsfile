@@ -20,7 +20,8 @@ pipeline {
             post {
                 always {
                     // Record the jUnit test
-                    junit 'target/surefire-reports/*.xml'
+                    //junit 'target/surefire-reports/*.xml'
+		    echo "Save the test reports..."
                 }
             }
         }
