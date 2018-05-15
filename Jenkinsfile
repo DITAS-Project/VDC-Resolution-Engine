@@ -59,8 +59,9 @@ pipeline {
                 skipDefaultCheckout true
             }
             steps {
-			      // Deploy to Staging environment calling the deployment script
-                sh './jenkins/deploy/deploy-staging.sh'
+		// TODO: Uncomment this when the previous stages run correctly
+		// Deploy to Staging environment calling the deployment script
+                //sh './jenkins/deploy/deploy-staging.sh'
             }
         }
     }
