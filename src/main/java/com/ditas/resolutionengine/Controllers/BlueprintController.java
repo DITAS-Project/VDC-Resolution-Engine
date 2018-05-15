@@ -15,7 +15,7 @@ public class BlueprintController {
 	@Autowired
 	EsSearchService searchService;
 	
-	@RequestMapping(method=RequestMethod.POST , value="/searchBP")
+	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprint")
 	public String searchBP(@RequestBody String searchText){
 		
 		System.out.println("Search text: "+searchText);
