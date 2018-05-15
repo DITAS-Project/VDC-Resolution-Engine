@@ -8,11 +8,11 @@ pipeline {
                 }
             }
             steps {
-				// Build 
-                // sh 'mvn whatever'
+		// Build 
+                // sh 'gradle whatever'
 		    
-				// Test	
-                // sh 'mvn whatever'
+		// Test	
+                // sh 'gradle whatever'
 				
             }
             // Save the reports always
@@ -47,7 +47,7 @@ pipeline {
                 sh "docker login -u ditasgeneric -p ${password}"
                 echo "Done"
 
-                echo "Pushing the image ditas/vdc-blueprint-repository-engine:latest..."
+                echo "Pushing the image ditas/vdc-resolution-engine:latest..."
                 sh "docker push ditas/vdc-resolution-engine:latest"
                 echo "Done "
             }
