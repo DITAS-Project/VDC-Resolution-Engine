@@ -11,7 +11,7 @@ pipeline {
             steps {
 		// Build 
                 // sh 'gradle whatever'
-		    
+		echo "Build stage ..."    
 		// Test	
                 // sh 'gradle whatever'
 				
@@ -63,6 +63,7 @@ pipeline {
 		// TODO: Uncomment this when the previous stages run correctly
 		// Deploy to Staging environment calling the deployment script
                 //sh './jenkins/deploy/deploy-staging.sh'
+		echo "Deploy stage ..."  
             }
         }
     }
