@@ -7,7 +7,7 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 		
 		$http({
 			method: 'POST',
-			url: "/searchBP",     
+			url: "/searchBlueprint",     
 			data: $scope.searchText,
 			headers: {'Content-Type': 'application/json'}
 		})
