@@ -20,7 +20,7 @@ pipeline {
             post {
                 always {
                     // Record the jUnit test
-                    junit '/build/test-results/test/*.xml'
+                    //junit '/build/test-results/test/*.xml'
 		    //echo "Save the test reports..."
                 }
             }
