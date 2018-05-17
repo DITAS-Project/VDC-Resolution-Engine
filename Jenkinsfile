@@ -10,8 +10,11 @@ pipeline {
             }
             steps {
 		// Build 
-                sh 'gradle build -x test'
-		    
+                sh 'gradle clean build -x test'
+		
+		// Archive the artifact to be accessible from the Artifacts tab into the Blue Ocean interface, just to have it handy
+		archiveArtifacts 'build/libs/*.jar'
+		
 		// Test	
                 sh 'gradle test'
 				
@@ -20,8 +23,7 @@ pipeline {
             post {
                 always {
                     // Record the jUnit test
-                    //junit '/build/test-results/test/*.xml'
-		    echo "Save the test reports..."
+                    junit 'build/test-results/test/*.xml'
                 }
             }
         }
@@ -61,10 +63,8 @@ pipeline {
                 skipDefaultCheckout true
             }
             steps {
-		// TODO: Uncomment this when the previous stages run correctly
 		// Deploy to Staging environment calling the deployment script
-                //sh './jenkins/deploy/deploy-staging.sh'
-		echo "Deploy stage ..."  
+                sh './jenkins/deploy/deploy-staging.sh' 
             }
         }
     }
