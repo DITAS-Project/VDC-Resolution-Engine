@@ -10,18 +10,18 @@ pipeline {
             }
             steps {
 		// Build 
-                // sh 'gradle whatever'
-		echo "Build stage ..."    
+                sh 'gradle build -x test'
+		    
 		// Test	
-                // sh 'gradle whatever'
+                sh 'gradle test'
 				
             }
             // Save the reports always
             post {
                 always {
                     // Record the jUnit test
-                    //junit 'target/surefire-reports/*.xml'
-		    echo "Save the test reports..."
+                    junit '/build/test-results/test/*.xml'
+		    //echo "Save the test reports..."
                 }
             }
         }
