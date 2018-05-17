@@ -21,7 +21,7 @@ pipeline {
                 always {
                     // Record the jUnit test
                     //junit '/build/test-results/test/*.xml'
-		    //echo "Save the test reports..."
+		    echo "Save the test reports..."
                 }
             }
         }
