@@ -28,7 +28,7 @@ public class ElasticSearchConfig {
 
         Settings esSettings = Settings.settingsBuilder()
                 .put("cluster.name", EsClusterName)
-				.put("shield.user", "es_admin:esadmin")
+				.put("shield.user", "publicUser:Resolution")
                 .build();
         return TransportClient.builder()
 				.addPlugin(ShieldPlugin.class)
