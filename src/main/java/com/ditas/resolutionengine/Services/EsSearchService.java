@@ -33,7 +33,7 @@ public class EsSearchService {
 			QueryBuilder qb = boolQuery()
 					.should(matchQuery("description", searchText))
 					.should(nestedQuery("tags", matchQuery("tags.tags", searchText).boost(8))
-							.innerHit(new QueryInnerHitBuilder().setFetchSource("method_name", null))
+							.innerHit(new QueryInnerHitBuilder().setFetchSource("method_id", null))
 					);
 			
 			SearchResponse response = client.prepareSearch(EsIndex)
