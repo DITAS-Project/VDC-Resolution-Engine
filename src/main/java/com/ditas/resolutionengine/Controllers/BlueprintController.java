@@ -34,11 +34,11 @@ public class BlueprintController {
 		
 		Requirements requirements = new Requirements();
 		
-		ArrayList<String> method_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("FunctionalRequirements")).get("methodTags");
+		ArrayList<String> method_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("functionalRequirements")).get("methodTags");
 	//	System.out.println(method_tags.get(0));
 		requirements.setMethodTags(method_tags);
 		
-		ArrayList<String> vdc_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("FunctionalRequirements")).get("vdcTags");
+		ArrayList<String> vdc_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("functionalRequirements")).get("vdcTags");
 	//	System.out.println(vdc_tags.get(1));
 		requirements.setVdcTags(vdc_tags);
 		
