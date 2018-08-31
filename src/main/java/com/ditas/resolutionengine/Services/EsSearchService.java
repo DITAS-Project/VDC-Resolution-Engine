@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ditas.resolutionengine.Configurations.ElasticSearchConfig;
+import com.ditas.resolutionengine.Entities.Requirements;
 
 @Service
 public class EsSearchService {
@@ -49,6 +50,31 @@ public class EsSearchService {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+
+	public String blueprintSearchByReq(Requirements requirements) {
+		try {
+			Client client = config.client();
+			
+			QueryBuilder qb = boolQuery()
+					.should(matchQuery("description", requirements.getVdcTags()))
+					.should(nestedQuery("tags", matchQuery("tags.tags", requirements.getMethodTags()).boost(8))
+							.innerHit(new QueryInnerHitBuilder().setFetchSource("method_id", null))
+					);
+			
+			SearchResponse response = client.prepareSearch(EsIndex)
+					.setTypes(EsType)
+					.setQuery(qb)
+					.execute().actionGet();
+			
+			
+			return response.toString();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

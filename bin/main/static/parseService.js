@@ -12,7 +12,7 @@ angular.module('app')
 			var inner_hits = hits[i].inner_hits.tags.hits.hits
 			var methods = new Array();
 			for (var j = 0; j < inner_hits.length ; j++){
-				methods.push(inner_hits[j]._source.method_name)
+				methods.push(inner_hits[j]._source.method_id)
 			}
 			var result = {
 					"id": hits[i]._id,
