@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.ditas.resolutionengine.Entities.Requirements;
 import com.ditas.resolutionengine.Services.EsSearchService;
+import com.ditas.resolutionengine.Services.ResolutionEngineService;
 
 
 @RestController
@@ -17,6 +18,9 @@ public class BlueprintController {
 	
 	@Autowired
 	EsSearchService searchService;
+	
+	@Autowired
+	ResolutionEngineService resolutionService;
 	
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprint")
 	public String searchBP(@RequestBody String searchText){
@@ -35,18 +39,16 @@ public class BlueprintController {
 		Requirements requirements = new Requirements();
 		
 		ArrayList<String> method_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("functionalRequirements")).get("methodTags");
-	//	System.out.println(method_tags.get(0));
 		requirements.setMethodTags(method_tags);
 		
 		ArrayList<String> vdc_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("functionalRequirements")).get("vdcTags");
-	//	System.out.println(vdc_tags.get(1));
 		requirements.setVdcTags(vdc_tags);
 		
 		
-		System.out.println(requirements.getMethodTags());
-		System.out.println(requirements.getVdcTags());
+		//System.out.println(requirements.getMethodTags());
+		//System.out.println(requirements.getVdcTags());
 		
-		String response = searchService.blueprintSearchByReq(requirements);
+		String response = resolutionService.ResolutionEngineRequest(requirements);
 		
 		return response;
 	

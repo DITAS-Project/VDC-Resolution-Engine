@@ -3,7 +3,6 @@ package com.ditas.resolutionengine.Services;
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.nestedQuery;
-
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -11,7 +10,6 @@ import org.elasticsearch.index.query.support.QueryInnerHitBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import com.ditas.resolutionengine.Configurations.ElasticSearchConfig;
 import com.ditas.resolutionengine.Entities.Requirements;
 
@@ -77,5 +75,8 @@ public class EsSearchService {
 		}
 		return null;
 	}
+	
+	
+
 
 }
