@@ -5,20 +5,19 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DURERequestService {
 	
-    @Value("${repository.blueprints}")
-    private String repositoryBlueprintsPath;
+	@Autowired
+	private RepositoryRequestService repositoryService;
     
     @Value("${dure.blueprints}")
     private String dureBlueprintsPath;
@@ -65,8 +64,7 @@ public class DURERequestService {
 		}
 		
 		//Fetch the blueprints from repository and store them in a list
-		ArrayList<JSONObject> blueprints = fetchFromRepository(idsList);		
-		
+		ArrayList<JSONObject> blueprints = repositoryService.fetchFromRepository(idsList);		
 		String dure_request = buildDURERequest(blueprints, methodsList, app_requirements);
 		
 		
@@ -94,25 +92,6 @@ public class DURERequestService {
 	}
 	
 	
-	public ArrayList<JSONObject> fetchFromRepository(ArrayList<String> idsList) {
-		ArrayList<JSONObject> blueprints = new ArrayList<JSONObject>();
-		try {
-			for (String id : idsList) {
-				URL url = new URL("http://"+repositoryBlueprintsPath+id);
-				Scanner scanner = new Scanner(url.openStream());
-				String response_blueprint = scanner.useDelimiter("\\Z").next();
-				//System.out.println(response_blueprint);
-				JSONObject buleprint_json = new JSONObject(response_blueprint);
-				scanner.close();
-				blueprints.add(buleprint_json);
-			}	
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return blueprints;
-	}
 	
 
 	public String sendRequest(String dureRequest) {
