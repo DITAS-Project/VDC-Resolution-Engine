@@ -1,8 +1,5 @@
 package com.ditas.resolutionengine.Controllers;
 
-import java.util.ArrayList;
-
-import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ditas.resolutionengine.Entities.Requirements;
 import com.ditas.resolutionengine.Services.EsSearchService;
 import com.ditas.resolutionengine.Services.ResolutionEngineService;
-import com.unboundid.util.json.JSONArray;
+
 
 
 @RestController
@@ -35,7 +32,7 @@ public class BlueprintController {
 		return response;
 	}
 	
-	@SuppressWarnings("unchecked")
+
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
@@ -48,10 +45,7 @@ public class BlueprintController {
 		
 		org.json.JSONArray vdc_tags =  applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("vdcTags");
 		requirements.setVdcTags(vdc_tags);
-		
-		JSONObject app_requirements = applicationRequirements_json.getJSONObject("attributes");
-
-		
+	
 		String response = resolutionService.ResolutionEngineRequest(requirements, applicationRequirements_json);
 		
 		return response;

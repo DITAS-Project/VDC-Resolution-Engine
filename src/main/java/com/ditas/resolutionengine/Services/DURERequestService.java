@@ -1,6 +1,11 @@
 package com.ditas.resolutionengine.Services;
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +19,9 @@ public class DURERequestService {
 	
     @Value("${repository.blueprints}")
     private String repositoryBlueprintsPath;
+    
+    @Value("${dure.blueprints}")
+    private String dureBlueprintsPath;
 
 	public String createRequest(String elasticResponse, JSONObject app_requirements) {
 		
@@ -104,5 +112,47 @@ public class DURERequestService {
 		}
 		
 		return blueprints;
+	}
+	
+
+	public String sendRequest(String dureRequest) {
+		// TODO Auto-generated method stub
+		
+		URL url;
+		
+		try {
+			
+			url = new URL("http://"+dureBlueprintsPath);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
+			
+			OutputStream os = conn.getOutputStream();
+			os.write(dureRequest.getBytes());
+			os.flush();
+			
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+
+			String output;
+			String response = "";
+			System.out.println("Output from Server .... \n");
+			while ((output = br.readLine()) != null) {
+				response += output+"\n";
+			}
+
+			conn.disconnect();
+			
+			return response;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return null;
 	}
 }

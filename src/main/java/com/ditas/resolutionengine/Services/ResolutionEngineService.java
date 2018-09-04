@@ -19,8 +19,9 @@ public class ResolutionEngineService {
 		
 		String esResponse = esService.blueprintSearchByReq(requirements);
 		String dureRequest = dureService.createRequest(esResponse, app_requirements);
+		String dureResponse = dureService.sendRequest(dureRequest);
 				
-		return dureRequest;
+		return dureResponse;
 	}
 
 }

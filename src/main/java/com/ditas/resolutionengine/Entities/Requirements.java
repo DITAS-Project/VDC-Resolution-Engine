@@ -1,6 +1,7 @@
 package com.ditas.resolutionengine.Entities;
 
-import java.util.ArrayList;
+
+
 
 import org.json.JSONArray;
 
