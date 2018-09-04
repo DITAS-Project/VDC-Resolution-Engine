@@ -3,6 +3,8 @@ package com.ditas.resolutionengine.Controllers;
 import java.util.ArrayList;
 
 import java.util.Map;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ditas.resolutionengine.Entities.Requirements;
 import com.ditas.resolutionengine.Services.EsSearchService;
 import com.ditas.resolutionengine.Services.ResolutionEngineService;
+import com.unboundid.util.json.JSONArray;
 
 
 @RestController
@@ -34,23 +37,25 @@ public class BlueprintController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
-	public String searchBPByRequirements(@RequestBody Map<String, Object> searchText){
+	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
 		Requirements requirements = new Requirements();
 		
-		ArrayList<String> method_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("functionalRequirements")).get("methodTags");
+		JSONObject applicationRequirements_json = new JSONObject(applicationRequirements);
+		
+		org.json.JSONArray method_tags = applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("methodTags");
 		requirements.setMethodTags(method_tags);
 		
-		ArrayList<String> vdc_tags = (ArrayList<String>) ((Map<String, Object>) searchText.get("functionalRequirements")).get("vdcTags");
+		org.json.JSONArray vdc_tags =  applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("vdcTags");
 		requirements.setVdcTags(vdc_tags);
 		
+		JSONObject app_requirements = applicationRequirements_json.getJSONObject("attributes");
+
 		
-		//System.out.println(requirements.getMethodTags());
-		//System.out.println(requirements.getVdcTags());
-		
-		String response = resolutionService.ResolutionEngineRequest(requirements);
+		String response = resolutionService.ResolutionEngineRequest(requirements, applicationRequirements_json);
 		
 		return response;
+	
 	
 	}
 }

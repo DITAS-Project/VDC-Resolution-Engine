@@ -2,6 +2,8 @@ package com.ditas.resolutionengine.Entities;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+
 public class Requirements {
 
 	private String methodTags;
@@ -18,10 +20,10 @@ public class Requirements {
 	}
 
 
-	public void setMethodTags(ArrayList<String> methodTags) {
+	public void setMethodTags(JSONArray methodTags) {
 		this.methodTags = "";
-		for (String s:methodTags) {
-			this.methodTags += s+" ";
+		for (int i = 0 ; i < methodTags.length() ; i++) {
+			this.methodTags += methodTags.getString(i)+" ";
 		}
 		
 	}
@@ -32,10 +34,10 @@ public class Requirements {
 	}
 
 
-	public void setVdcTags(ArrayList<String> vdcTags) {
+	public void setVdcTags(JSONArray vdcTags) {
 		this.vdcTags = "";
-		for (String s:vdcTags) {
-			this.vdcTags += s+" ";
+		for (int i = 0 ; i < vdcTags.length() ; i++) {
+			this.vdcTags += vdcTags.getString(i)+" ";
 		}
 	}
 }

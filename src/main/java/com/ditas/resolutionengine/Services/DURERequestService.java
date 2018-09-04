@@ -15,7 +15,7 @@ public class DURERequestService {
     @Value("${repository.blueprints}")
     private String repositoryBlueprintsPath;
 
-	public String createRequest(String elasticResponse) {
+	public String createRequest(String elasticResponse, JSONObject app_requirements) {
 		
 		//Get the JSON response from Elastic Search for further parsing
 		JSONObject elastic_response_json = new JSONObject(elasticResponse);
@@ -59,17 +59,18 @@ public class DURERequestService {
 		//Fetch the blueprints from repository and store them in a list
 		ArrayList<JSONObject> blueprints = fetchFromRepository(idsList);		
 		
-		String dure_request = buildDURERequest(blueprints, methodsList);
+		String dure_request = buildDURERequest(blueprints, methodsList, app_requirements);
 		
 		
 		return dure_request;
 		
 	}
 	
-	public String buildDURERequest(ArrayList<JSONObject> blueprints, HashMap<Integer, ArrayList<String>> methodsList) {
+	public String buildDURERequest(ArrayList<JSONObject> blueprints, HashMap<Integer, ArrayList<String>> methodsList, JSONObject app_requirements) {
 		JSONObject dure_request_json = new JSONObject();
-				
-
+		
+		//JSONObject requirements = new JSONObject(app_requirements);
+		
 		ArrayList<Object> list = new ArrayList<Object>();
 		for (int i = 0; i < blueprints.size() ; i++) {
 			JSONObject json = new JSONObject();
@@ -77,7 +78,9 @@ public class DURERequestService {
 			json.put("methodNames", methodsList.get(i));
 			list.add(json);
 		}
+		dure_request_json.put("applicationRequirements", app_requirements);
 		dure_request_json.put("candidates", list);
+		
 		
 		return dure_request_json.toString();
 	}
@@ -90,6 +93,7 @@ public class DURERequestService {
 				URL url = new URL("http://"+repositoryBlueprintsPath+id);
 				Scanner scanner = new Scanner(url.openStream());
 				String response_blueprint = scanner.useDelimiter("\\Z").next();
+				//System.out.println(response_blueprint);
 				JSONObject buleprint_json = new JSONObject(response_blueprint);
 				scanner.close();
 				blueprints.add(buleprint_json);
