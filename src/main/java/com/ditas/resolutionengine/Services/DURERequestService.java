@@ -36,25 +36,30 @@ public class DURERequestService {
 		
 		//Here will be stored all the method names that had their tags matched (during the Elastic Search search) for its blueprint
 		HashMap<Integer, ArrayList<String>> methodsList = new HashMap<Integer, ArrayList<String>>();
-		
+		//System.out.println("eksw");
+		//System.out.println(elastic_response_json);
 		JSONObject esResult;	
 		for (int bp_index = 0 ; bp_index < num_of_hits ; bp_index++) {
-			
+			//System.out.println("mesa1");
 			esResult = elastic_response_json.getJSONObject("hits").getJSONArray("hits").getJSONObject(bp_index);
 			idsList.add(esResult.get("_id").toString());
 			
 			JSONObject result_innerHits =  esResult.getJSONObject("inner_hits").getJSONObject("tags").getJSONObject("hits");
 			
 			//Parse the number of matched methods of the current blueprint from Elastic Search response
-			int num_of_matched_methods = Integer.parseInt(result_innerHits.get("total").toString());
+			//int num_of_matched_methods = Integer.parseInt(result_innerHits.get("total").toString());
+			int num_of_matched_methods = result_innerHits.getJSONArray("hits").length();
+			//System.out.println("mesa2");
 			ArrayList<String> list_of_methods = new ArrayList<String>();
 			for (int method_index = 0 ; method_index < num_of_matched_methods ; method_index++) {
+				//System.out.println("mesa3");
 				String method =  result_innerHits.getJSONArray("hits").getJSONObject(method_index).getJSONObject("_source").get("method_id").toString();
 				list_of_methods.add(method);		
 			}
 			methodsList.put(bp_index, list_of_methods);		
 			
 		}
+		//System.out.println("telos");
 		
 		for (int i = 0; i < num_of_hits ; i++) {
 			System.out.println(idsList.get(i));
@@ -65,8 +70,10 @@ public class DURERequestService {
 		
 		//Fetch the blueprints from repository and store them in a list
 		ArrayList<JSONObject> blueprints = repositoryService.fetchFromRepository(idsList);		
+		System.out.println(methodsList.toString());
 		String dure_request = buildDURERequest(blueprints, methodsList, app_requirements);
-		
+		System.out.println(dure_request);
+
 		
 		return dure_request;
 		
