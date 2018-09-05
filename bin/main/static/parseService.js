@@ -6,17 +6,21 @@ angular.module('app')
 		
 		var results = new Array();
 		
-		var hits = searchResults.hits.hits;
 		
-		for (var i = 0 ; i < hits.length; i++){
-			var inner_hits = hits[i].inner_hits.tags.hits.hits
+		for (var i = 0 ; i < searchResults.length ; i++){
+			var blueprint_overview = searchResults[i].blueprint.INTERNAL_STRUCTURE.Overview
+			var id = searchResults[i].blueprint._id;
+			var score = searchResults[i].score;
+			var methods_list = searchResults[i].methodNames;
 			var methods = new Array();
-			for (var j = 0; j < inner_hits.length ; j++){
-				methods.push(inner_hits[j]._source.method_id)
+			for (var j = 0; j < methods_list.length ; j++){
+				methods.push(methods_list[j])
 			}
 			var result = {
-					"id": hits[i]._id,
-					"description": hits[i]._source.description,
+					"id":id,
+					"name": blueprint_overview.name,
+					"description": blueprint_overview.description,
+					"score": score,
 					"methods": methods
 			}
 			results.push(result)

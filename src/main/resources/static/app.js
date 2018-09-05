@@ -7,12 +7,13 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 		
 		$http({
 			method: 'POST',
-			url: "/searchBlueprint",     
+			url: "/searchBlueprintByReq",     
 			data: $scope.searchText,
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function successCallback(response) {
 			$rootScope.search = true
+			//console.log(response.data)
 			parseService.parseResults(response.data)
 		}, function errorCallback(response) {
 			console.log(response)
