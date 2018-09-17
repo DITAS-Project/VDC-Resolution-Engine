@@ -52,4 +52,25 @@ public class BlueprintController {
 	
 	
 	}
+	
+	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq_ESresponse")
+	public String searchBPByRequirements_esResponse(@RequestBody String  applicationRequirements){
+		
+		Requirements requirements = new Requirements();
+		
+		JSONObject applicationRequirements_json = new JSONObject(applicationRequirements);
+		
+		org.json.JSONArray method_tags = applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("methodTags");
+		requirements.setMethodTags(method_tags);
+		
+		org.json.JSONArray vdc_tags =  applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("vdcTags");
+		requirements.setVdcTags(vdc_tags);
+	
+		String esResponse = searchService.blueprintSearchByReq(requirements);
+		
+		
+		return esResponse;
+	
+	
+	}
 }
