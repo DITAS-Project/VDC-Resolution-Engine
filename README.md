@@ -26,19 +26,19 @@ DITAS Project: https://www.ditas-project.eu/
   * **description**: This methods retrieves the blueprints responded by DURE 
   * (indicative) **caller** Resolution Engine
   * **input**: Application requirements JSON file
-  * **input**: Blueprints
+  * **output**: Blueprints
 
 * `POST` `/searchBlueprintByReq_ESresponse`  
   * **description**: This methods retrieves the results of the ElasticSearch search based on VDC and Method tags 
   * (indicative) **caller** Resolution Engine
   * **input**: Application requirements JSON file
-  * **input**: ElasticSearch JSON response
+  * **output**: ElasticSearch JSON response
 
 * `POST` `/searchBlueprintByReq_DureRequest`  
   * **description**: This method retrieves the JSON request to DURE built from Resolution Engine 
   * (indicative) **caller** Resolution Engine
   * **input**: Application requirements JSON file
-  * **input**: JSON file for DURE request
+  * **output**: JSON file for DURE request
   
 ## Language
 Java
