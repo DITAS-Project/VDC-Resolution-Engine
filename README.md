@@ -55,7 +55,7 @@ Clone repository
 	src/main/resources/application.properties
 	(configure elasticsearch connection)
 * Deploy using embedded tomcat:
-	$ gradle bootRun
+	$ gradlew bootRun
 * Deploy in standalone application server:
   * Build war file: $ gradlew bootWar
   * Deploy build/libs/Resolution-Engine-0.0.1-SNAPSHOT.war to server
