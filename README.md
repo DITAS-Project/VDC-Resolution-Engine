@@ -1,5 +1,5 @@
 # VDC-Resolution-Engine
-This repository contain all the API methods and UI of the resolution engine
+This repository contains all the API methods and UI of the resolution engine
 
 ## License
 This file is part of VDC-Resolution-Engine.
