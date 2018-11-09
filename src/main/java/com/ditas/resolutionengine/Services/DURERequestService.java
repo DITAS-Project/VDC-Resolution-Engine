@@ -35,14 +35,16 @@ public class DURERequestService {
 		ArrayList<String> idsList = new ArrayList<String>();
 		
 		//Here will be stored all the method names that had their tags matched (during the Elastic Search search) for its blueprint
-		HashMap<Integer, ArrayList<String>> methodsList = new HashMap<Integer, ArrayList<String>>();
+		HashMap<String, ArrayList<String>> methodsList = new HashMap<String, ArrayList<String>>();
 		//System.out.println("eksw");
 		//System.out.println(elastic_response_json);
 		JSONObject esResult;	
+		String bp_id;
 		for (int bp_index = 0 ; bp_index < num_of_hits ; bp_index++) {
 			//System.out.println("mesa1");
 			esResult = elastic_response_json.getJSONObject("hits").getJSONArray("hits").getJSONObject(bp_index);
-			idsList.add(esResult.get("_id").toString());
+			bp_id = esResult.get("_id").toString();
+			idsList.add(bp_id);
 			
 			JSONObject result_innerHits =  esResult.getJSONObject("inner_hits").getJSONObject("tags").getJSONObject("hits");
 			
@@ -56,17 +58,12 @@ public class DURERequestService {
 				String method =  result_innerHits.getJSONArray("hits").getJSONObject(method_index).getJSONObject("_source").get("method_id").toString();
 				list_of_methods.add(method);		
 			}
-			methodsList.put(bp_index, list_of_methods);		
+			methodsList.put(bp_id, list_of_methods);		
 			
 		}
 		//System.out.println("telos");
 		
-		for (int i = 0; i < num_of_hits ; i++) {
-			System.out.println(idsList.get(i));
-			for (String s: methodsList.get(i)) {
-				System.out.println(s);
-			}
-		}
+	
 		
 		//Fetch the blueprints from repository and store them in a list
 		ArrayList<JSONObject> blueprints = repositoryService.fetchFromRepository(idsList);		
@@ -79,16 +76,20 @@ public class DURERequestService {
 		
 	}
 	
-	public String buildDURERequest(ArrayList<JSONObject> blueprints, HashMap<Integer, ArrayList<String>> methodsList, JSONObject app_requirements) {
+	public String buildDURERequest(ArrayList<JSONObject> blueprints, HashMap<String, ArrayList<String>> methodsList, JSONObject app_requirements) {
 		JSONObject dure_request_json = new JSONObject();
 		
 		//JSONObject requirements = new JSONObject(app_requirements);
 		
 		ArrayList<Object> list = new ArrayList<Object>();
+		JSONObject current_blueprint ;
+		String current_id;
 		for (int i = 0; i < blueprints.size() ; i++) {
 			JSONObject json = new JSONObject();
-			json.put("blueprint", blueprints.get(i));
-			json.put("methodNames", methodsList.get(i));
+			current_blueprint = blueprints.get(i);
+			current_id = (String) current_blueprint.get("_id");
+			json.put("blueprint", current_blueprint);
+			json.put("methodNames", methodsList.get(current_id));
 			list.add(json);
 		}
 		dure_request_json.put("applicationRequirements", app_requirements);
