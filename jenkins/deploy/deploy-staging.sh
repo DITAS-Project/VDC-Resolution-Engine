@@ -30,5 +30,5 @@ sudo docker stop --time 20 vdc-resolution-engine || true
 sudo docker rm --force vdc-resolution-engine || true
 sudo docker pull ditas/vdc-resolution-engine:latest
 # SET THE PORT MAPPING
-sudo docker run -p 50011:8080 -d --name vdc-resolution-engine ditas/vdc-resolution-engine:latest
+sudo docker run -p 50011:8080 --restart unless-stopped -d --name vdc-resolution-engine ditas/vdc-resolution-engine:latest
 ENDSSH
