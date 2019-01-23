@@ -17,168 +17,168 @@ paths:
           required: true
           schema:
             type: object
-          x-example:
-            functionalRequirements:
-              methodTags:
-                - cholesterol
-              vdcTags:
-                - patients
-            attributes:
-              dataUtility:
-                - id: volume_8000
-                  description: volume 8000
-                  type: Volume
-                  properties:
-                    volume:
-                      minimum: 8000
-                      unit: tuple
-                - id: accuracy_08
-                  description: Accuracy
-                  type: Accuracy
-                  properties:
-                    accuracy:
-                      minimum: 0.8
-                      unit: none
-                - id: processCompleteness_8
-                  description: Process completeness 8
-                  type: Process completeness
-                  properties:
-                    completeness:
-                      minimum: 8
-                      unit: percentage
-                - id: scaleUpMemory
-                  description: scale-up memory
-                  type: Scale-up
-                  properties:
-                    ramGain:
-                      unit: percentage
-                      value: 150
-                    ramLimit:
-                      unit: percentage
-                      value: 99
-                - id: scaleUpSpace
-                  description: scale-up space
-                  type: Scale-up
-                  properties:
-                    spaceGain:
-                      unit: percentage
-                      value: 150
-                    spaceLimit:
-                      unit: percentage
-                      value: 99
-              security:
-                - id: encryptionAES_128
-                  description: Encryption AES 128
-                  type: TransportEncryption
-                  properties:
-                    protocol:
-                      unit: enum
-                      value: TLS
-                    algorithm:
-                      unit: enum
-                      value: AES
-                    keyLength:
-                      unit: number
-                      minimum: 128
-                - id: tracing_1
-                  description: Tracing
-                  type: Tracing
-                  properties:
-                    level:
-                      unit: enum
-                      value: datasource
-                    sampleRate:
-                      unit: percentage
-                      minimum: 1
-                    instrumentation:
-                      unit: enum
-                      value: VDC
-                - id: aclUserPWResearcher
-                  description: ACL rolebased readOnly
-                  type: ACL
-                  properties:
-                    protocol:
-                      unit: enum
-                      value: username/password
-                    credentials:
-                      unit: list
-                      value:
-                        - researcher_id
-              privacy:
-                - id: purposeControlResearch
-                  description: PurposeControl Research
-                  type: PurposeControl
-                  properties:
-                    availablePurpose:
-                      unit: list
-                      value:
-                        - research
-                        - medical research
-                        - nutritional research
-                    allowedGuarantor:
-                      unit: list
-                      value:
-                        - d63d0e21fdc05f618d55ef306c54af82
-            goalTrees:
-              dataUtility:
-                type: AND
-                children:
-                  - type: AND
-                    children:
-                      - type: OR
-                        leaves:
-                          - id: serviceScalable
-                            description: Service Scalable
-                            weight: 1
-                            attributes:
-                              - scaleUpMemory
-                              - scaleUpSpace
-                  - type: AND
-                    leaves:
-                      - id: dataVolume
-                        description: Data volume
-                        weight: 1
-                        attributes:
-                          - volume_8000
-                      - id: accuracy
-                        description: Accuracy
-                        weight: 1
-                        attributes:
-                          - accuracy_08
-                      - id: completeness
-                        description: Completeness
-                        weight: 1
-                        attributes:
-                          - processCompleteness_8
-              security:
-                type: AND
-                children:
-                  - type: AND
-                    leaves:
-                      - id: storageEncryption
-                        description: Storage encryption
-                        weight: 1
-                        attributes:
-                          - encryptionAES_128
-                leaves:
-                  - id: accessControl
-                    description: Access control
-                    weight: 1
-                    attributes:
-                      - aclUserPWResearcher
-                  - id: tracing
-                    description: Tracing and monitoring
-                    weight: 1
-                    attributes:
-                      - tracing_1
-              privacy:
-                type: AND
-                leaves:
-                  - id: purposeControl
-                    description: Purpose control
-                    weight: 1
-                    attributes:
-                      - purposeControlResearch
+            example:
+              functionalRequirements:
+                methodTags:
+                  - cholesterol
+                vdcTags:
+                  - patients
+              attributes:
+                dataUtility:
+                  - id: volume_8000
+                    description: volume 8000
+                    type: Volume
+                    properties:
+                      volume:
+                        minimum: 8000
+                        unit: tuple
+                  - id: accuracy_08
+                    description: Accuracy
+                    type: Accuracy
+                    properties:
+                      accuracy:
+                        minimum: 0.8
+                        unit: none
+                  - id: processCompleteness_8
+                    description: Process completeness 8
+                    type: Process completeness
+                    properties:
+                      completeness:
+                        minimum: 8
+                        unit: percentage
+                  - id: scaleUpMemory
+                    description: scale-up memory
+                    type: Scale-up
+                    properties:
+                      ramGain:
+                        unit: percentage
+                        value: 150
+                      ramLimit:
+                        unit: percentage
+                        value: 99
+                  - id: scaleUpSpace
+                    description: scale-up space
+                    type: Scale-up
+                    properties:
+                      spaceGain:
+                        unit: percentage
+                        value: 150
+                      spaceLimit:
+                        unit: percentage
+                        value: 99
+                security:
+                  - id: encryptionAES_128
+                    description: Encryption AES 128
+                    type: TransportEncryption
+                    properties:
+                      protocol:
+                        unit: enum
+                        value: TLS
+                      algorithm:
+                        unit: enum
+                        value: AES
+                      keyLength:
+                        unit: number
+                        minimum: 128
+                  - id: tracing_1
+                    description: Tracing
+                    type: Tracing
+                    properties:
+                      level:
+                        unit: enum
+                        value: datasource
+                      sampleRate:
+                        unit: percentage
+                        minimum: 1
+                      instrumentation:
+                        unit: enum
+                        value: VDC
+                  - id: aclUserPWResearcher
+                    description: ACL rolebased readOnly
+                    type: ACL
+                    properties:
+                      protocol:
+                        unit: enum
+                        value: username/password
+                      credentials:
+                        unit: list
+                        value:
+                          - researcher_id
+                privacy:
+                  - id: purposeControlResearch
+                    description: PurposeControl Research
+                    type: PurposeControl
+                    properties:
+                      availablePurpose:
+                        unit: list
+                        value:
+                          - research
+                          - medical research
+                          - nutritional research
+                      allowedGuarantor:
+                        unit: list
+                        value:
+                          - d63d0e21fdc05f618d55ef306c54af82
+              goalTrees:
+                dataUtility:
+                  type: AND
+                  children:
+                    - type: AND
+                      children:
+                        - type: OR
+                          leaves:
+                            - id: serviceScalable
+                              description: Service Scalable
+                              weight: 1
+                              attributes:
+                                - scaleUpMemory
+                                - scaleUpSpace
+                    - type: AND
+                      leaves:
+                        - id: dataVolume
+                          description: Data volume
+                          weight: 1
+                          attributes:
+                            - volume_8000
+                        - id: accuracy
+                          description: Accuracy
+                          weight: 1
+                          attributes:
+                            - accuracy_08
+                        - id: completeness
+                          description: Completeness
+                          weight: 1
+                          attributes:
+                            - processCompleteness_8
+                security:
+                  type: AND
+                  children:
+                    - type: AND
+                      leaves:
+                        - id: storageEncryption
+                          description: Storage encryption
+                          weight: 1
+                          attributes:
+                            - encryptionAES_128
+                  leaves:
+                    - id: accessControl
+                      description: Access control
+                      weight: 1
+                      attributes:
+                        - aclUserPWResearcher
+                    - id: tracing
+                      description: Tracing and monitoring
+                      weight: 1
+                      attributes:
+                        - tracing_1
+                privacy:
+                  type: AND
+                  leaves:
+                    - id: purposeControl
+                      description: Purpose control
+                      weight: 1
+                      attributes:
+                        - purposeControlResearch
       responses:
         '200':
           description: successful operation
