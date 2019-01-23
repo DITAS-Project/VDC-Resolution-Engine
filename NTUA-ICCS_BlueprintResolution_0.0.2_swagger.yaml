@@ -1,92 +1,35 @@
 swagger: '2.0'
 info:
-  title: VDC Blueprint Resolution Engine
+  title: VDC Resolution Engine
   version: 0.0.1
 paths:
-  /searchBlueprint:
+  /searchBlueprintByReq:
     post:
       description: Blueprint Filtering
       consumes:
-        - text/plain
+        - application/json
       produces:
         - application/json
       parameters:
-        - name: searchText
+        - name: ApplicationRequirements
           in: body
+          description: Requirements posed by the application designer
           required: true
           schema:
-            type: string
+            type: object
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/ElasticSearchResponse'
-definitions:
-  ElasticSearchResponse:
-    type: object
-    properties:
-      hits:
-        type: object
-        properties:
-          total:
-            type: integer
-          max_score:
-            type: number
-          hits:
             type: array
             items:
               type: object
               properties:
-                _index:
-                  type: string
-                _type:
-                  type: string
-                _id:
-                  type: string
-                _score:
+                blueprint:
+                  type: object
+                score:
                   type: number
-                _source:
-                  type: object
-                  properties:
-                    description:
-                      type: string
-                    tags:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          method_name:
-                            type: string
-                          tags:
-                            type: array
-                            items:
-                              type: string
-                            minItems: 1
-                            uniqueItems: true
-                inner_hits:
-                  type: object
-                  properties:
-                    tags:
-                      type: object
-                      properties:
-                        hits:
-                          type: object
-                          properties:
-                            total:
-                              type: integer
-                            max_score:
-                              type: number
-                            hits:
-                              type: array
-                              items:
-                                type: object
-                                properties:
-                                  _id:
-                                    type: string
-                                  _score:
-                                    type: number
-                                  _source:
-                                    type: object
-                                    properties:
-                                      method_name:
-                                        type: string
+                methodNames:
+                  type: array
+                  items:
+                    type: string
