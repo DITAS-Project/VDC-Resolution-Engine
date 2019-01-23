@@ -70,6 +70,7 @@ pipeline {
 	stage('API validation') {
 	    agent any
 	    steps {
+	      sh 'sleep 10'    
 	      sh 'dredd NTUA-ICCS_BlueprintResolution_0.0.2_swagger.yaml http://31.171.247.162:50011'
 	    }
 	}	
