@@ -67,5 +67,11 @@ pipeline {
                 sh './jenkins/deploy/deploy-staging.sh' 
             }
         }
+	stage('API validation') {
+	    agent any
+	    steps {
+	      sh 'dredd NTUA-ICCS_BlueprintResolution_0.0.2_swagger.yaml http://31.171.247.162:50011'
+	    }
+	}	
     }
 }
