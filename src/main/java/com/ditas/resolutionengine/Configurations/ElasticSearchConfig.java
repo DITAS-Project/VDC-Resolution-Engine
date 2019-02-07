@@ -55,7 +55,7 @@ public class ElasticSearchConfig {
                 .settings(esSettings)
                 .build()
                 .addTransportAddress(
-				  new InetSocketTransportAddress(InetAddress.getByName(System.getenv("$DOCKER_HOST_IP")), EsPort));
+				  new InetSocketTransportAddress(InetAddress.getByName(System.getenv("DOCKER_HOST_IP")), EsPort));
    
     }
 }
