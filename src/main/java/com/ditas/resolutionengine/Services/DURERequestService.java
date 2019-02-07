@@ -39,7 +39,7 @@ public class DURERequestService {
 	@Autowired
 	private RepositoryRequestService repositoryService;
 	
-	 @Value("#{environment['host']}")
+	@Value("${host")
     private String host;
     
     @Value("${dure.blueprints.path}")

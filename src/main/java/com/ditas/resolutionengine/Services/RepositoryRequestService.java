@@ -37,7 +37,7 @@ public class RepositoryRequestService {
     @Value("${repository.blueprints.path}")
     private String repositoryBlueprintsPath;
     
-    @Value("#{environment['host']}")
+    @Value("${host}")
     private String host;
 	
 	public ArrayList<JSONObject> fetchFromRepository(ArrayList<String> idsList) {
