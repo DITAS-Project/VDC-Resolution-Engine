@@ -29,6 +29,11 @@ ssh -i /opt/keypairs/ditas-testbed-keypair.pem cloudsigma@31.171.247.162 << 'END
 sudo docker stop --time 20 vdc-resolution-engine || true
 sudo docker rm --force vdc-resolution-engine || true
 sudo docker pull ditas/vdc-resolution-engine:staging
+
+# Get the host IP
+HOST_IP="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"
+
+
 # SET THE PORT MAPPING
-sudo docker run -p 50011:8080 --restart unless-stopped -d --name vdc-resolution-engine ditas/vdc-resolution-engine:staging
+sudo docker run -p 50011:8080 -e DOCKER_HOST_IP=$HOST_IP --restart unless-stopped -d --name vdc-resolution-engine ditas/vdc-resolution-engine:staging
 ENDSSH
