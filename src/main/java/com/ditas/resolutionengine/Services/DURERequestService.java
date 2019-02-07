@@ -39,7 +39,7 @@ public class DURERequestService {
 	@Autowired
 	private RepositoryRequestService repositoryService;
 	
-    @Value("${host}")
+	 @Value("#{environment['host']}")
     private String host;
     
     @Value("${dure.blueprints.path}")
@@ -135,7 +135,7 @@ public class DURERequestService {
 		
 		try {
 			
-			url = new URL("http://"+host+":"+dureBlueprintsPort+dureBlueprintsPath);
+			url = new URL("http://"+host+":"+dureBlueprintsPort+dureBlueprintsP);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
