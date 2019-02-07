@@ -1,4 +1,3 @@
-// Your repo link in Jenkins: http://178.22.71.23:8080/job/VDC-Resolution-Engine/job/master/
 pipeline {
     agent none
     stages {
@@ -27,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Image creation') {
+        stage('Staging image creation') {
             agent any
             options {
                 skipDefaultCheckout true
@@ -37,7 +36,7 @@ pipeline {
                 echo 'Creating the image...'
 
                 // This will search for a Dockerfile.artifact in the working directory and build the image to the local repository
-                sh "docker build -t \"ditas/vdc-resolution-engine\" -f Dockerfile.artifact ."
+                sh "docker build -t \"ditas/vdc-resolution-engine:staging\" -f Dockerfile.artifact ."
                 echo "Done"
 		    
                 // Get the password from a file. This reads the file from the host, not the container. Slaves already have the password in there.
@@ -51,28 +50,27 @@ pipeline {
                 sh "docker login -u ditasgeneric -p ${password}"
                 echo "Done"
 
-                echo "Pushing the image ditas/vdc-resolution-engine:latest..."
-                sh "docker push ditas/vdc-resolution-engine:latest"
+                echo "Pushing the image ditas/vdc-resolution-engine:staging"
+                sh "docker push ditas/vdc-resolution-engine:staging"
                 echo "Done "
             }
         }
-        stage('Image deploy') {
+        stage('Deployment in Staging') {
             agent any
             options {
                 // Don't need to checkout Git again
                 skipDefaultCheckout true
             }
             steps {
-		// Deploy to Staging environment calling the deployment script
+		        // Deploy to Staging environment calling the deployment script
                 sh './jenkins/deploy/deploy-staging.sh' 
             }
         }
-	stage('API validation') {
-	    agent any
-	    steps {
-	      sh 'sleep 10'    
-	      sh 'dredd NTUA-ICCS_BlueprintResolution_0.0.2_swagger.yaml http://31.171.247.162:50011'
-	    }
-	}	
+	    stage('Dredd API validation') {
+	        agent any
+	        steps {
+	            sh './jenkins/dredd/run-api-test.sh'
+	        }
+	    }	
     }
 }

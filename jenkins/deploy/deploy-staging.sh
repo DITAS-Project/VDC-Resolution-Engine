@@ -28,7 +28,7 @@ ssh -i /opt/keypairs/ditas-testbed-keypair.pem cloudsigma@31.171.247.162 << 'END
 # || true - "docker stop" failt with exit status 1 if image doen't exists, what makes the Pipeline fail. the "|| true" forces the command to exit with 0.
 sudo docker stop --time 20 vdc-resolution-engine || true
 sudo docker rm --force vdc-resolution-engine || true
-sudo docker pull ditas/vdc-resolution-engine:latest
+sudo docker pull ditas/vdc-resolution-engine:staging
 # SET THE PORT MAPPING
-sudo docker run -p 50011:8080 --restart unless-stopped -d --name vdc-resolution-engine ditas/vdc-resolution-engine:latest
+sudo docker run -p 50011:8080 --restart unless-stopped -d --name vdc-resolution-engine ditas/vdc-resolution-engine:staging
 ENDSSH
