@@ -135,7 +135,7 @@ public class DURERequestService {
 		
 		try {
 			
-			url = new URL("http://"+host+":"+dureBlueprintsPort+dureBlueprintsP);
+			url = new URL("http://"+host+":"+dureBlueprintsPort+dureBlueprintsPath);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
