@@ -33,8 +33,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ElasticSearchConfig {
-	//@Value("${host}")
-    //private String EsHost;
+	@Value("${host}")
+    private String EsHost;
 
     @Value("${elasticsearch.port}")
     private int EsPort;
@@ -55,7 +55,7 @@ public class ElasticSearchConfig {
                 .settings(esSettings)
                 .build()
                 .addTransportAddress(
-				  new InetSocketTransportAddress(InetAddress.getByName(System.getenv("DOCKER_HOST_IP")), EsPort));
+				  new InetSocketTransportAddress(InetAddress.getByName(EsHost), EsPort));
    
     }
 }
