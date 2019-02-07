@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ElasticSearchConfig {
-	@Value("${elasticsearch.host}")
+	@Value("${host}")
     private String EsHost;
 
     @Value("${elasticsearch.port}")

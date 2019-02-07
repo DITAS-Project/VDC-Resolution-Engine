@@ -31,8 +31,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RepositoryRequestService {
 	
-    @Value("${repository.blueprints}")
+    @Value("${repository.blueprints.port}")
+    private String repositoryBlueprintsPort;
+    
+    @Value("${repository.blueprints.path}")
     private String repositoryBlueprintsPath;
+    
+    @Value("${host}")
+    private String host;
 	
 	public ArrayList<JSONObject> fetchFromRepository(ArrayList<String> idsList) {
 		
@@ -40,7 +46,7 @@ public class RepositoryRequestService {
 		
 		try {
 				String repository_request = buildRepositoryRequest(idsList);
-				URL url = new URL("http://"+repositoryBlueprintsPath+"?filter="+repository_request);
+				URL url = new URL("http://"+host+":"+repositoryBlueprintsPort+repositoryBlueprintsPath+"?filter="+repository_request);
 				Scanner scanner = new Scanner(url.openStream());
 				String response = scanner.useDelimiter("\\Z").next();
 				scanner.close();

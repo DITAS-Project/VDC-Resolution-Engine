@@ -38,9 +38,15 @@ public class DURERequestService {
 	
 	@Autowired
 	private RepositoryRequestService repositoryService;
+	
+    @Value("${host}")
+    private String host;
     
-    @Value("${dure.blueprints}")
+    @Value("${dure.blueprints.path}")
     private String dureBlueprintsPath;
+    
+    @Value("${dure.blueprints.port}")
+    private String dureBlueprintsPort;
 
 	public String createRequest(String elasticResponse, JSONObject app_requirements) {
 		
@@ -129,7 +135,7 @@ public class DURERequestService {
 		
 		try {
 			
-			url = new URL("http://"+dureBlueprintsPath);
+			url = new URL("http://"+host+":"+dureBlueprintsPort+dureBlueprintsPath);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
