@@ -71,6 +71,24 @@ pipeline {
 	        steps {
 	            sh './jenkins/dredd/run-api-test.sh'
 	        }
-	    }	
+	    }
+        stage('Production image creation') {
+            agent any
+			steps {
+                // Change the tag from staging to production 
+                sh "docker tag ditas/vdc-resolution-engine:staging ditas/vdc-resolution-engine:production"
+                sh "docker push ditas/vdc-resolution-engine:production"
+            }
+        }	
+		
+        stage('Deployment in Production') {
+            agent any
+            steps {
+                // Production environment: 178.22.69.83
+                // Private key for ssh: /opt/keypairs/ditas-testbed-keypair.pem
+                // Call the deployment script
+                sh './jenkins/deploy/deploy-production.sh'
+            }
+        }		
     }
 }
