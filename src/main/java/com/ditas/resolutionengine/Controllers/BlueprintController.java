@@ -23,10 +23,7 @@
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
-import com.ditas.resolutionengine.Services.PurchaseHandlerService;
-import com.mashape.unirest.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +51,6 @@ public class BlueprintController {
 	
 	@Autowired
 	DURERequestService dureService;
-
-	//@Autowired
-	//PurchaseHandlerService phService;
 	
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprint")
 	public String searchBP(@RequestBody String searchText){
@@ -67,30 +61,7 @@ public class BlueprintController {
 		
 		return response;
 	}
-
-	/*@RequestMapping(method=RequestMethod.POST , value="/randomPurchases")
-	public String addRandomPurchases(@RequestBody String  numberOfPurchases){
-		int numOfPurchases = 0;
-		try{
-			numOfPurchases = Integer.parseInt(numberOfPurchases);
-			if(numOfPurchases > 50){
-				return "Insert quota exceeded, please don't enter more than 50 records.";
-			}
-			ArrayList<HttpResponse<String>> responses = phService.pushRandom(numOfPurchases);
-			String result = "";
-			for (HttpResponse<String> res : responses) {
-				result+=res.getCode()+" : "+res.getBody()+"\n";
-			}
-			return result;
-		}catch(Exception ex){
-			return ex.getLocalizedMessage();
-		}
-	}
-
-	@RequestMapping(method=RequestMethod.DELETE , value="/emptyPurchases")
-	public String removePurchases(@RequestBody String  numberOfPurchases){
-		return "Not yet implemented.";
-	}*/
+	
 
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
