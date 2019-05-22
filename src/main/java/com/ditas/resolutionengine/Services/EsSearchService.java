@@ -49,6 +49,40 @@ public class EsSearchService {
 		try {
 			Client client = config.client();
 			
+			/*
+			{
+    				"query":{
+        				"bool":{
+            					"should":[
+                				{
+                    					"match":{
+                        					"description":{
+                            						"query":"patient"
+                        					}
+                   					}
+                				},
+               					{
+                    				"nested":{
+                        				"path":"tags",
+                        				"inner_hits": {
+                           					"_source": ["method_name"],
+                           					"size": 10
+			       				},
+                       					 "query":{
+                            					"match":{
+                                					"tags.tags":{
+                                    						"query":"OSR",
+                                    						"boost": 3
+                                						}
+                            						}
+                        					}
+                    					}
+                				}
+                			]
+        			}
+    			}
+		}
+		*/
 			QueryBuilder qb = boolQuery()
 					.should(matchQuery("description", searchText))
 					.should(nestedQuery("tags", matchQuery("tags.tags", searchText).boost(8))
