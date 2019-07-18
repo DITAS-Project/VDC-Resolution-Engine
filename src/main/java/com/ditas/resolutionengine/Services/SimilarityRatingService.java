@@ -22,10 +22,11 @@ package com.ditas.resolutionengine.Services;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import javafx.util.Pair;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
-import com.ditas.resolutionengine.Configurations.ElasticSearchConfig;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.mashape.unirest.http.*;
 import com.ditas.resolutionengine.Entities.Requirements;
@@ -40,8 +41,26 @@ import java.util.Iterator;
 @Service
 public class SimilarityRatingService {
 
-    @Autowired
-    ElasticSearchConfig config;
+    @Value("${elasticsearch.index}")
+    private String EsIndex;
+
+    @Value("${purchase.index}")
+    private String PurchIndex;
+
+    @Value("${elasticsearch.auth}")
+    private String EsAuth;
+
+    @Value("${elasticsearch.user}")
+    private String EsUser;
+
+    @Value("${elasticsearch.pass}")
+    private String EsPass;
+
+    @Value("${eshost}")
+    private String EsHost;
+
+    @Value("${elasticsearch.port}")
+    private int EsPort;
 
     /**
      * Adds the "ranking" field to the blueprints, based on the blueprints' popularity and the similarity of the requirements file.
@@ -71,24 +90,35 @@ public class SimilarityRatingService {
 
             String reqBody = "{\"query\": " +
                     "{\"function_score\": {" +
-                    "\"query\": { \"filtered\": { \"filter\": { \"terms\":{" +
+                    "\"query\": { \"bool\": { \"filter\": { \"terms\":{" +
                     "\"blueprintID\": "+blueprintIdList+"}}}},"+
                     "\"functions\": [" +
-                    "{\"script_score\" : {\"params\":{" +
+                    "{\"script_score\" : {" +
+                    "\"script\":{" +
+                    "\"params\":{" +
                     "\"vector\": " + vector.getValue() + "," +
                     "\"field_labels\":" + vector.getKey() + "}," +
-                    //"\"script\" : \"int distance(str1,str2){dist=new int[str1.size()+1][str2.size()+1]; (0..str1.size()).each{dist[it][0]=it;}; (0..str2.size()).each{dist[0][it]=it;}; (1..str1.size()).each{i->(1..str2.size()).each{j->dist[i][j]=[dist[i-1][j]+1,dist[i][j-1]+1,dist[i-1][j-1]+((str1[i-1]==str2[j-1])?0:1)].min();};}; return dist[str1.size()][str2.size()];}; vector_B=[]; for(i=0;i<field_labels.size();i++){path = []; splits = ('requirements.'+field_labels[i]).split(/\\\\./); for(j=0;j<splits.size();j++){cur = splits[j]; if(splits[j].isInteger()){cur = splits[j] as Integer;}; path.add(cur);}; cur2=path.inject( _source ) { obj, prop -> obj != null ? obj[prop] : obj; }; if(cur2 instanceof String){cur2=distance(vector[i],cur2);}; vector_B.add(cur2);}; dotProduct=0.0; normA=0.0; normB=0.0; for(i=0;i<vector.size()-1;i++){cur=vector[i]; if(cur instanceof String){cur=distance(vector[i],vector[i]);}; if(vector_B[i] != null){ dotProduct+=cur*vector_B[i]; normA+=cur*cur; normB+=vector_B[i]*vector_B[i];};}; if((Math.sqrt(normA)*Math.sqrt(normB)) > 0){ return (dotProduct/(Math.sqrt(normA)*Math.sqrt(normB)))*_source['score'];};else{return 0.0;};\"}" +
-                    "\"script\":\"int distance(str1,str2){dist=new int[str1.size()+1][str2.size()+1]; (0..str1.size()).each{dist[it][0]=it;}; (0..str2.size()).each{dist[0][it]=it;}; (1..str1.size()).each{i->(1..str2.size()).each{j->dist[i][j]=[dist[i-1][j]+1,dist[i][j-1]+1,dist[i-1][j-1]+((str1[i-1]==str2[j-1])?0:1)].min();};}; return dist[str1.size()][str2.size()]; }; def drop(obj,index){ new_obj=[]; for(dr=0;dr<obj.size();dr++){if(dr!=index){new_obj.add(obj[dr]); }; }; return new_obj; }; def getProperty(obj,prop){new_obj = obj; if((obj != null) && (prop.size() > 0)){if(prop[0] instanceof Integer){for(elems=0;elems<obj.size();elems++){new_obj = getProperty(obj[elems],drop(prop,0)); if(new_obj!=null){break; }; }; }else{new_obj = getProperty(obj[prop[0]],drop(prop,0)); }; }; return new_obj; }; vector_B=[]; for(i=0;i<field_labels.size();i++){path = []; splits = ('requirements.'+field_labels[i]).split(/\\\\./); for(j=0;j<splits.size();j++){cur = splits[j]; if(splits[j].isInteger()){cur = splits[j] as Integer; }; path.add(cur); }; cur2=getProperty(_source,path); if(cur2 instanceof String){cur2=distance(vector[i],cur2); }; vector_B.add(cur2); }; dotProduct=0.0; normA=0.0; normB=0.0; for(i=0;i<vector.size()-1;i++){cur=vector[i]; if(cur instanceof String){cur=distance(vector[i],vector[i]); }; if(vector_B[i]){dotProduct+=cur*vector_B[i]; normA+=cur*cur; normB+=vector_B[i]*vector_B[i]; }; else{continue; }; }; if((Math.sqrt(normA)*Math.sqrt(normB)) > 0){return (dotProduct/(Math.sqrt(normA)*Math.sqrt(normB)))*_source['score']; }; else{return 0.0; };\"}"+
-                    "}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
-            HttpResponse<String> response = Unirest.post("http://31.171.247.162:50014/ditas/purchaseinfo/_search")
-                    .header("Content-Type", "application/json")
-                    .header("Authorization", "Basic cHVibGljVXNlcjpSZXNvbHV0aW9u")
-                    .header("cache-control", "no-cache")
-                    .header("Postman-Token", "5f58f7f0-a1f0-426b-92f1-1fd875e2e355")
-                    .header("Method","GET")
-                    .body(reqBody)
-                    .asString();
+                    "\"source\":\"double distance(String s1, String s2) { if (s1.equals(s2)) { return 0; } if (s1.length() == 0) { return s2.length(); } if (s2.length() == 0) { return s1.length(); } double[] v0 = new double[s2.length() + 1]; double[] v1 = new double[s2.length() + 1]; double[] vtemp; for (int i = 0; i < v0.length; i++) { v0[i] = i; } for (int i = 0; i < s1.length(); i++) { v1[0] = i + 1; double minv1 = v1[0]; for (int j = 0; j < s2.length(); j++) { double cost = 1; if (s1.charAt(i) == s2.charAt(j)) { cost = 0; } v1[j + 1] = Math.min(v1[j] + 1,Math.min(v0[j + 1] + 1, v0[j] + cost)); minv1 = Math.min(minv1, v1[j + 1]); } vtemp = v0; v0 = v1; v1 = vtemp; } return v0[s2.length()]; } def drop(def obj,def index){ def new_obj=[]; for(int dr=0;dr<obj.length;dr++){ if(dr!=index){ new_obj.add(obj[dr]); } } return new_obj; } def getProperty(def obj,def prop){ def new_obj = obj; if((obj != null) && (prop.length > 0)){ if(prop[0] instanceof Integer){ for(int elems=0;elems<obj.length;elems++){ new_obj = getProperty(obj[elems],drop(prop,0)); if(new_obj!=null){ break; } } } else{ new_obj = getProperty(obj[prop[0]],drop(prop,0)); } } return new_obj; } def vector_B=[]; for(int i=0;i<params.field_labels.length;i++){ def path = []; String[] splits = /\\\\./.split('requirements.'+params.field_labels[i]); for(int j=0;j<splits.length;j++){ def cur = splits[j]; try{ cur = Integer.parseInt(splits[j]); }catch(Exception ex){} path.add(cur); } def cur2=getProperty(params._source,path); if(cur2 instanceof String){ cur2=distance(params.vector[i],cur2); } vector_B.add(cur2); } double dotProduct=0.0; double normA=0.0; double normB=0.0; for(int i=0;i<params.vector.length-1;i++){ def cur=params.vector[i]; if(cur instanceof String){ cur=distance(params.vector[i],params.vector[i]); } if(vector_B[i] != null){ dotProduct+=cur*vector_B[i]; normA+=cur*cur; normB+=vector_B[i]*vector_B[i]; } } if((Math.sqrt(normA)*Math.sqrt(normB)) > 0){ return (dotProduct/(Math.sqrt(normA)*Math.sqrt(normB)))*params._source['score']; } else{ return 0.0; }\"}"+
+                    "}}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
 
+            HttpResponse<String> response;
+            if(EsAuth.equals("basic")) {
+                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                        .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
+                        .header("Content-Type", "application/json")
+                        .header("cache-control", "no-cache")
+                        .header("Method", "POST")
+                        .body(reqBody)
+                        .asString();
+            }else{
+                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                        .header("Content-Type", "application/json")
+                        .header("cache-control", "no-cache")
+                        .header("Method", "POST")
+                        .body(reqBody)
+                        .asString();
+            }
+            System.out.println(reqBody);
             if (response.getCode() == 200) {
                 String bodys = response.getBody();
                 JSONArray hits = (new JSONObject(bodys)).getJSONObject("hits").getJSONArray("hits");

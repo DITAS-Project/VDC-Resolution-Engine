@@ -43,7 +43,7 @@ public class ResolutionEngineService {
 		String dureRequest = dureService.createRequest(esResponse, app_requirements);
 		String dureResponse = dureService.sendRequest(dureRequest);
 		String userRatingResponse = simService.addRanking(app_requirements,dureResponse);
-		System.out.println(userRatingResponse);
+		System.out.println("userRatingResponse: "+userRatingResponse);
 		return userRatingResponse;
 	}
 

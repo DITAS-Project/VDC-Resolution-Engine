@@ -23,6 +23,7 @@ package com.ditas.resolutionengine.Services;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,32 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.ditas.resolutionengine.Configurations.ElasticSearchConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
 public class PurchaseHandlerService {
 
-    @Autowired
-    ElasticSearchConfig config;
+    @Value("${elasticsearch.index}")
+    private String EsIndex;
+
+    @Value("${purchase.index}")
+    private String PurchIndex;
+
+    @Value("${eshost}")
+    private String EsHost;
+
+    @Value("${elasticsearch.auth}")
+    private String EsAuth;
+
+    @Value("${elasticsearch.user}")
+    private String EsUser;
+
+    @Value("${elasticsearch.pass}")
+    private String EsPass;
+
+    @Value("${elasticsearch.port}")
+    private int EsPort;
 
     Purchase purchase;
 
@@ -48,12 +67,22 @@ public class PurchaseHandlerService {
 
     public HttpResponse<String> push(Purchase purc) throws UnirestException, NullPointerException {
         String reqBody = purc.toJson().toString();
-        return Unirest.post("http://31.171.247.162:50014/ditas/purchaseinfo/")
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Basic cHVibGljVXNlcjpSZXNvbHV0aW9u")
-                .header("cache-control", "no-cache")
-                .body(reqBody)
-                .asString();
+        if(EsAuth.equals("basic")) {
+            return Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                    .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
+                    .header("Content-Type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Method", "POST")
+                    .body(reqBody)
+                    .asString();
+        }else {
+            return Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                    .header("Content-Type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Method", "POST")
+                    .body(reqBody)
+                    .asString();
+        }
     }
 
     public ArrayList<HttpResponse<String>> pushAll(String FilePath) throws UnirestException, NullPointerException, IOException {
@@ -157,33 +186,62 @@ public class PurchaseHandlerService {
         for (int i = 0; i < hits.length(); i++) {
             reqBody+="{ \"delete\" : { \"_index\" : \"ditas\", \"_type\" : \"purchaseinfo\", \"_id\" : \""+hits.getJSONObject(i).getString("_id")+"\" } }\n";
         }
-        HttpResponse<String> data = Unirest.post("http://31.171.247.162:50014/ditas/purchaseinfo/_bulk")
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Basic cHVibGljVXNlcjpSZXNvbHV0aW9u")
-                .header("cache-control", "no-cache")
-                .body(reqBody)
-                .asString();
-
-        res = data.getCode()+":"+data.getBody();
+        HttpResponse<String> data;
+        if(EsAuth.equals("basic")) {
+            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                    .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
+                    .header("Content-Type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Method", "POST")
+                    .body(reqBody)
+                    .asString();
+        }else{
+            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                    .header("Content-Type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Method", "POST")
+                    .body(reqBody)
+                    .asString();
+        }
+        res = data.getCode() + ":" + data.getBody();
         return res;
     }
 
     public JSONArray getAllRecords() throws UnirestException {
-        HttpResponse<String> data = Unirest.get("http://31.171.247.162:50014/ditas/purchaseinfo/_search")
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Basic cHVibGljVXNlcjpSZXNvbHV0aW9u")
-                .header("cache-control", "no-cache")
-                .asString();
+        HttpResponse<String> data;
+        if(EsAuth.equals("basic")) {
+            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                    .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
+                    .header("Content-Type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Method", "POST")
+                    .asString();
+        }else{
+            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
+                    .header("Content-Type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Method", "POST")
+                    .asString();
+        }
         try{
             JSONObject respJSON= new JSONObject(data.getBody());
             JSONArray hits = respJSON.getJSONObject("hits").getJSONArray("hits");
             int total = respJSON.getJSONObject("hits").getInt("total");
             if(total>10){
-                data = Unirest.get("http://31.171.247.162:50014/ditas/purchaseinfo/_search?size="+total+2)
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", "Basic cHVibGljVXNlcjpSZXNvbHV0aW9u")
-                        .header("cache-control", "no-cache")
-                        .asString();
+                if(EsAuth.equals("basic")) {
+                    data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2)
+                            .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
+                            .header("Content-Type", "application/json")
+                            .header("cache-control", "no-cache")
+                            .header("Method", "POST")
+                            .asString();
+                }else{
+                    data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2)
+                            .header("Content-Type", "application/json")
+                            .header("cache-control", "no-cache")
+                            .header("Method", "POST")
+                            .asString();
+                }
                 respJSON= new JSONObject(data.getBody());
                 hits = respJSON.getJSONObject("hits").getJSONArray("hits");
             }
