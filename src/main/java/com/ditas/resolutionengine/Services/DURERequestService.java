@@ -28,6 +28,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,11 +41,11 @@ public class DURERequestService {
 	
 	@Autowired
 	private RepositoryRequestService repositoryService;
-	
-	@Value("${host}")
-    private String host;
-    
-    @Value("${dure.blueprints.path}")
+
+	@Value("${rphost}")
+	private String rphost;
+
+	@Value("${dure.blueprints.path}")
     private String dureBlueprintsPath;
     
     @Value("${dure.blueprints.port}")
@@ -55,19 +58,17 @@ public class DURERequestService {
 		
 		
 		//Parse the number of returned blueprints from Elastic Search response
-		int num_of_hits = Integer.parseInt(elastic_response_json.getJSONObject("hits").get("total").toString());
+		int num_of_hits = Integer.parseInt(elastic_response_json.getJSONObject("hits").getJSONObject("total").get("value").toString());
 		
 		//Here will be stored all the ids of the returned blueprints in order to retrieve them from the Blueprint Repository
 		ArrayList<String> idsList = new ArrayList<String>();
 		
 		//Here will be stored all the method names that had their tags matched (during the Elastic Search search) for its blueprint
 		HashMap<String, ArrayList<String>> methodsList = new HashMap<String, ArrayList<String>>();
-		//System.out.println("eksw");
 		//System.out.println(elastic_response_json);
 		JSONObject esResult;	
 		String bp_id;
 		for (int bp_index = 0 ; bp_index < num_of_hits ; bp_index++) {
-			//System.out.println("mesa1");
 			esResult = elastic_response_json.getJSONObject("hits").getJSONArray("hits").getJSONObject(bp_index);
 			bp_id = esResult.get("_id").toString();
 			idsList.add(bp_id);
@@ -77,26 +78,18 @@ public class DURERequestService {
 			//Parse the number of matched methods of the current blueprint from Elastic Search response
 			//int num_of_matched_methods = Integer.parseInt(result_innerHits.get("total").toString());
 			int num_of_matched_methods = result_innerHits.getJSONArray("hits").length();
-			//System.out.println("mesa2");
 			ArrayList<String> list_of_methods = new ArrayList<String>();
 			for (int method_index = 0 ; method_index < num_of_matched_methods ; method_index++) {
-				//System.out.println("mesa3");
 				String method =  result_innerHits.getJSONArray("hits").getJSONObject(method_index).getJSONObject("_source").get("method_id").toString();
 				list_of_methods.add(method);		
 			}
 			methodsList.put(bp_id, list_of_methods);		
 			
 		}
-		//System.out.println("telos");
-		
-	
 		
 		//Fetch the blueprints from repository and store them in a list
-		ArrayList<JSONObject> blueprints = repositoryService.fetchFromRepository(idsList);		
-		System.out.println(methodsList.toString());
+		ArrayList<JSONObject> blueprints = repositoryService.fetchFromRepository(idsList);
 		String dure_request = buildDURERequest(blueprints, methodsList, app_requirements);
-		System.out.println(dure_request);
-
 		
 		return dure_request;
 		
@@ -130,35 +123,18 @@ public class DURERequestService {
 
 	public String sendRequest(String dureRequest) {
 		// TODO Auto-generated method stub
-		
-		URL url;
-		
+
 		try {
-			
-			url = new URL("http://"+host+":"+dureBlueprintsPort+dureBlueprintsPath);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput(true);
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type", "application/json");
-			
-			OutputStream os = conn.getOutputStream();
-			os.write(dureRequest.getBytes());
-			os.flush();
-			
+			HttpResponse<String> response = Unirest.post("http://"+rphost+":"+dureBlueprintsPort+dureBlueprintsPath)
+					.header("Content-Type", "application/json")
+					.header("cache-control", "no-cache")
+					.header("Method","POST")
+					.body(dureRequest)
+					.asString();
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					(conn.getInputStream())));
-
-			String output;
-			String response = "";
-			System.out.println("Output from Server .... \n");
-			while ((output = br.readLine()) != null) {
-				response += output+"\n";
-			}
-
-			conn.disconnect();
+			System.out.println("Output from Server .... \n"+response.getBody());
 			
-			return response;
+			return response.getBody();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -36,9 +36,9 @@ public class RepositoryRequestService {
     
     @Value("${repository.blueprints.path}")
     private String repositoryBlueprintsPath;
-    
-    @Value("${host}")
-    private String host;
+
+	@Value("${rphost}")
+	private String rphost;
 	
 	public ArrayList<JSONObject> fetchFromRepository(ArrayList<String> idsList) {
 		
@@ -46,7 +46,7 @@ public class RepositoryRequestService {
 		
 		try {
 				String repository_request = buildRepositoryRequest(idsList);
-				URL url = new URL("http://"+host+":"+repositoryBlueprintsPort+repositoryBlueprintsPath+"?filter="+repository_request);
+				URL url = new URL("http://"+rphost+":"+repositoryBlueprintsPort+repositoryBlueprintsPath+"?filter="+repository_request);
 				Scanner scanner = new Scanner(url.openStream());
 				String response = scanner.useDelimiter("\\Z").next();
 				scanner.close();
