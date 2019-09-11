@@ -35,6 +35,9 @@ public class ResolutionEngineService {
 	@Autowired
 	DURERequestService dureService;
 	
+	@Autowired
+	SimilarityRatingService simService;
+	
 	public String ResolutionEngineRequest(Requirements requirements, JSONObject app_requirements) {
 		
 		String esResponse = esService.blueprintSearchByReq(requirements);
