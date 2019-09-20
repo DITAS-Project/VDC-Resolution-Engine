@@ -29,8 +29,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -124,17 +128,18 @@ public class DURERequestService {
 	public String sendRequest(String dureRequest) {
 		// TODO Auto-generated method stub
 
-		try {
-			HttpResponse<String> response = Unirest.post("http://"+rphost+":"+dureBlueprintsPort+dureBlueprintsPath)
-					.header("Content-Type", "application/json")
-					.header("cache-control", "no-cache")
-					.header("Method","POST")
-					.body(dureRequest)
-					.asString();
+		HttpClient httpClient= HttpClientBuilder.create().build();
 
-			System.out.println("Output from Server .... \n"+response.getBody());
+		try {
+			HttpPost request = new HttpPost("http://"+rphost+":"+dureBlueprintsPort+dureBlueprintsPath);
+			request.addHeader("content-type", "application/json");
+			StringEntity params =new StringEntity(dureRequest);
+			request.setEntity(params);
+			HttpResponse response = httpClient.execute(request);
+			String responseString = new BasicResponseHandler().handleResponse(response);
+			System.out.println("Output from Server .... \n"+responseString);
 			
-			return response.getBody();
+			return responseString;
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

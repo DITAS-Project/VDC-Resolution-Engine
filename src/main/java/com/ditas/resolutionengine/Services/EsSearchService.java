@@ -24,10 +24,18 @@ import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.nestedQuery;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
 import javafx.util.Pair;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -89,31 +97,36 @@ public class EsSearchService {
 					"  }\n" +
 					"}\n" +
 					"}";
-			HttpResponse<String> response;
-			if(EsAuth.equals("basic")){
-                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search")
-                        .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                        .header("Content-Type", "application/json")
-                        .header("cache-control", "no-cache")
-                        .header("Method", "POST")
-                        .body(query)
-                        .asString();
-            }else {
-                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search")
-                        .header("Content-Type", "application/json")
-                        .header("cache-control", "no-cache")
-                        .header("Method", "POST")
-                        .body(query)
-                        .asString();
-            }
 
-			if (response.getCode() != 200) {
-				System.err.println(response.getBody());
+			HttpClient httpClient;
+			if(EsAuth.equals("basic")) {
+				CredentialsProvider provider = new BasicCredentialsProvider();
+				UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+				provider.setCredentials(AuthScope.ANY, credentials);
+				httpClient= HttpClientBuilder.create()
+						.setDefaultCredentialsProvider(provider)
+						.build();
+			}else{
+				httpClient=HttpClientBuilder.create()
+						.build();
 			}
 
-
-			return response.getBody();
-			
+			try {
+				HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search");
+				request.addHeader("content-type", "application/json");
+				StringEntity params =new StringEntity(query);
+				request.setEntity(params);
+				HttpResponse response = httpClient.execute(request);
+				int statusCode = response.getStatusLine().getStatusCode();
+				String responseString = new BasicResponseHandler().handleResponse(response);
+				if (statusCode != 200) {
+					System.err.println(responseString);
+				}
+				return responseString;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,35 +169,40 @@ public class EsSearchService {
 					"  }\n" +
 					"}\n" +
 					"}";
-			HttpResponse<String> response;
-            if(EsAuth.equals("basic")) {
-                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search")
-						.header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                        .header("Content-Type", "application/json")
-                        .header("cache-control", "no-cache")
-                        .header("Method", "POST")
-                        .body(query)
-                        .asString();
-            }else {
-                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search")
-                        .header("Content-Type", "application/json")
-                        .header("cache-control", "no-cache")
-                        .header("Method", "POST")
-                        .body(query)
-                        .asString();
-            }
-
-			if (response.getCode() != 200) {
-				System.err.println(response.getBody());
+			HttpClient httpClient;
+			if(EsAuth.equals("basic")) {
+				CredentialsProvider provider = new BasicCredentialsProvider();
+				UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+				provider.setCredentials(AuthScope.ANY, credentials);
+				httpClient= HttpClientBuilder.create()
+						.setDefaultCredentialsProvider(provider)
+						.build();
+			}else{
+				httpClient=HttpClientBuilder.create()
+						.build();
 			}
 
-
-			return response.getBody();
-
+			try {
+				HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search");
+				request.addHeader("content-type", "application/json");
+				StringEntity params =new StringEntity(query);
+				request.setEntity(params);
+				HttpResponse response = httpClient.execute(request);
+				int statusCode = response.getStatusLine().getStatusCode();
+				String responseString = new BasicResponseHandler().handleResponse(response);
+				if (statusCode != 200) {
+					System.err.println(responseString);
+				}
+				return responseString;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 	

@@ -20,15 +20,23 @@
  */
 package com.ditas.resolutionengine.Services;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
 import javafx.util.Pair;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.mashape.unirest.http.*;
 import com.ditas.resolutionengine.Entities.Requirements;
 
 import java.io.IOException;
@@ -101,49 +109,58 @@ public class SimilarityRatingService {
                     "\"source\":\"double distance(String s1, String s2) { if (s1.equals(s2)) { return 0; } if (s1.length() == 0) { return s2.length(); } if (s2.length() == 0) { return s1.length(); } double[] v0 = new double[s2.length() + 1]; double[] v1 = new double[s2.length() + 1]; double[] vtemp; for (int i = 0; i < v0.length; i++) { v0[i] = i; } for (int i = 0; i < s1.length(); i++) { v1[0] = i + 1; double minv1 = v1[0]; for (int j = 0; j < s2.length(); j++) { double cost = 1; if (s1.charAt(i) == s2.charAt(j)) { cost = 0; } v1[j + 1] = Math.min(v1[j] + 1,Math.min(v0[j + 1] + 1, v0[j] + cost)); minv1 = Math.min(minv1, v1[j + 1]); } vtemp = v0; v0 = v1; v1 = vtemp; } return v0[s2.length()]; } def drop(def obj,def index){ def new_obj=[]; for(int dr=0;dr<obj.length;dr++){ if(dr!=index){ new_obj.add(obj[dr]); } } return new_obj; } def getProperty(def obj,def prop){ def new_obj = obj; if((obj != null) && (prop.length > 0)){ if(prop[0] instanceof Integer){ for(int elems=0;elems<obj.length;elems++){ new_obj = getProperty(obj[elems],drop(prop,0)); if(new_obj!=null){ break; } } } else{ new_obj = getProperty(obj[prop[0]],drop(prop,0)); } } return new_obj; } def vector_B=[]; for(int i=0;i<params.field_labels.length;i++){ def path = []; String[] splits = /\\\\./.split('requirements.'+params.field_labels[i]); for(int j=0;j<splits.length;j++){ def cur = splits[j]; try{ cur = Integer.parseInt(splits[j]); }catch(Exception ex){} path.add(cur); } def cur2=getProperty(params._source,path); if(cur2 instanceof String){ cur2=distance(params.vector[i],cur2); } vector_B.add(cur2); } double dotProduct=0.0; double normA=0.0; double normB=0.0; for(int i=0;i<params.vector.length-1;i++){ def cur=params.vector[i]; if(cur instanceof String){ cur=distance(params.vector[i],params.vector[i]); } if(vector_B[i] != null){ dotProduct+=cur*vector_B[i]; normA+=cur*cur; normB+=vector_B[i]*vector_B[i]; } } if((Math.sqrt(normA)*Math.sqrt(normB)) > 0){ return (dotProduct/(Math.sqrt(normA)*Math.sqrt(normB)))*params._source['score']; } else{ return 0.0; }\"}"+
                     "}}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
 
-            HttpResponse<String> response;
+            HttpClient httpClient;
             if(EsAuth.equals("basic")) {
-                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                        .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                        .header("Content-Type", "application/json")
-                        .header("cache-control", "no-cache")
-                        .header("Method", "POST")
-                        .body(reqBody)
-                        .asString();
+                CredentialsProvider provider = new BasicCredentialsProvider();
+                UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+                provider.setCredentials(AuthScope.ANY, credentials);
+                httpClient= HttpClientBuilder.create()
+                        .setDefaultCredentialsProvider(provider)
+                        .build();
             }else{
-                response = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                        .header("Content-Type", "application/json")
-                        .header("cache-control", "no-cache")
-                        .header("Method", "POST")
-                        .body(reqBody)
-                        .asString();
-            }
-            System.out.println(reqBody);
-            if (response.getCode() == 200) {
-                String bodys = response.getBody();
-                JSONArray hits = (new JSONObject(bodys)).getJSONObject("hits").getJSONArray("hits");
-                for (int i =0;i<hits.length();i++){
-                    JSONObject hit = hits.getJSONObject(i);
-                    JSONObject source = hit.getJSONObject("_source");
-                    double score = hit.getDouble("_score");
-                    String bId = source.getString("blueprintID");
-                    ratings.merge(bId, new Pair<Float,Integer>((float) score,1), (v1, v2) -> new Pair<Float,Integer>(v1.getKey()+v2.getKey(),v1.getValue()+v2.getValue()));
-                }
-            }
-            else{
-                System.out.println(response.getBody());
+                httpClient=HttpClientBuilder.create()
+                        .build();
             }
 
-            for(int i=0;i<blueprintArray.length();i++) {
-                JSONObject obj = blueprintArray.getJSONObject(i);
-                String id = obj.getJSONObject("blueprint").getString("_id");
-                if (ratings.containsKey(id)) {
-                    obj.put("userRating", ratings.get(id).getKey() / (float) ratings.get(id).getValue());
-                    blueprintArray.put(i, obj);
+            try {
+                HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search");
+                request.addHeader("content-type", "application/json");
+                StringEntity params =new StringEntity(reqBody);
+                request.setEntity(params);
+                HttpResponse response = httpClient.execute(request);
+                int statusCode = response.getStatusLine().getStatusCode();
+                System.out.println(reqBody);
+                if (statusCode == 200) {
+                    String bodys = new BasicResponseHandler().handleResponse(response);
+                    JSONArray hits = (new JSONObject(bodys)).getJSONObject("hits").getJSONArray("hits");
+                    for (int i =0;i<hits.length();i++){
+                        JSONObject hit = hits.getJSONObject(i);
+                        JSONObject source = hit.getJSONObject("_source");
+                        double score = hit.getDouble("_score");
+                        String bId = source.getString("blueprintID");
+                        ratings.merge(bId, new Pair<Float,Integer>((float) score,1), (v1, v2) -> new Pair<Float,Integer>(v1.getKey()+v2.getKey(),v1.getValue()+v2.getValue()));
+                    }
                 }
-            }
+                else{
+                    System.out.println(new BasicResponseHandler().handleResponse(response));
+                }
 
-            return blueprintArray.toString();
+                for(int i=0;i<blueprintArray.length();i++) {
+                    JSONObject obj = blueprintArray.getJSONObject(i);
+                    String id = obj.getJSONObject("blueprint").getString("_id");
+                    if (ratings.containsKey(id)) {
+                        obj.put("userRating", ratings.get(id).getKey() / (float) ratings.get(id).getValue());
+                        blueprintArray.put(i, obj);
+                    }
+                }
+
+                return blueprintArray.toString();
+
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

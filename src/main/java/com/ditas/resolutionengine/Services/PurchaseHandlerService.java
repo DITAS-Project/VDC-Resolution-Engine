@@ -20,10 +20,17 @@
  */
 package com.ditas.resolutionengine.Services;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,49 +68,68 @@ public class PurchaseHandlerService {
 
     Purchase purchase;
 
-    public HttpResponse<String> push() throws UnirestException, NullPointerException {
+    public String push() {
         return push(this.purchase);
     }
 
-    public HttpResponse<String> push(Purchase purc) throws UnirestException, NullPointerException {
+    public String push(Purchase purc){
         String reqBody = purc.toJson().toString();
+
+        HttpClient httpClient;
         if(EsAuth.equals("basic")) {
-            return Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                    .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                    .header("Content-Type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .header("Method", "POST")
-                    .body(reqBody)
-                    .asString();
-        }else {
-            return Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                    .header("Content-Type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .header("Method", "POST")
-                    .body(reqBody)
-                    .asString();
+            CredentialsProvider provider = new BasicCredentialsProvider();
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+            provider.setCredentials(AuthScope.ANY, credentials);
+            httpClient= HttpClientBuilder.create()
+                    .setDefaultCredentialsProvider(provider)
+                    .build();
+        }else{
+            httpClient=HttpClientBuilder.create()
+                    .build();
         }
+
+        try {
+            HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search");
+            request.addHeader("content-type", "application/json");
+            StringEntity params =new StringEntity(reqBody);
+            request.setEntity(params);
+            HttpResponse response = httpClient.execute(request);
+            int statusCode = response.getStatusLine().getStatusCode();
+            String responseString = new BasicResponseHandler().handleResponse(response);
+            if (statusCode != 200) {
+                System.err.println(responseString);
+            }
+            return responseString;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public ArrayList<HttpResponse<String>> pushAll(String FilePath) throws UnirestException, NullPointerException, IOException {
-        ArrayList<HttpResponse<String>> results = new ArrayList<HttpResponse<String>>();
+    public ArrayList<String> pushAll(String FilePath){
+        ArrayList<String> results = new ArrayList<String>();
         File file = new File(FilePath);
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String st;
-        while ((st = br.readLine()) != null){
-            try{
-                JSONObject curLine = new JSONObject(st);
-                Purchase curPurc = new Purchase(curLine.getString("userID"),curLine.getString("blueprintID"),(float)curLine.getDouble("score"),curLine.getJSONObject("requirements"));
-                results.add(push(curPurc));
-            }catch(Exception ex){
-                continue;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = br.readLine()) != null) {
+                try {
+                    JSONObject curLine = new JSONObject(st);
+                    Purchase curPurc = new Purchase(curLine.getString("userID"), curLine.getString("blueprintID"), (float) curLine.getDouble("score"), curLine.getJSONObject("requirements"));
+                    results.add(push(curPurc));
+                } catch (Exception ex) {
+                    continue;
+                }
             }
+        }catch(Exception ex){
+            System.err.println(ex.getLocalizedMessage());
         }
         return results;
     }
 
-    public ArrayList<HttpResponse<String>> pushRandom(int num) throws UnirestException, NullPointerException, IOException {
-        ArrayList<HttpResponse<String>> results = new ArrayList<HttpResponse<String>>();
+    public ArrayList<String> pushRandom(int num) {
+        ArrayList<String> results = new ArrayList<String>();
         String[] blueprintIDs={"5be598ca16af09d17d6085ef","5be598b916af09d17d6085e6","5be598df16af09d17d6085f8","5be5989016af09d17d6085d4","5be5993b16af09d17d608608","5be598a416af09d17d6085dd"};
         String[] userIDs={"5be598ca17af09d17d6085ef","5be598b917af09d17d6085e6","5be598df17af09d17d6085f8","5be5989017af09d17d6085d4","5be5993b17af09d17d608608","5be598a417af09d17d6085dd"};
         Random rand = new Random(4);
@@ -178,7 +204,7 @@ public class PurchaseHandlerService {
         return results;
     }
 
-    public String clearPurchases() throws UnirestException {
+    public String clearPurchases() {
         String res = "";
 
         JSONArray hits = getAllRecords();
@@ -186,69 +212,87 @@ public class PurchaseHandlerService {
         for (int i = 0; i < hits.length(); i++) {
             reqBody+="{ \"delete\" : { \"_index\" : \"ditas\", \"_type\" : \"purchaseinfo\", \"_id\" : \""+hits.getJSONObject(i).getString("_id")+"\" } }\n";
         }
-        HttpResponse<String> data;
+
+        HttpClient httpClient;
         if(EsAuth.equals("basic")) {
-            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                    .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                    .header("Content-Type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .header("Method", "POST")
-                    .body(reqBody)
-                    .asString();
+            CredentialsProvider provider = new BasicCredentialsProvider();
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+            provider.setCredentials(AuthScope.ANY, credentials);
+            httpClient= HttpClientBuilder.create()
+                    .setDefaultCredentialsProvider(provider)
+                    .build();
         }else{
-            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                    .header("Content-Type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .header("Method", "POST")
-                    .body(reqBody)
-                    .asString();
+            httpClient=HttpClientBuilder.create()
+                    .build();
         }
-        res = data.getCode() + ":" + data.getBody();
-        return res;
+        int statusCode = -1;
+        String responseString = "";
+        try {
+            HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search");
+            request.addHeader("content-type", "application/json");
+            StringEntity params =new StringEntity(reqBody);
+            request.setEntity(params);
+            HttpResponse response = httpClient.execute(request);
+            statusCode = response.getStatusLine().getStatusCode();
+            responseString = new BasicResponseHandler().handleResponse(response);
+            if (statusCode != 200) {
+                System.err.println(responseString);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return statusCode+':'+responseString;
     }
 
-    public JSONArray getAllRecords() throws UnirestException {
-        HttpResponse<String> data;
+    public JSONArray getAllRecords(){
+        HttpClient httpClient;
         if(EsAuth.equals("basic")) {
-            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                    .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                    .header("Content-Type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .header("Method", "POST")
-                    .asString();
+            CredentialsProvider provider = new BasicCredentialsProvider();
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+            provider.setCredentials(AuthScope.ANY, credentials);
+            httpClient= HttpClientBuilder.create()
+                    .setDefaultCredentialsProvider(provider)
+                    .build();
         }else{
-            data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search")
-                    .header("Content-Type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .header("Method", "POST")
-                    .asString();
+            httpClient=HttpClientBuilder.create()
+                    .build();
         }
-        try{
-            JSONObject respJSON= new JSONObject(data.getBody());
-            JSONArray hits = respJSON.getJSONObject("hits").getJSONArray("hits");
-            int total = respJSON.getJSONObject("hits").getInt("total");
-            if(total>10){
-                if(EsAuth.equals("basic")) {
-                    data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2)
-                            .header("Authorization", "Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))))
-                            .header("Content-Type", "application/json")
-                            .header("cache-control", "no-cache")
-                            .header("Method", "POST")
-                            .asString();
-                }else{
-                    data = Unirest.post("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2)
-                            .header("Content-Type", "application/json")
-                            .header("cache-control", "no-cache")
-                            .header("Method", "POST")
-                            .asString();
+        int statusCode = -1;
+        String data = "";
+        try {
+            HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search");
+            request.addHeader("content-type", "application/json");
+            HttpResponse response = httpClient.execute(request);
+            statusCode = response.getStatusLine().getStatusCode();
+            data = new BasicResponseHandler().handleResponse(response);
+            if (statusCode != 200) {
+                System.err.println(data);
+            }else{
+                try{
+                    JSONObject respJSON= new JSONObject(data);
+                    JSONArray hits = respJSON.getJSONObject("hits").getJSONArray("hits");
+                    int total = respJSON.getJSONObject("hits").getInt("total");
+                    if(total>10){
+                        request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2);
+                        request.addHeader("content-type", "application/json");
+                        response = httpClient.execute(request);
+                        statusCode = response.getStatusLine().getStatusCode();
+                        data = new BasicResponseHandler().handleResponse(response);
+                        respJSON= new JSONObject(data);
+                        hits = respJSON.getJSONObject("hits").getJSONArray("hits");
+                    }
+                    return hits;
+                }catch (Exception ex){
+                    return null;
                 }
-                respJSON= new JSONObject(data.getBody());
-                hits = respJSON.getJSONObject("hits").getJSONArray("hits");
             }
-            return hits;
-        }catch (Exception ex){
-            return null;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        return null;
     }
 
     public PurchaseHandlerService(String UserID, String BlueprintID, float UserScore, JSONObject Requirements) {
