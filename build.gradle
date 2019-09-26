@@ -1,43 +1,23 @@
 buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-        maven { url "http://repo.spring.io/plugins-release" }
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    ext {
-        grpcVersion = '1.23.0'
-        protobufVersion = '3.9.1'
-        protobufGradlePluginVersion = '0.8.10'
-        springBootVersion = '2.1.8.RELEASE'
-    }
-    dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.24.2"
-// https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform
-compile group: 'net.java.dev.jna', name: 'jna-platform', version: '5.3.1'
-
-    compile group: 'org.json', name: 'json', version: '20190722'
-    compile('org.springframework.boot:spring-boot-starter-web')
-	// https://mvnrepository.com/artifact/org.elasticsearch.plugin/shield
-    // providedCompile group: 'org.elasticsearch.plugin', name: 'shield', version: '2.4.6'
-    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch
-    compile group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '3.1.10.RELEASE'
-    // https://mvnrepository.com/artifact/org.elasticsearch.plugin/shield
-    // providedCompile group: 'org.elasticsearch.plugin', name: 'shield', version: '2.4.3-atlassian-shaded-1'
-    // https://mvnrepository.com/artifact/com.dukescript.api/javafx.base
-    compile group: 'com.dukescript.api', name: 'javafx.base', version: '8.60.11'
-    // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.13'
-    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-    }
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'gradle.plugin.com.github.jk1:gradle-license-report:1.3'
+		
+	}
 }
 
-
+plugins {
+  id 'com.github.jk1.dependency-license-report' version '1.3'
+}
 
 apply plugin: 'com.github.jk1.dependency-license-report'
 apply plugin: 'java'
@@ -50,7 +30,26 @@ group = 'com.ditas.resolutionengine'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+repositories {
+	mavenCentral()
+	maven {
+    	url "https://artifacts.elastic.co/maven"
+  	}
+}
 
 configurations {
 	providedRuntime
+}
+
+dependencies {
+
+    compile group: 'net.java.dev.jna', name: 'platform', version: '3.5.0'
+    compile group: 'org.json', name: 'json', version: '20140107'
+    compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.data:spring-data-elasticsearch:2.1.9.RELEASE')   
+	compile "org.elasticsearch.plugin:shield:2.4.6"
+	compile group: 'com.dukescript.api', name: 'javafx.base', version: '8.60.11'
+	compile 'commons-codec:commons-codec:1.10'
+	compile 'org.apache.httpcomponents:httpclient:4.5.10'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
