@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.9.RELEASE'
+		springBootVersion = '2.1.8.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -43,13 +43,18 @@ configurations {
 
 dependencies {
 
-    compile group: 'net.java.dev.jna', name: 'platform', version: '3.5.0'
-    compile group: 'org.json', name: 'json', version: '20140107'
+    compile group: 'net.java.dev.jna', name: 'platform', version: '5.4.0'
+    compile group: 'org.json', name: 'json', version: '20190722'
     compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.data:spring-data-elasticsearch:2.1.9.RELEASE')   
-	compile "org.elasticsearch.plugin:shield:2.4.6"
-	compile group: 'com.dukescript.api', name: 'javafx.base', version: '8.60.11'
-	compile 'commons-codec:commons-codec:1.10'
-	compile 'org.apache.httpcomponents:httpclient:4.5.10'
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch
+    compile group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '3.1.10.RELEASE'
+    // https://mvnrepository.com/artifact/org.elasticsearch.plugin/shield
+    providedCompile group: 'org.elasticsearch.plugin', name: 'shield', version: '2.4.3-atlassian-shaded-1'
+    // https://mvnrepository.com/artifact/com.dukescript.api/javafx.base
+    compile group: 'com.dukescript.api', name: 'javafx.base', version: '8.60.11'
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.13'
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
