@@ -16,7 +16,9 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:3.24.2"
-	compile group: 'net.java.dev.jna', name: 'platform', version: '5.4.0'
+// https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform
+compile group: 'net.java.dev.jna', name: 'jna-platform', version: '5.3.1'
+
     compile group: 'org.json', name: 'json', version: '20190722'
     compile('org.springframework.boot:spring-boot-starter-web')
 	// https://mvnrepository.com/artifact/org.elasticsearch.plugin/shield
