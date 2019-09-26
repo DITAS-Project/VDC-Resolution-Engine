@@ -39,7 +39,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.support.QueryInnerHitBuilder;
+//import org.elasticsearch.index.query.support.QueryInnerHitBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
