@@ -10,13 +10,13 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath 'gradle.plugin.com.github.jk1:gradle-license-report:1.3'
+		classpath 'gradle.plugin.com.github.jk1:gradle-license-report:1.11'
 		
 	}
 }
 
 plugins {
-  id 'com.github.jk1.dependency-license-report' version '1.3'
+  id 'com.github.jk1.dependency-license-report' version '1.11'
 }
 
 apply plugin: 'com.github.jk1.dependency-license-report'
@@ -47,7 +47,7 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20190722'
     compile('org.springframework.boot:spring-boot-starter-web')
 	// https://mvnrepository.com/artifact/org.elasticsearch.plugin/shield
-    providedCompile group: 'org.elasticsearch.plugin', name: 'shield', version: '2.4.6'
+    // providedCompile group: 'org.elasticsearch.plugin', name: 'shield', version: '2.4.6'
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch
     compile group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '3.1.10.RELEASE'
     // https://mvnrepository.com/artifact/org.elasticsearch.plugin/shield
