@@ -41,7 +41,7 @@ p.good{
 p.bad{
     color:red;
 }
-}
+
 </style>
 
 </head>
@@ -78,22 +78,28 @@ p.bad{
 				ng-show="search">Results</h1>
 		</center>
 		<div class="row">
-			<ul style="list-style-type: none" ng-repeat="x in results">
+			<ul style="list-style-type: none" ng-repeat="blueprint in results">
 				<li><a target="_blank">
 					<!--  ng-href="http://31.171.247.162:50009/blueprints/"-->
 						<div class="col-md-10 col-md-offset-1"
 							style="border-style: solid; border-color: lightgrey; border-width: 1px; border-radius: 3px; color: black; margin-bottom: 3%">
 							<div style="margin-bottom: 3%; margin-top: 3%">
 
-								<h3>{{x.description}}</h3>
+								<h3>{{blueprint.description}}</h3>
 								<p>
-									<strong>Blueprint name: </strong>{{x.name}}
+									<strong>Blueprint name: </strong>{{blueprint.name}}
 								</p>
 								<p>
-									<strong>Related methods: </strong>{{x.methods}}
+									<strong>Related methods: </strong>{{blueprint.methods}}
 								</p>
 								<p>
-									<strong style="color:red">Score: </strong>{{x.score}}
+									<strong style="color:red">Method Relevance Score : </strong>{{blueprint.score}}
+								</p>
+								<p>
+									<strong style="color:blue">Blueprint Relevance Score: </strong>{{blueprint.score}}
+								</p>
+								<p >
+									<button type="button" class="btn btn-success pull-right">Deploy Blueprint</button>
 								</p>
 							</div>
 						</div>
