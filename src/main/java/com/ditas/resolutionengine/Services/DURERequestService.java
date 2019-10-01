@@ -62,7 +62,7 @@ public class DURERequestService {
 		
 		
 		//Parse the number of returned blueprints from Elastic Search response
-		int num_of_hits = Integer.parseInt(elastic_response_json.getJSONObject("hits").getJSONObject("total").get("value").toString());
+		int num_of_hits = elastic_response_json.getJSONObject("hits").getJSONArray("hits").length();
 		
 		//Here will be stored all the ids of the returned blueprints in order to retrieve them from the Blueprint Repository
 		ArrayList<String> idsList = new ArrayList<String>();
