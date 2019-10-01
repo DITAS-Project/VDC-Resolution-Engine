@@ -169,6 +169,7 @@ public class EsSearchService {
 					"  }\n" +
 					"}\n" +
 					"}";
+			System.out.println(query);
 			HttpClient httpClient;
 			if(EsAuth.equals("basic")) {
 				CredentialsProvider provider = new BasicCredentialsProvider();

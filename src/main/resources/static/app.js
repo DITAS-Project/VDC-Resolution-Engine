@@ -38,8 +38,8 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 		}, function errorCallback(response) {
 			console.log(response)
 		});
-	}
-	$scope.deployBlueprint =function (blueprint) {
+	};
+	$scope.deployBlueprint = function (blueprint) {
 		//method to deploy blueprint
         /*$http({
             method: 'POST',
@@ -54,6 +54,6 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
             });*/
 		console.log("deployed!!!!!!");
 		console.log(blueprint);
-    }
+    };
 
 });
