@@ -138,7 +138,7 @@ public class EsSearchService {
 	public String blueprintSearchByReq(Requirements requirements) {
 		System.out.println("Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))));
 		try {
-			String query = "{\"query\":\n" +
+			String query2 = "{\"query\":\n" +
 					"{\n" +
 					"  \"bool\" : {\n" +
 					"    \"should\" : [ {\n" +
@@ -169,7 +169,72 @@ public class EsSearchService {
 					"  }\n" +
 					"}\n" +
 					"}";
-			System.out.println(query);
+			System.out.println(query2);
+			String query="{\n" +
+					"  \"query\":{\n" +
+					"     \"bool\":{\n" +
+					"        \"should\":[\n" +
+					"           {\n" +
+					"              \"function_score\":{\n" +
+					"                 \"query\":{\n" +
+					"                    \"bool\":{\n" +
+					"                       \"must\":{\n" +
+					"                          \"match_all\":{\n" +
+					"                          }\n" +
+					"                       },\n" +
+					"                       \"filter\":[\n" +
+					"                          {\n" +
+					"                             \"match\":{\n" +
+					"                                \"description\":{\n" +
+					"                                   \"query\" : \""+ requirements.getVdcTags()+" \"\n" +
+					"                                }\n" +
+					"                             }\n" +
+					"                          }\n" +
+					"                       ]\n" +
+					"                    }\n" +
+					"                 },\n" +
+					"                 \"field_value_factor\":{\n" +
+					"                    \"field\":\"factor\"\n" +
+					"                 },\n" +
+					"                 \"boost\":4\n" +
+					"              }\n" +
+					"           },\n" +
+					"           {\n" +
+					"              \"function_score\":{\n" +
+					"                 \"query\":{\n" +
+					"                    \"bool\":{\n" +
+					"                       \"must\":{\n" +
+					"                          \"match_all\":{\n" +
+					"                          }\n" +
+					"                       },\n" +
+					"                       \"filter\":[\n" +
+					"                          {\n" +
+					"                             \"nested\":{\n" +
+					"                                \"query\":{\n" +
+					"                                   \"match\":{\n" +
+					"                                      \"tags.tags\":{\n" +
+					"                                         \"query\" : \""+requirements.getMethodTags()+" \",\n" +
+					"                                      }\n" +
+					"                                   }\n" +
+					"                                },\n" +
+					"                                \"path\":\"tags\",\n" +
+					"                                \"inner_hits\":{\n" +
+					"                                }\n" +
+					"                             }\n" +
+					"                          }\n" +
+					"                       ]\n" +
+					"                    }\n" +
+					"                 },\n" +
+					"                 \"field_value_factor\":{\n" +
+					"                    \"field\":\"factor\"\n" +
+					"                 },\n" +
+					"                 \"boost\":8\n" +
+					"              }\n" +
+					"           }\n" +
+					"        ]\n" +
+					"     }\n" +
+					"  }\n" +
+					"}";
 			HttpClient httpClient;
 			if(EsAuth.equals("basic")) {
 				CredentialsProvider provider = new BasicCredentialsProvider();
