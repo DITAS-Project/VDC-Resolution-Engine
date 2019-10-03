@@ -27,7 +27,7 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 		//method to get blueprints
 		$http({
 			method: 'POST',
-			url: "/searchBlueprintByReq",     
+			url: "/searchBlueprintByReq",
 			data: $scope.searchText,
 			headers: {'Content-Type': 'application/json'}
 		})
