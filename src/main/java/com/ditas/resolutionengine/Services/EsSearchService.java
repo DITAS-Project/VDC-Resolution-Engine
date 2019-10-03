@@ -169,7 +169,7 @@ public class EsSearchService {
 					"  }\n" +
 					"}\n" +
 					"}";
-			System.out.println(query2);
+
 			String query="{\n" +
 					"  \"query\":{\n" +
 					"     \"bool\":{\n" +
@@ -213,7 +213,7 @@ public class EsSearchService {
 					"                                \"query\":{\n" +
 					"                                   \"match\":{\n" +
 					"                                      \"tags.tags\":{\n" +
-					"                                         \"query\" : \""+requirements.getMethodTags()+" \",\n" +
+					"                                         \"query\" : \""+requirements.getMethodTags()+" \"\n" +
 					"                                      }\n" +
 					"                                   }\n" +
 					"                                },\n" +
@@ -235,6 +235,7 @@ public class EsSearchService {
 					"     }\n" +
 					"  }\n" +
 					"}";
+			System.out.println(query);
 			HttpClient httpClient;
 			if(EsAuth.equals("basic")) {
 				CredentialsProvider provider = new BasicCredentialsProvider();
