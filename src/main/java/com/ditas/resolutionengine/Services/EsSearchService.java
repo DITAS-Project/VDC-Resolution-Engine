@@ -171,67 +171,67 @@ public class EsSearchService {
 					"}";
 
 			String query = "{\n" +
-				"    \"query\": {\n" +
-				"        \"bool\": {\n" +
-				"            \"must\": {\n" +
-				"                \"function_score\": {\n" +
-				"                    \"query\": {\n" +
-				"                        \"bool\": {\n" +
-				"                            \"must\": {\n" +
-				"                                \"match_all\": {}\n" +
-				"                            },\n" +
-				"                            \"filter\": [\n" +
-				"                                {\n" +
-				"                                    \"nested\": {\n" +
-				"                                        \"query\": {\n" +
-				"                                            \"match\": {\n" +
-				"                                                \"tags.tags\": {\n" +
-				"                                                    \"query\" : \""+requirements.getMethodTags()+" \"\n" +
-				"                                                }\n" +
-				"                                            }\n" +
-				"                                        },\n" +
-				"                                        \"path\": \"tags\",\n" +
-				"                                        \"inner_hits\": {}\n" +
-				"											 \"size\": 10\n" +
-				"										 }\n" +
-				"                                    }\n" +
-				"                                }\n" +
-				"                            ]\n" +
-				"                        }\n" +
-				"                    },\n" +
-				"                    \"field_value_factor\": {\n" +
-				"                        \"field\": \"tagsFactor\"\n" +
-				"                    },\n" +
-				"                    \"boost\": 8\n" +
-				"                }\n" +
-				"            },\n" +
-				"            \"should\": {\n" +
-				"                \"function_score\": {\n" +
-				"                    \"query\": {\n" +
-				"                        \"bool\": {\n" +
-				"                            \"must\": {\n" +
-				"                                \"match_all\": {}\n" +
-				"                            },\n" +
-				"                            \"filter\": [\n" +
-				"                                {\n" +
-				"                                    \"match\": {\n" +
-				"                                        \"description\": {\n" +
-				"                                            \"query\" : \""+ requirements.getVdcTags()+" \"\n" +
-				"                                        }\n" +
-				"                                    }\n" +
-				"                                }\n" +
-				"                            ]\n" +
-				"                        }\n" +
-				"                    },\n" +
-				"                    \"field_value_factor\": {\n" +
-				"                        \"field\": \"descriptionFactor\"\n" +
-				"                    },\n" +
-				"                    \"boost\": 4\n" +
-				"                }\n" +
-				"            }\n" +
-				"        }\n" +
-				"    }\n" +
-				"}";
+					"    \"query\": {\n" +
+					"        \"bool\": {\n" +
+					"            \"must\": {\n" +
+					"                \"function_score\": {\n" +
+					"                    \"query\": {\n" +
+					"                        \"bool\": {\n" +
+					"                            \"must\": {\n" +
+					"                                \"match_all\": {}\n" +
+					"                            },\n" +
+					"                            \"filter\": [\n" +
+					"                                {\n" +
+					"                                    \"nested\": {\n" +
+					"                                        \"query\": {\n" +
+					"                                            \"match\": {\n" +
+					"                                                \"tags.tags\": {\n" +
+					"                                                    \"query\" : \""+requirements.getMethodTags()+" \",\n" +
+					"                                                }\n" +
+					"                                            }\n" +
+					"                                        },\n" +
+					"                                        \"path\": \"tags\",\n" +
+					"                                        \"inner_hits\": {\n" +
+					"                                            \"size\": 10\n" +
+					"                                        }\n" +
+					"                                    }\n" +
+					"                                }\n" +
+					"                            ]\n" +
+					"                        }\n" +
+					"                    },\n" +
+					"                    \"field_value_factor\": {\n" +
+					"                        \"field\": \"tagsFactor\"\n" +
+					"                    },\n" +
+					"                    \"boost\": 8\n" +
+					"                }\n" +
+					"            },\n" +
+					"            \"should\": {\n" +
+					"                \"function_score\": {\n" +
+					"                    \"query\": {\n" +
+					"                        \"bool\": {\n" +
+					"                            \"must\": {\n" +
+					"                                \"match_all\": {}\n" +
+					"                            },\n" +
+					"                            \"filter\": [\n" +
+					"                                {\n" +
+					"                                    \"match\": {\n" +
+					"                                        \"description\": {\n" +
+					"                                            \"query\" : \""+ requirements.getVdcTags()+" \"\n" +
+					"                                        }\n" +
+					"                                    }\n" +
+					"                                }\n" +
+					"                            ]\n" +
+					"                        }\n" +
+					"                    },\n" +
+					"                    \"field_value_factor\": {\n" +
+					"                        \"field\": \"descriptionFactor\"\n" +
+					"                    },\n" +
+					"                    \"boost\": 4\n" +
+					"                }\n" +
+					"            }\n" +
+					"        }\n" +
+					"    }\n" +
+					"}";
 			System.out.println(query);
 			HttpClient httpClient;
 			if(EsAuth.equals("basic")) {
