@@ -192,6 +192,8 @@ public class EsSearchService {
 				"                                        },\n" +
 				"                                        \"path\": \"tags\",\n" +
 				"                                        \"inner_hits\": {}\n" +
+				"											 \"size\": 10\n" +
+				"										 }\n" +
 				"                                    }\n" +
 				"                                }\n" +
 				"                            ]\n" +
