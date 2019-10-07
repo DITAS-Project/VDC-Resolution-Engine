@@ -186,7 +186,7 @@ public class EsSearchService {
 					"                                        \"query\": {\n" +
 					"                                            \"match\": {\n" +
 					"                                                \"tags.tags\": {\n" +
-					"                                                    \"query\" : \""+requirements.getMethodTags()+" \",\n" +
+					"                                                    \"query\" : \""+requirements.getMethodTags()+" \"\n" +
 					"                                                }\n" +
 					"                                            }\n" +
 					"                                        },\n" +
