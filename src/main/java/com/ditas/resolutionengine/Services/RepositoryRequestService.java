@@ -18,7 +18,7 @@
  * VDC-Resolution-Engine is being developed for the
  * DITAS Project: https://www.ditas-project.eu/
  */
- package com.ditas.resolutionengine.Services;
+package com.ditas.resolutionengine.Services;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,10 +59,8 @@ public class RepositoryRequestService {
 					JSONObject blueprint = blueprints_array.getJSONObject(i);
 					blueprints.add(blueprint);
 				}
-				
-				
+					
 				return blueprints;
-
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

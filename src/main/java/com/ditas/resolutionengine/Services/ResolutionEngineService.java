@@ -18,12 +18,11 @@
  * VDC-Resolution-Engine is being developed for the
  * DITAS Project: https://www.ditas-project.eu/
  */
- package com.ditas.resolutionengine.Services;
+package com.ditas.resolutionengine.Services;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.ditas.resolutionengine.Entities.Requirements;
 
 @Service
@@ -48,5 +47,4 @@ public class ResolutionEngineService {
 		return userRatingResponse;
 
 	}
-
 }

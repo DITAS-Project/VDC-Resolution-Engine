@@ -18,17 +18,10 @@
  * VDC-Resolution-Engine is being developed for the
  * DITAS Project: https://www.ditas-project.eu/
  */
- package com.ditas.resolutionengine.Services;
+package com.ditas.resolutionengine.Services;
 
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -99,6 +92,7 @@ public class DURERequestService {
 		
 	}
 	
+	
 	public String buildDURERequest(ArrayList<JSONObject> blueprints, HashMap<String, ArrayList<String>> methodsList, JSONObject app_requirements) {
 		JSONObject dure_request_json = new JSONObject();
 		
@@ -117,14 +111,11 @@ public class DURERequestService {
 		}
 		dure_request_json.put("applicationRequirements", app_requirements);
 		dure_request_json.put("candidates", list);
-		
-		
+				
 		return dure_request_json.toString();
 	}
 	
-	
-	
-
+		
 	public String sendRequest(String dureRequest) {
 		// TODO Auto-generated method stub
 
@@ -146,7 +137,6 @@ public class DURERequestService {
 			e.printStackTrace();
 		}
 		
-
 		return null;
 	}
 }
