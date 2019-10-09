@@ -18,12 +18,10 @@
  * VDC-Resolution-Engine is being developed for the
  * DITAS Project: https://www.ditas-project.eu/
  */
- package com.ditas.resolutionengine.Controllers;
-
+package com.ditas.resolutionengine.Controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +37,6 @@ import com.ditas.resolutionengine.Services.EsSearchService;
 import com.ditas.resolutionengine.Services.ResolutionEngineService;
 
 
-
 @RestController
 public class BlueprintController {
 	
@@ -51,16 +48,6 @@ public class BlueprintController {
 	
 	@Autowired
 	DURERequestService dureService;
-	
-	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprint")
-	public String searchBP(@RequestBody String searchText){
-		
-	
-		System.out.println("Search text: "+searchText);
-		String response = searchService.blueprintSearch(searchText);
-		
-		return response;
-	}
 	
 
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
