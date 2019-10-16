@@ -24,10 +24,10 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 	
 	$rootScope.search = false;
 	$scope.search = function(){
-		
+		//method to get blueprints
 		$http({
 			method: 'POST',
-			url: "/searchBlueprintByReq",     
+			url: "/searchBlueprintByReq",
 			data: $scope.searchText,
 			headers: {'Content-Type': 'application/json'}
 		})
@@ -38,6 +38,22 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 		}, function errorCallback(response) {
 			console.log(response)
 		});
-	}
+	};
+	$scope.deployBlueprint = function (blueprint) {
+		//method to deploy blueprint
+        /*$http({
+            method: 'POST',
+            url: "...",
+            data: ...,
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(function successCallback(response) {
+
+            }, function errorCallback(response) {
+                console.log(response)
+            });*/
+		console.log("deployed!!!!!!");
+		console.log(blueprint);
+    };
 
 });
