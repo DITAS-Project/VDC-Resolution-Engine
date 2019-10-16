@@ -18,56 +18,47 @@ paths:
           schema:
             type: object
             example:
+              applicationType: batch
               functionalRequirements:
                 methodTags:
-                  - cholesterol
+                  - anomaly detection
                 vdcTags:
-                  - patients
+                  - machines
+                schema:
+                  attributes:
+                    - ask_iccs
               attributes:
                 dataUtility:
-                  - id: volume_8000
-                    description: volume 8000
+                  - id: availability_90
+                    description: Availability 90
+                    type: Availability
+                    properties:
+                      availability:
+                        unit: percentage
+                        minimum: 90
+                  - id: responseTime_2
+                    description: ResponseTime 2
+                    type: ResponseTime
+                    properties:
+                      responseTime:
+                        maximum: 4
+                        unit: second
+                  - id: timeliness
+                    description: Timeliness
+                    type: Timeliness
+                    properties:
+                      timeliness:
+                        minimum: 90
+                        unit: percentage
+                  - id: volume_1200
+                    description: volume 1200
                     type: Volume
                     properties:
                       volume:
-                        minimum: 8000
+                        minimum: 1200
                         unit: tuple
-                  - id: accuracy_08
-                    description: Accuracy
-                    type: Accuracy
-                    properties:
-                      accuracy:
-                        minimum: 0.8
-                        unit: none
-                  - id: processCompleteness_8
-                    description: Process completeness 8
-                    type: Process completeness
-                    properties:
-                      completeness:
-                        minimum: 8
-                        unit: percentage
-                  - id: scaleUpMemory
-                    description: scale-up memory
-                    type: Scale-up
-                    properties:
-                      ramGain:
-                        unit: percentage
-                        value: 150
-                      ramLimit:
-                        unit: percentage
-                        value: 99
-                  - id: scaleUpSpace
-                    description: scale-up space
-                    type: Scale-up
-                    properties:
-                      spaceGain:
-                        unit: percentage
-                        value: 150
-                      spaceLimit:
-                        unit: percentage
-                        value: 99
                 security:
-                  - id: encryptionAES_128
+                  - id: encryption_AES128
                     description: Encryption AES 128
                     type: TransportEncryption
                     properties:
@@ -75,110 +66,152 @@ paths:
                         unit: enum
                         value: TLS
                       algorithm:
-                        unit: enum
-                        value: AES
+                        unit: list
+                        value:
+                          - TLS_AES_256_GCM_SHA384
+                          - TLS_AES_128_GCM_SHA256
+                          - TLS_AES_128_CCM_8_SHA256
+                          - TLS_AES_128_CCM_SHA256
                       keyLength:
                         unit: number
-                        minimum: 128
-                  - id: tracing_1
-                    description: Tracing
-                    type: Tracing
+                        value: 128
+                  - id: accessControl_direct
+                    description: Access control Direct
+                    type: AccessControl
                     properties:
-                      level:
-                        unit: enum
-                        value: datasource
-                      sampleRate:
-                        unit: percentage
-                        minimum: 1
-                      instrumentation:
-                        unit: enum
-                        value: VDC
-                  - id: aclUserPWResearcher
-                    description: ACL rolebased readOnly
-                    type: ACL
-                    properties:
-                      protocol:
-                        unit: enum
-                        value: username/password
-                      credentials:
-                        unit: list
-                        value:
-                          - researcher_id
-                privacy:
-                  - id: purposeControlResearch
-                    description: PurposeControl Research
-                    type: PurposeControl
-                    properties:
-                      availablePurpose:
-                        unit: list
-                        value:
-                          - research
-                          - medical research
-                          - nutritional research
-                      allowedGuarantor:
-                        unit: list
-                        value:
-                          - d63d0e21fdc05f618d55ef306c54af82
+                      Protocol:
+                        value: 'Direct, OAuth'
+                privacy: []
               goalTrees:
                 dataUtility:
+                  description: Requirements achieved
                   type: AND
                   children:
-                    - type: AND
-                      children:
-                        - type: OR
-                          leaves:
-                            - id: serviceScalable
-                              description: Service Scalable
-                              weight: 1
-                              attributes:
-                                - scaleUpMemory
-                                - scaleUpSpace
-                    - type: AND
+                    - description: High QoS
+                      type: AND
                       leaves:
-                        - id: dataVolume
-                          description: Data volume
+                        - id: serviceAvailable
+                          description: Service available
                           weight: 1
                           attributes:
-                            - volume_8000
-                        - id: accuracy
-                          description: Accuracy
+                            - availability_90
+                        - id: fastProcess
+                          description: Fast process
                           weight: 1
                           attributes:
-                            - accuracy_08
-                        - id: completeness
-                          description: Completeness
+                            - responseTime_2
+                    - description: High Data Quality
+                      type: AND
+                      leaves:
+                        - id: freshData
+                          description: Fresh data
                           weight: 1
                           attributes:
-                            - processCompleteness_8
+                            - timeliness
+                        - id: EnoughData
+                          description: Enough amount of Data
+                          weight: 1
+                          attributes:
+                            - volume_1200
                 security:
                   type: AND
-                  children:
-                    - type: AND
-                      leaves:
-                        - id: storageEncryption
-                          description: Storage encryption
-                          weight: 1
-                          attributes:
-                            - encryptionAES_128
+                  description: High security
                   leaves:
-                    - id: accessControl
-                      description: Access control
+                    - id: TrasportEncryption
+                      description: Secure data trasport
                       weight: 1
                       attributes:
-                        - aclUserPWResearcher
-                    - id: tracing
-                      description: Tracing and monitoring
+                        - encryption_AES128
+                    - id: AccessControl
+                      description: Secure access
                       weight: 1
                       attributes:
-                        - tracing_1
-                privacy:
-                  type: AND
-                  leaves:
-                    - id: purposeControl
-                      description: Purpose control
-                      weight: 1
-                      attributes:
-                        - purposeControlResearch
+                        - accessControl_direct
+              methodsOutput:
+                methods:
+                  - method_id: GetSimplifiedDiagnostic
+                    attributes:
+                      - status
+                      - timestamp
+                      - cause
+                  - method_id: GetFullDiagnostic
+                    attributes:
+                      - status
+                      - timestamp
+                      - cause
+              providedResources:
+                infrastructures:
+                  - name: spart-fog-infrastructure
+                    type: fog
+                    provider:
+                      api_endpoint: ip_removed
+                      apy_tpye: kubernetes
+                      credentials:
+                        config:
+                          apiVersion: v1
+                          clusters:
+                            - cluster:
+                                certificate-authority-data: removed
+                                server: 'https://ip_removed:36443'
+                              name: kubernetes
+                          contexts:
+                            - context:
+                                cluster: kubernetes
+                                user: kubernetes-admin
+                              name: kubernetes-admin@kubernetes
+                          current-context: kubernetes-admin@kubernetes
+                          kind: Config
+                          preferences: {}
+                          users:
+                            - name: kubernetes-admin
+                              user:
+                                client-certificate-data: removed
+                                client-key-data: removed
+                    extra_properties:
+                      owner: ApplicationDeveloper
+                      ditas_default: true
+                    resources:
+                      - name: spart-fog-server-1
+                        cpu: 1830
+                        ram: 8000
+                        disk: 480000
+                        drives: []
+                        role: master
+                  - name: spart-edge-infrastructure
+                    type: edge
+                    provider:
+                      api_endpoint: ip_removed
+                      apy_tpye: kubernetes
+                      credentials:
+                        config:
+                          apiVersion: v1
+                          clusters:
+                            - cluster:
+                                certificate-authority-data: removed
+                                server: 'https://ip_removed:36444'
+                              name: kubernetes
+                          contexts:
+                            - context:
+                                cluster: kubernetes
+                                user: kubernetes-admin
+                              name: kubernetes-admin@kubernetes
+                          current-context: kubernetes-admin@kubernetes
+                          kind: Config
+                          preferences: {}
+                          users:
+                            - name: kubernetes-admin
+                              user:
+                                client-certificate-data: removed
+                                client-key-data: removed
+                    extra_properties:
+                      owner: ApplicationDeveloper
+                    resources:
+                      - name: spart-edge-server-1
+                        cpu: 1830
+                        ram: 4000
+                        disk: 120000
+                        drives: []
+                        role: master
       responses:
         '200':
           description: successful operation
