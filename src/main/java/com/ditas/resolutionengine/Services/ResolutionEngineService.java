@@ -42,9 +42,10 @@ public class ResolutionEngineService {
 		String esResponse = esService.blueprintSearchByReq(requirements);
 		String dureRequest = dureService.createRequest(esResponse, app_requirements);
 		String dureResponse = dureService.sendRequest(dureRequest);
-		String userRatingResponse = simService.addRanking(app_requirements,dureResponse);
-		System.out.println("userRatingResponse: "+userRatingResponse);
-		return userRatingResponse;
+		//String userRatingResponse = simService.addRanking(app_requirements,dureResponse);
+		//System.out.println("userRatingResponse: "+userRatingResponse);
+		//return userRatingResponse;
+		return dureResponse;
 
 	}
 }
