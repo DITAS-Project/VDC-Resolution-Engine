@@ -27,7 +27,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import com.ditas.resolutionengine.Entities.Requirements;
 import com.ditas.resolutionengine.Services.DURERequestService;
 import com.ditas.resolutionengine.Services.EsSearchService;
@@ -46,7 +49,7 @@ public class BlueprintController {
 	@Autowired
 	DURERequestService dureService;
 	
-	@CrossOrigin(origins="http://localhost:8080")
+
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
@@ -61,7 +64,7 @@ public class BlueprintController {
 		requirements.setVdcTags(vdc_tags);
 	
 		String response = resolutionService.ResolutionEngineRequest(requirements, applicationRequirements_json);
-
+		
 		return response;
 	
 	
