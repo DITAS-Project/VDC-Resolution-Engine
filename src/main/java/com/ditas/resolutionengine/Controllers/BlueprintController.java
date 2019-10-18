@@ -35,6 +35,7 @@ import com.ditas.resolutionengine.Entities.Requirements;
 import com.ditas.resolutionengine.Services.DURERequestService;
 import com.ditas.resolutionengine.Services.EsSearchService;
 import com.ditas.resolutionengine.Services.ResolutionEngineService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
@@ -51,6 +52,7 @@ public class BlueprintController {
 	
 
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
+	@CrossOrigin(origins = "http://localhost:8080")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
 		Requirements requirements = new Requirements();
