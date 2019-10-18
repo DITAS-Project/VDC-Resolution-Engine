@@ -45,8 +45,8 @@ public class BlueprintController {
 	
 	@Autowired
 	DURERequestService dureService;
-	
-	@CrossOrigin(origins="http://localhost:8080")
+	//cors test
+	@CrossOrigin(origins="*")
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
