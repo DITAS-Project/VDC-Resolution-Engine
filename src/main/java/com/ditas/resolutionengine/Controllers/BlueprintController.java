@@ -48,7 +48,6 @@ public class BlueprintController {
 
 
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
-    @CrossOrigin(origins = "http://localhost:8080")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
 		Requirements requirements = new Requirements();
