@@ -27,10 +27,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ditas.resolutionengine.Entities.Requirements;
 import com.ditas.resolutionengine.Services.DURERequestService;
 import com.ditas.resolutionengine.Services.EsSearchService;
@@ -51,6 +48,7 @@ public class BlueprintController {
 
 
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
+    @CrossOrigin(origins = "http://localhost:8080")
 	public String searchBPByRequirements(@RequestBody String  applicationRequirements){
 		
 		Requirements requirements = new Requirements();
