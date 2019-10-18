@@ -20,8 +20,8 @@
  */
 var app = angular.module('app', []);
 
-app.controller("searchController", function($scope, $http, $rootScope, parseService){
-	
+app.controller("searchController", function($scope, $http, $rootScope, $location , parseService){
+	$scope.searchText= $location.absUrl();
 	$rootScope.search = false;
 	$scope.search = function(){
 		//method to get blueprints
