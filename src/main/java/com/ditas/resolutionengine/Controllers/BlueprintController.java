@@ -22,6 +22,8 @@ package com.ditas.resolutionengine.Controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.ditas.resolutionengine.Services.PurchaseHandlerService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,9 @@ public class BlueprintController {
 	
 	@Autowired
 	DURERequestService dureService;
-	
+
+	@Autowired
+	PurchaseHandlerService phService;
 
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq")
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -70,6 +74,21 @@ public class BlueprintController {
 		return response;
 	
 	
+	}
+
+	@RequestMapping(method=RequestMethod.POST , value="/makePurchaces")
+	public String makePurchases(@RequestBody String  numberOfPurchases){
+		try {
+			JSONObject purchNum = new JSONObject(numberOfPurchases);
+			int num = purchNum.getInt("num");
+			String response = "";
+			for(int i =0 ;i<num;i++){
+				response+=phService.makePurchase()+"\n";
+			}
+			response += "\ndone";
+
+			return response;
+		}catch(Exception ex){return ex.getStackTrace().toString();}
 	}
 	
 	@RequestMapping(method=RequestMethod.POST , value="/searchBlueprintByReq_ESresponse")

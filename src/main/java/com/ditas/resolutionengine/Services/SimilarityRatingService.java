@@ -113,8 +113,77 @@ public class SimilarityRatingService {
                         "\"params\":{" +
                         "\"vector\": " + vector.getValue() + "," +
                         "\"field_labels\":" + vector.getKey() + "}," +
-                        "\"source\":\"double distance(String s1, String s2) { if (s1.equals(s2)) { return 0; } if (s1.length() == 0) { return s2.length(); } if (s2.length() == 0) { return s1.length(); } double[] v0 = new double[s2.length() + 1]; double[] v1 = new double[s2.length() + 1]; double[] vtemp; for (int i = 0; i < v0.length; i++) { v0[i] = i; } for (int i = 0; i < s1.length(); i++) { v1[0] = i + 1; double minv1 = v1[0]; for (int j = 0; j < s2.length(); j++) { double cost = 1; if (s1.charAt(i) == s2.charAt(j)) { cost = 0; } v1[j + 1] = Math.min(v1[j] + 1,Math.min(v0[j + 1] + 1, v0[j] + cost)); minv1 = Math.min(minv1, v1[j + 1]); } vtemp = v0; v0 = v1; v1 = vtemp; } return v0[s2.length()]; } def drop(def obj,def index){ def new_obj=[]; for(int dr=0;dr<obj.length;dr++){ if(dr!=index){ new_obj.add(obj[dr]); } } return new_obj; } def getProperty(def obj,def prop){ def new_obj = obj; if((obj != null) && (prop.length > 0)){ if(prop[0] instanceof Integer){ for(int elems=0;elems<obj.length;elems++){ new_obj = getProperty(obj[elems],drop(prop,0)); if(new_obj!=null){ break; } } } else{ new_obj = getProperty(obj[prop[0]],drop(prop,0)); } } return new_obj; } def vector_B=[]; for(int i=0;i<params.field_labels.length;i++){ def path = []; String[] splits = /\\\\./.split('requirements.'+params.field_labels[i]); for(int j=0;j<splits.length;j++){ def cur = splits[j]; try{ cur = Integer.parseInt(splits[j]); }catch(Exception ex){} path.add(cur); } def cur2=getProperty(params._source,path); if(cur2 instanceof String){ cur2=distance(params.vector[i],cur2); } vector_B.add(cur2); } double dotProduct=0.0; double normA=0.0; double normB=0.0; for(int i=0;i<params.vector.length-1;i++){ def cur=params.vector[i]; if(cur instanceof String){ cur=distance(params.vector[i],params.vector[i]); } if(vector_B[i] != null){ dotProduct+=cur*vector_B[i]; normA+=cur*cur; normB+=vector_B[i]*vector_B[i]; } } if((Math.sqrt(normA)*Math.sqrt(normB)) > 0){ return (dotProduct/(Math.sqrt(normA)*Math.sqrt(normB)))*params._source['score']; } else{ return 0.0; }\"}" +
-                        "}}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
+                        "\"source\":\""+
+                        "double distance(String s1, String s2) { " +
+                            "if (s1.equals(s2)) { return 0; } " +
+                            "if (s1.length() == 0) { return s2.length(); } " +
+                            "if (s2.length() == 0) { return s1.length(); } " +
+                            "double[] v0 = new double[s2.length() + 1]; " +
+                            "double[] v1 = new double[s2.length() + 1]; " +
+                            "double[] vtemp; " +
+                            "for (int i = 0; i < v0.length; i++) { v0[i] = i; } " +
+                            "for (int i = 0; i < s1.length(); i++) { " +
+                                "v1[0] = i + 1; " +
+                                "double minv1 = v1[0]; " +
+                                "for (int j = 0; j < s2.length(); j++) { " +
+                                    "double cost = 1; " +
+                                    "if (s1.charAt(i) == s2.charAt(j)) { cost = 0; } " +
+                                    "v1[j + 1] = Math.min(v1[j] + 1,Math.min(v0[j + 1] + 1, v0[j] + cost)); " +
+                                    "minv1 = Math.min(minv1, v1[j + 1]); " +
+                                "} " +
+                                "vtemp = v0; v0 = v1; v1 = vtemp; " +
+                            "} " +
+                            "return v0[s2.length()]; " +
+                        "} " +
+                        "def drop(def obj,def index){ " +
+                            "def new_obj=[]; " +
+                            "for(int dr=0;dr<obj.length;dr++){ " +
+                                "if(dr!=index){ new_obj.add(obj[dr]);} " +
+                            "} " +
+                            "return new_obj; } " +
+                        "def getProperty(def obj,def prop){ " +
+                            "def new_obj = obj; " +
+                            "if((obj != null) && (prop.length > 0)){ " +
+                                "if(prop[0] instanceof Integer){ " +
+                                    "for(int elems=0;elems<obj.length;elems++){ " +
+                                        "new_obj = getProperty(obj[elems],drop(prop,0)); " +
+                                        "if(new_obj!=null){ break; } " +
+                                    "} " +
+                                "} else{ " +
+                                    "new_obj = getProperty(obj[prop[0]],drop(prop,0)); " +
+                                "} " +
+                            "} " +
+                            "return new_obj; " +
+                        "} " +
+                        "def vector_B=[]; " +
+                        "for(int i=0;i<params.field_labels.length;i++){ " +
+                            "def path = []; " +
+                            "String[] splits = /\\\\./.split('requirements.'+params.field_labels[i]); " +
+                            "for(int j=0;j<splits.length;j++){ " +
+                                "def cur = splits[j]; " +
+                                "try{ cur = Integer.parseInt(splits[j]); }" +
+                                "catch(Exception ex){} " +
+                                "path.add(cur); " +
+                            "} " +
+                            "def cur2=getProperty(params._source,path); " +
+                            "if(cur2 instanceof String){ cur2=distance(params.vector[i],cur2); } " +
+                            "vector_B.add(cur2); " +
+                        "} " +
+                        "double dotProduct=0.0; " +
+                        "double normA=0.0; " +
+                        "double normB=0.0; " +
+                        "for(int i=0;i<params.vector.length-1;i++){ " +
+                            "def cur=params.vector[i]; " +
+                            "if(cur instanceof String){ cur=distance(params.vector[i],params.vector[i]); } " +
+                            "if(vector_B[i] != null){ " +
+                                "dotProduct+=cur*vector_B[i]; " +
+                                "normA+=cur*cur; normB+=vector_B[i]*vector_B[i]; " +
+                            "} " +
+                        "} " +
+                        "if((Math.sqrt(normA)*Math.sqrt(normB)) > 0){ " +
+                            "return (dotProduct/(Math.sqrt(normA)*Math.sqrt(normB)))*params._source['score']; " +
+                        "} else{ return 0.0; }" +
+                        "\"}}}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
 
                 HttpClient httpClient;
                 if (EsAuth.equals("basic")) {
