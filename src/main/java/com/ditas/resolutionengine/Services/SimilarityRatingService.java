@@ -226,6 +226,9 @@ public class SimilarityRatingService {
                         if (ratings.containsKey(id)) {
                             obj.put("userRating", ratings.get(id).getKey() / (float) ratings.get(id).getValue());
                             blueprintArray.put(i, obj);
+                        }else{
+                            obj.put("userRating", 0.0);
+                            blueprintArray.put(i, obj);
                         }
                     }
 
