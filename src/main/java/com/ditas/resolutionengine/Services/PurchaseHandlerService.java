@@ -252,16 +252,30 @@ public class PurchaseHandlerService {
      */
     public static JSONArray randomizeDataUtilityArray(JSONArray dataUtilities){
         Random rand = new Random();
+        JSONObject flags = new JSONObject();
+        flags.put("volume",true);
+        flags.put("accuracy",true);
+        flags.put("completeness",true);
+        flags.put("responseTime",false);
+        flags.put("throughtput",false);
+        flags.put("precision",false);
+        flags.put("timeliness",false);
+        flags.put("availability",false);
+        flags.put("ramGain",false);
+        flags.put("ramLimit",false);
+        flags.put("spaceGain",false);
+        flags.put("spaceLimit",false);
         if(dataUtilities != null && dataUtilities.length() > 0){
             for (int i =0;i<dataUtilities.length();i++){
                 if (dataUtilities.get(i) instanceof JSONObject) {
                     JSONObject cur = dataUtilities.getJSONObject(i);
                     if(cur.has("properties")){
                         JSONObject props = cur.getJSONObject("properties");
-                        if(props.has("volume")){
+                        if(props.has("volume") && flags.getBoolean("volume")){
+                            System.err.println("Found Volume");
                             JSONObject vol = props.getJSONObject("volume");
-                            int min = (5000+rand.nextInt(5001));
-                            int max = (min+rand.nextInt(5001));
+                            int min = (6000+rand.nextInt(1001));
+                            int max = (min+rand.nextInt(2001));
                             if(vol.has("minimum")){
                                 vol.put("minimum",min);
                             }
@@ -270,7 +284,7 @@ public class PurchaseHandlerService {
                             }
                             props.put("volume",vol);
                         }
-                        if(props.has("responseTime")){
+                        if(props.has("responseTime") && flags.getBoolean("responseTime")){
                             JSONObject rspt = props.getJSONObject("responseTime");
                             int min = (1+rand.nextInt(4));
                             int max = (min+rand.nextInt(4));
@@ -282,7 +296,7 @@ public class PurchaseHandlerService {
                             }
                             props.put("responseTime",rspt);
                         }
-                        if(props.has("throughtput")){
+                        if(props.has("throughtput") && flags.getBoolean("throughtput")){
                             JSONObject thrpt = props.getJSONObject("throughtput");
                             double min = (0.2+(((double)rand.nextInt(54))/10));
                             double max = (min+(((double)rand.nextInt(56))/10));
@@ -294,11 +308,12 @@ public class PurchaseHandlerService {
                             }
                             props.put("throughtput",thrpt);
                         }
-                        if(props.has("accuracy")){
+                        if(props.has("accuracy") && flags.getBoolean("accuracy")){
+                            System.err.println("Accuracy");
                             JSONObject acc = props.getJSONObject("accuracy");
-                            int min = (50+rand.nextInt(51));
+                            int min = (70+rand.nextInt(31));
                             min = min(min,100);
-                            int max = (min+rand.nextInt(51));
+                            int max = (min+rand.nextInt(21));
                             max = min(max,100);
                             if(acc.has("minimum")){
                                 acc.put("minimum",min);
@@ -308,11 +323,12 @@ public class PurchaseHandlerService {
                             }
                             props.put("accuracy",acc);
                         }
-                        if(props.has("completeness")){
+                        if(props.has("completeness") && flags.getBoolean("completeness")){
+                            System.err.println("Process completeness");
                             JSONObject comp = props.getJSONObject("completeness");
-                            int min = (50+rand.nextInt(51));
+                            int min = (70+rand.nextInt(31));
                             min = min(min,100);
-                            int max = (min+rand.nextInt(51));
+                            int max = (min+rand.nextInt(31));
                             max = min(max,100);
                             if(comp.has("minimum")){
                                 comp.put("minimum",min);
@@ -322,7 +338,7 @@ public class PurchaseHandlerService {
                             }
                             props.put("completeness",comp);
                         }
-                        if(props.has("precision")){
+                        if(props.has("precision") && flags.getBoolean("precision")){
                             JSONObject prs = props.getJSONObject("precision");
                             int min = (50+rand.nextInt(51));
                             min = min(min,100);
@@ -336,7 +352,7 @@ public class PurchaseHandlerService {
                             }
                             props.put("precision",prs);
                         }
-                        if(props.has("timeliness")){
+                        if(props.has("timeliness") && flags.getBoolean("timeliness")){
                             JSONObject timl = props.getJSONObject("timeliness");
                             int min = (50+rand.nextInt(51));
                             min = min(min,100);
@@ -350,7 +366,7 @@ public class PurchaseHandlerService {
                             }
                             props.put("timeliness",timl);
                         }
-                        if(props.has("availability")){
+                        if(props.has("availability") && flags.getBoolean("availability")){
                             JSONObject avl = props.getJSONObject("availability");
                             int min = (50+rand.nextInt(51));
                             min = min(min,100);
@@ -364,28 +380,28 @@ public class PurchaseHandlerService {
                             }
                             props.put("availability",avl);
                         }
-                        if(props.has("ramGain")){
+                        if(props.has("ramGain") && flags.getBoolean("ramGain")){
                             JSONObject rgain = props.getJSONObject("ramGain");
                             if(rgain.has("value")){
                                 rgain.put("value",(50+rand.nextInt(151)));
                             }
                             props.put("ramGain",rgain);
                         }
-                        if(props.has("ramLimit")){
+                        if(props.has("ramLimit") && flags.getBoolean("ramLimit")){
                             JSONObject rlim = props.getJSONObject("ramLimit");
                             if(rlim.has("value")){
                                 rlim.put("value",(50+rand.nextInt(51)));
                             }
                             props.put("ramLimit",rlim);
                         }
-                        if(props.has("spaceGain")){
+                        if(props.has("spaceGain") && flags.getBoolean("spaceGain")){
                             JSONObject sgain = props.getJSONObject("spaceGain");
                             if(sgain.has("value")){
                                 sgain.put("value",(50+rand.nextInt(151)));
                             }
                             props.put("spaceGain",sgain);
                         }
-                        if(props.has("spaceLimit")){
+                        if(props.has("spaceLimit") && flags.getBoolean("spaceLimit")){
                             JSONObject slimit = props.getJSONObject("spaceLimit");
                             if(slimit.has("value")){
                                 slimit.put("value",(50+rand.nextInt(51)));
@@ -408,8 +424,8 @@ public class PurchaseHandlerService {
      */
     public String makePurchase() {
         ArrayList<String> requirementsUrls= new ArrayList<String>();
-        requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-diagnostics.json");
-        requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-streaming.json");
+        //requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-diagnostics.json");
+        //requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-streaming.json");
         requirementsUrls.add("https://github.com/DITAS-Project/osr-use-case/raw/master/scenario13/applicationRequirements/appreq-scenario-13.json");
         Random rand = new Random();
         int pickedIndex = rand.nextInt(requirementsUrls.size());
@@ -454,7 +470,7 @@ public class PurchaseHandlerService {
         JSONArray hits = getAllRecords();
         String reqBody = "";
         for (int i = 0; i < hits.length(); i++) {
-            reqBody+="{ \"delete\" : { \"_index\" : \"ditas\", \"_type\" : \"purchaseinfo\", \"_id\" : \""+hits.getJSONObject(i).getString("_id")+"\" } }\n";
+            reqBody+="{ \"delete\" : { \"_index\" : \"ditas.purchaseinfo\", \"_type\" : \"_doc\", \"_id\" : \""+hits.getJSONObject(i).getString("_id")+"\" } }\n";
         }
 
         HttpClient httpClient;
@@ -472,7 +488,7 @@ public class PurchaseHandlerService {
         int statusCode = -1;
         String responseString = "";
         try {
-            HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_batch");
+            HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_bulk");
             request.addHeader("content-type", "application/json");
             StringEntity params =new StringEntity(reqBody);
             request.setEntity(params);
@@ -517,7 +533,7 @@ public class PurchaseHandlerService {
                 try{
                     JSONObject respJSON= new JSONObject(data);
                     JSONArray hits = respJSON.getJSONObject("hits").getJSONArray("hits");
-                    int total = respJSON.getJSONObject("hits").getInt("total");
+                    int total = respJSON.getJSONObject("hits").getJSONObject("total").getInt("value");
                     if(total>10){
                         request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2);
                         request.addHeader("content-type", "application/json");
@@ -529,6 +545,7 @@ public class PurchaseHandlerService {
                     }
                     return hits;
                 }catch (Exception ex){
+                    ex.printStackTrace();
                     return null;
                 }
             }

@@ -76,7 +76,16 @@ public class BlueprintController {
 	
 	}
 
-	@RequestMapping(method=RequestMethod.POST , value="/makePurchaces")
+	@RequestMapping(method=RequestMethod.POST , value="/clearPurchases")
+	public String clearPurchases(){
+		//try {
+			phService.clearPurchases();
+			String response = "done";
+			return response;
+		//}catch(Exception ex){return ex.getStackTrace().toString();}
+	}
+
+	@RequestMapping(method=RequestMethod.POST , value="/makePurchases")
 	public String makePurchases(@RequestBody String  numberOfPurchases){
 		try {
 			JSONObject purchNum = new JSONObject(numberOfPurchases);
