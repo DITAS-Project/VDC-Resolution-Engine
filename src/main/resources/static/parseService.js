@@ -31,6 +31,7 @@ angular.module('app')
 			var blueprint_overview = searchResults[i].blueprint.INTERNAL_STRUCTURE.Overview
 			var id = searchResults[i].blueprint._id;
 			var score = searchResults[i].score;
+			var userRating= searchResults[i].userRating;
 			var methods_list = searchResults[i].methodNames;
 			var methods = new Array();
 			for (var j = 0; j < methods_list.length ; j++){
@@ -41,7 +42,8 @@ angular.module('app')
 					"name": blueprint_overview.name,
 					"description": blueprint_overview.description,
 					"score": score,
-					"methods": methods
+					"methods": methods,
+					"userRating": userRating
 			}
 			results.push(result)
 		}
