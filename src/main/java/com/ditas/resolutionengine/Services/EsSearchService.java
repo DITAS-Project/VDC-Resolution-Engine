@@ -137,7 +137,7 @@ public class EsSearchService {
 			}
 
 			try {
-				HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search?scroll=3m&size=50");
+				HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search?scroll=3m&size=20");
 				request.addHeader("content-type", "application/json");
 				StringEntity params =new StringEntity(query);
 				request.setEntity(params);
