@@ -1,0 +1,866 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://ditas-project.eu/iccs/medical_ontology#"
+     xml:base="http://ditas-project.eu/iccs/medical_ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:medical_ontology="http://ditas-project.eu/iccs/medical_ontology#">
+    <owl:Ontology rdf:about="http://ditas-project.eu/iccs/medical_ontology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#isPartOf -->
+
+    <owl:ObjectProperty rdf:about="http://ditas-project.eu/iccs/medical_ontology#isPartOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Address -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Address">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Antithrombin -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Antithrombin">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#BMI -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#BMI">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Biographical -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Biographical">
+        <owl:equivalentClass rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Demographics"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Biopsy -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Biopsy">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Blood -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Blood">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#BodyMassIndexCategory -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#BodyMassIndexCategory">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#NormalWeight"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Obesity"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Overweight"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Underweight"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Cholesterol -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Cholesterol">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#City -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#City">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Component -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Continent -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Continent">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Country -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Country">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Demographics -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Demographics"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Dentist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Dentist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Dermatologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Dermatologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Doctor -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Doctor">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Education -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Education">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#OtherEducationLevel"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Primary"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Secondary"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Tertiary"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Endocrinologists -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Endocrinologists">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Ethnicity -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Ethnicity">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Country"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ditas-project.eu/iccs/medical_ontology#isPartOf"/>
+                <owl:hasValue rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Europe"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Examination -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Examination">
+        <owl:equivalentClass rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Fibrinogen -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Fibrinogen">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Gastroenterologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Gastroenterologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Gender -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Gender">
+        <owl:equivalentClass rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Sex"/>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Female"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Male"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#OtherGender"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Gynecologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Gynecologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#HDL -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#HDL">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Cholesterol"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Haemoglobin -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Haemoglobin">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Hematologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Hematologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#ItalianCity -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#ItalianCity">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#City"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ditas-project.eu/iccs/medical_ontology#isPartOf"/>
+                <owl:hasValue rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Italy"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#LDL -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#LDL">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Cholesterol"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Location -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Location"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#MedicalImaging -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#MedicalImaging">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Nationality -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Nationality">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Nephrologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Nephrologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Neurologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Neurologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Nurse -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Nurse">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Occupation -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Occupation">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Employed"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#OtherOccupationStatus"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Retired"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Student"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Underage"/>
+                    <rdf:Description rdf:about="http://ditas-project.eu/iccs/medical_ontology#Unemployed"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Ocular -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Ocular">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Ophthalmologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Ophthalmologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Oral -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Oral">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Otolaryngologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Otolaryngologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Patient -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Patient">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Person -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Person"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#PhoneNumber -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#PhoneNumber">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#PlateletCount -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#PlateletCount">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#ProthrombinTime -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#ProthrombinTime">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Psychiatrist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Psychiatrist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Pulmonologist -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Pulmonologist">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Doctor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Road -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Road">
+        <owl:equivalentClass rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Street"/>
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#SSN -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#SSN">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Sex -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Sex">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Biographical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Street -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Street">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Test -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Total -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Total">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Cholesterol"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#TotalWhiteCellCount -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#TotalWhiteCellCount">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Component"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Triglycerides -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Triglycerides">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Cholesterol"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Urine -->
+
+    <owl:Class rdf:about="http://ditas-project.eu/iccs/medical_ontology#Urine">
+        <rdfs:subClassOf rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Test"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Africa -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Africa">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Antarctica -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Antarctica">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Asia -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Asia">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Athens -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Athens">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#City"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Australia -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Australia">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Berlin -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Berlin">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#City"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Employed -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Employed"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Europe -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Europe">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Female -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Female"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#France -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#France">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Germany -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Germany">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Greece -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Greece">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Italy -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Italy">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Madrid -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Madrid">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#City"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Male -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Male"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Milan -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Milan">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#ItalianCity"/>
+        <owl:sameAs rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Milano"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Milano -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Milano"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Naples -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Naples">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#ItalianCity"/>
+        <owl:sameAs rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Napoli"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Napoli -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Napoli"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#NormalWeight -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#NormalWeight"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#NorthAmerica -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#NorthAmerica">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Obesity -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Obesity"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#OtherEducationLevel -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#OtherEducationLevel"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#OtherGender -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#OtherGender"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#OtherOccupationStatus -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#OtherOccupationStatus"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Overweight -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Overweight"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Paris -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Paris">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#City"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Primary -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Primary"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Retired -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Retired"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Roma -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Roma">
+        <owl:sameAs rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Rome"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Rome -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Rome">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#ItalianCity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Secondary -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Secondary"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#SouthAmerica -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#SouthAmerica">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Continent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Spain -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Spain">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#EuropeanCountry"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Student -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Student"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Tertiary -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Tertiary"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Torino -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Torino">
+        <owl:sameAs rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Turin"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Turin -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Turin">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#ItalianCity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Underage -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Underage"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Underweight -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Underweight"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Unemployed -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Unemployed"/>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Venezia -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Venezia">
+        <owl:sameAs rdf:resource="http://ditas-project.eu/iccs/medical_ontology#Venice"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ditas-project.eu/iccs/medical_ontology#Venice -->
+
+    <owl:NamedIndividual rdf:about="http://ditas-project.eu/iccs/medical_ontology#Venice">
+        <rdf:type rdf:resource="http://ditas-project.eu/iccs/medical_ontology#ItalianCity"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
