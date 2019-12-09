@@ -45,40 +45,46 @@ public class RepositoryRequestService {
 		ArrayList<JSONObject> blueprints = new ArrayList<JSONObject>();
 		
 		try {
-				String repository_request = buildRepositoryRequest(idsList);
-				URL url = new URL("http://"+rphost+":"+repositoryBlueprintsPort+repositoryBlueprintsPath+"?filter="+repository_request);
-				Scanner scanner = new Scanner(url.openStream());
-				String response = scanner.useDelimiter("\\Z").next();
-				scanner.close();
-				//System.out.println(response_blueprint);
 				
-				JSONObject response_json = new JSONObject(response);
-				JSONArray blueprints_array = response_json.getJSONArray("_embedded");
+			String repository_request = buildRepositoryRequest(idsList);
+			URL url = new URL("http://"+rphost+":"+repositoryBlueprintsPort+repositoryBlueprintsPath+"?filter="+repository_request);
+			Scanner scanner = new Scanner(url.openStream());
+			String response = scanner.useDelimiter("\\Z").next();
+			scanner.close();
 				
-				for (int i = 0 ; i < blueprints_array.length() ; i++) {
-					JSONObject blueprint = blueprints_array.getJSONObject(i);
-					blueprints.add(blueprint);
-				}
+			JSONObject response_json = new JSONObject(response);
+			JSONArray blueprints_array = response_json.getJSONArray("_embedded");
+				
+			for (int i = 0 ; i < blueprints_array.length() ; i++) {
 					
-				return blueprints;
+				JSONObject blueprint = blueprints_array.getJSONObject(i);
+				blueprints.add(blueprint);
+				
+			}
+					
+			return blueprints;
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+		
 		}
 		
 		return null;
 	}
 	
 	public String buildRepositoryRequest(ArrayList<String> idsList) {
+		
 		JSONObject repository_request_json = new JSONObject();
 		JSONObject repository_ids_json = new JSONObject();
 		
 		JSONArray ids_array = new JSONArray();
 		for (String id : idsList) {
+			
 			JSONObject id_json = new JSONObject();
 			id_json.put("$oid", id);
 			ids_array.put(id_json);
+		
 		}
 		repository_ids_json.put("$in", ids_array);
 		repository_request_json.put("_id",repository_ids_json);
