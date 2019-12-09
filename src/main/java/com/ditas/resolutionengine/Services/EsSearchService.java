@@ -20,7 +20,6 @@
  */
 package com.ditas.resolutionengine.Services;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -38,11 +37,11 @@ import com.ditas.resolutionengine.Entities.Requirements;
 @Service
 public class EsSearchService {
 	
-	@Value("${elasticsearch.index}")
+    @Value("${elasticsearch.index}")
     private String EsIndex;
 
-	@Value("${eshost}")
-	private String EsHost;
+    @Value("${eshost}")
+    private String EsHost;
 
     @Value("${elasticsearch.auth}")
     private String EsAuth;
@@ -53,110 +52,70 @@ public class EsSearchService {
     @Value("${elasticsearch.pass}")
     private String EsPass;
 
-	@Value("${elasticsearch.port}")
-	private int EsPort;
+    @Value("${elasticsearch.port}")
+    private int EsPort;
 
 
-	public String blueprintSearchByReq(Requirements requirements) {
-		System.out.println("Basic " + (new String(Base64.encodeBase64((EsUser+":"+EsPass).getBytes()))));
-		try {
-			String query = "{\n" +
-					"    \"query\": {\n" +
-					"        \"bool\": {\n" +
-					"            \"must\": {\n" +
-					"                \"function_score\": {\n" +
-					"                    \"query\": {\n" +
-					"                        \"bool\": {\n" +
-					"                            \"must\": {\n" +
-					"                                \"match_all\": {}\n" +
-					"                            },\n" +
-					"                            \"filter\": [\n" +
-					"                                {\n" +
-					"                                    \"nested\": {\n" +
-					"                                        \"query\": {\n" +
-					"                                            \"match\": {\n" +
-					"                                                \"tags.tags\": {\n" +
-					"                                                    \"query\" : \""+requirements.getMethodTags()+" \"\n" +
-					"                                                }\n" +
-					"                                            }\n" +
-					"                                        },\n" +
-					"                                        \"path\": \"tags\",\n" +
-					"                                        \"inner_hits\": {\n" +
-					"                                            \"size\": 10\n" +
-					"                                        }\n" +
-					"                                    }\n" +
-					"                                }\n" +
-					"                            ]\n" +
-					"                        }\n" +
-					"                    },\n" +
-					"                    \"field_value_factor\": {\n" +
-					"                        \"field\": \"tagsFactor\"\n" +
-					"                    },\n" +
-					"                    \"boost\": 8\n" +
-					"                }\n" +
-					"            },\n" +
-					"            \"should\": {\n" +
-					"                \"function_score\": {\n" +
-					"                    \"query\": {\n" +
-					"                        \"bool\": {\n" +
-					"                            \"must\": {\n" +
-					"                                \"match_all\": {}\n" +
-					"                            },\n" +
-					"                            \"filter\": [\n" +
-					"                                {\n" +
-					"                                    \"match\": {\n" +
-					"                                        \"description\": {\n" +
-					"                                            \"query\" : \""+ requirements.getVdcTags()+" \"\n" +
-					"                                        }\n" +
-					"                                    }\n" +
-					"                                }\n" +
-					"                            ]\n" +
-					"                        }\n" +
-					"                    },\n" +
-					"                    \"field_value_factor\": {\n" +
-					"                        \"field\": \"descriptionFactor\"\n" +
-					"                    },\n" +
-					"                    \"boost\": 4\n" +
-					"                }\n" +
-					"            }\n" +
-					"        }\n" +
-					"    }\n" +
-					"}";
-			System.out.println(query);
-			HttpClient httpClient;
-			if(EsAuth.equals("basic")) {
-				CredentialsProvider provider = new BasicCredentialsProvider();
-				UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
-				provider.setCredentials(AuthScope.ANY, credentials);
-				httpClient= HttpClientBuilder.create()
-						.setDefaultCredentialsProvider(provider)
-						.build();
-			}else{
-				httpClient=HttpClientBuilder.create()
-						.build();
-			}
+    public String blueprintSearchByReq(Requirements requirements) { 
+                         
+        SemanticManagerService manager = new SemanticManagerService();
+        
+        String query = "";
+        
+        try {
+			
+            query = manager.createSemanticElasticSearchQuery(requirements);
+                        
+            System.out.println(query);
+                        
+            HttpClient httpClient;
+            if(EsAuth.equals("basic")) {
+                        
+                CredentialsProvider provider = new BasicCredentialsProvider();
+                UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(EsUser, EsPass);
+                provider.setCredentials(AuthScope.ANY, credentials);
+                httpClient= HttpClientBuilder.create()
+                .setDefaultCredentialsProvider(provider)
+                .build();
+			
+            }
+            else{
+				
+                httpClient=HttpClientBuilder.create()
+                .build();
+			
+            }
 
-			try {
-				HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search?scroll=3m&size=20");
-				request.addHeader("content-type", "application/json");
-				StringEntity params =new StringEntity(query);
-				request.setEntity(params);
-				HttpResponse response = httpClient.execute(request);
-				int statusCode = response.getStatusLine().getStatusCode();
-				String responseString = new BasicResponseHandler().handleResponse(response);
-				if (statusCode != 200) {
-					System.err.println(responseString);
-				}
-				return responseString;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+            try {
+				
+                HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + EsIndex + "/_search?scroll=3m&size=20");
+                request.addHeader("content-type", "application/json");
+                StringEntity params =new StringEntity(query);
+                request.setEntity(params);
+                HttpResponse response = httpClient.execute(request);
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseString = new BasicResponseHandler().handleResponse(response);
+                if (statusCode != 200) {
+					
+                    System.err.println(responseString);
+				
+                }
+				
+                return responseString;
+			
+            } catch (Exception e) {
+				
+                e.printStackTrace();
+			
+            }
+		
+        } catch (Exception e) {
+			
+            e.printStackTrace();
+		
+        }
+		
+        return null;
+	
+    }
 }

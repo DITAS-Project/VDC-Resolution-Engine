@@ -18,47 +18,76 @@
  * VDC-Resolution-Engine is being developed for the
  * DITAS Project: https://www.ditas-project.eu/
  */
- package com.ditas.resolutionengine.Entities;
-
-
-
+package com.ditas.resolutionengine.Entities;
 
 import org.json.JSONArray;
 
 public class Requirements {
 
-	private String methodTags;
-	private String vdcTags;
+    private String methodTags;
+    private String vdcTags;
 	
-	
-	public Requirements() {
-		// TODO Auto-generated constructor stub
-	}
-
-
-	public String getMethodTags() {
-		return methodTags;
-	}
-
-
-	public void setMethodTags(JSONArray methodTags) {
-		this.methodTags = "";
-		for (int i = 0 ; i < methodTags.length() ; i++) {
-			this.methodTags += methodTags.getString(i)+" ";
-		}
+    public Requirements() {
 		
-	}
+    }
+
+    
+    public String getMethodTags() {
+		
+        return methodTags;
+        
+    }
+
+    public void setMethodTags(JSONArray methodTags) {
+		
+        this.methodTags = "";
+        
+        for (int i = 0 ; i < methodTags.length() ; i++) {
+                        
+            String str = "";
+            if (methodTags.getString(i).length() > 1) {
+                            
+                str = methodTags.getString(i).substring(0, 1).toUpperCase() + methodTags.getString(i).substring(1);
+                        
+            }
+            else {
+                            
+                str = methodTags.getString(i).substring(0, 1).toUpperCase();
+                    
+            }
+                        
+            this.methodTags += str+" ";
+		
+        }	
+    }
 
 
-	public String getVdcTags() {
-		return vdcTags;
-	}
+    public String getVdcTags() {
+		
+        return vdcTags;
+	
+    }
 
-
-	public void setVdcTags(JSONArray vdcTags) {
-		this.vdcTags = "";
-		for (int i = 0 ; i < vdcTags.length() ; i++) {
-			this.vdcTags += vdcTags.getString(i)+" ";
-		}
-	}
+    public void setVdcTags(JSONArray vdcTags) {
+		
+        this.vdcTags = "";
+		
+        for (int i = 0 ; i < vdcTags.length() ; i++) {
+			            
+            String str = "";
+            if (vdcTags.getString(i).length() > 1) {
+                            
+                str = vdcTags.getString(i).substring(0, 1).toUpperCase() + vdcTags.getString(i).substring(1);
+                        
+            }
+            else {
+                            
+                str = vdcTags.getString(i).substring(0, 1).toUpperCase();
+                        
+            }
+			           
+            this.vdcTags += str+" ";
+                    	
+        }
+    }
 }
