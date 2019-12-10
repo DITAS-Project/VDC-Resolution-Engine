@@ -22,7 +22,6 @@ package com.ditas.resolutionengine.Controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import com.ditas.resolutionengine.Services.PurchaseHandlerService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +37,6 @@ import com.ditas.resolutionengine.Services.DURERequestService;
 import com.ditas.resolutionengine.Services.EsSearchService;
 import com.ditas.resolutionengine.Services.ResolutionEngineService;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 
 @RestController
 public class BlueprintController {
@@ -73,20 +71,20 @@ public class BlueprintController {
 		
 		return response;
 	
-	
 	}
 
 	@RequestMapping(method=RequestMethod.POST , value="/clearPurchases")
 	public String clearPurchases(){
-		//try {
-			phService.clearPurchases();
-			String response = "done";
-			return response;
-		//}catch(Exception ex){return ex.getStackTrace().toString();}
+		
+		phService.clearPurchases();
+		String response = "done";
+		return response;
+		
 	}
 
 	@RequestMapping(method=RequestMethod.POST , value="/makePurchases")
 	public String makePurchases(@RequestBody String  numberOfPurchases){
+		
 		try {
 			JSONObject purchNum = new JSONObject(numberOfPurchases);
 			int num = purchNum.getInt("num");
@@ -97,6 +95,7 @@ public class BlueprintController {
 			response += "\ndone";
 
 			return response;
+			
 		}catch(Exception ex){return ex.getStackTrace().toString();}
 	}
 	
@@ -115,9 +114,7 @@ public class BlueprintController {
 	
 		String esResponse = searchService.blueprintSearchByReq(requirements);
 		
-		
 		return esResponse;
-	
 	
 	}
 	
@@ -138,61 +135,6 @@ public class BlueprintController {
 		String dureRequest = dureService.createRequest(esResponse, applicationRequirements_json);
 		
 		return dureRequest;
-	
-	
-	}
-	
-	
-	@RequestMapping(method=RequestMethod.GET , value="/GetIntermediateBlueprint")
-	public String GetIntermediateBlueprint(){
-		
-		String requirements_file = "";
-		Resource resource = new ClassPathResource("user_reqs.json");
-		try {
-			InputStream resourceInputStream = resource.getInputStream();
-			int data = resourceInputStream.read();
-			while(data != -1) {
-				  requirements_file += (char) data;
-				  data =  resourceInputStream.read();
-				}
-			
-			
-			Requirements requirements = new Requirements();
-			
-			JSONObject applicationRequirements_json = new JSONObject(requirements_file);
-			
-			org.json.JSONArray method_tags = applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("methodTags");
-			requirements.setMethodTags(method_tags);
-			
-			org.json.JSONArray vdc_tags =  applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("vdcTags");
-			requirements.setVdcTags(vdc_tags);
-		
-			String response = resolutionService.ResolutionEngineRequest(requirements, applicationRequirements_json);
-			
-			JSONArray response_json = new JSONArray(response);
-			return response_json.getJSONObject(0).getJSONObject("blueprint").toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
-		/*
-		Requirements requirements = new Requirements();
-		
-		JSONObject applicationRequirements_json = new JSONObject(applicationRequirements);
-		
-		org.json.JSONArray method_tags = applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("methodTags");
-		requirements.setMethodTags(method_tags);
-		
-		org.json.JSONArray vdc_tags =  applicationRequirements_json.getJSONObject("functionalRequirements").getJSONArray("vdcTags");
-		requirements.setVdcTags(vdc_tags);
-	
-		String esResponse = searchService.blueprintSearchByReq(requirements);
-		String dureRequest = dureService.createRequest(esResponse, applicationRequirements_json);
-		
-		return dureRequest;
-	*/
 	
 	}
 }
