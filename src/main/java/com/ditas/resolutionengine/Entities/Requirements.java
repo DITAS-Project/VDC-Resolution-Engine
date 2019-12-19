@@ -50,7 +50,7 @@ public class Requirements {
                 str = methodTags.getString(i).substring(0, 1).toUpperCase() + methodTags.getString(i).substring(1);
                         
             }
-            else {
+            else if (methodTags.getString(i).length() > 0) {
                             
                 str = methodTags.getString(i).substring(0, 1).toUpperCase();
                     
@@ -80,7 +80,7 @@ public class Requirements {
                 str = vdcTags.getString(i).substring(0, 1).toUpperCase() + vdcTags.getString(i).substring(1);
                         
             }
-            else {
+            else if (vdcTags.getString(i).length() > 0) {
                             
                 str = vdcTags.getString(i).substring(0, 1).toUpperCase();
                         

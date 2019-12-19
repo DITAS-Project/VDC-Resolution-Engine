@@ -18,7 +18,7 @@
  * VDC-Resolution-Engine is being developed for the
  * DITAS Project: https://www.ditas-project.eu/
  */
- package com.ditas.resolutionengine;
+package com.ditas.resolutionengine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
