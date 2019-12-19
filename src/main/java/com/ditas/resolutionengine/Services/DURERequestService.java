@@ -71,8 +71,10 @@ public class DURERequestService {
             bp_id = esResult.get("_id").toString();
             idsList.add(bp_id);
             ArrayList<String> list_of_methods = new ArrayList<String>();
-                        
-            JSONArray result_innerHits_exact_synonym =  esResult.getJSONObject("inner_hits").getJSONObject("exact_synonym").getJSONObject("hits").getJSONArray("hits");
+            
+            int num_of_exact_synonym_innerHits = esResult.getJSONObject("inner_hits").length() - 2;
+            
+            JSONArray result_innerHits_exact_synonym =  esResult.getJSONObject("inner_hits").getJSONObject("exact_synonym_0").getJSONObject("hits").getJSONArray("hits");
 			
             //Parse the number of matched methods of the current blueprint from Elastic Search response
             int num_of_matched_methods_exact_synonym = result_innerHits_exact_synonym.length();
@@ -83,7 +85,29 @@ public class DURERequestService {
                 list_of_methods.add(method);		
 			
             }
-                        
+            int current_index_of_exact_synonym_innerHits = 1;
+            
+            while (current_index_of_exact_synonym_innerHits < num_of_exact_synonym_innerHits) {
+                
+                result_innerHits_exact_synonym =  esResult.getJSONObject("inner_hits").getJSONObject("exact_synonym_"+String.valueOf(current_index_of_exact_synonym_innerHits)).getJSONObject("hits").getJSONArray("hits");
+			
+                //Parse the number of matched methods of the current blueprint from Elastic Search response
+                num_of_matched_methods_exact_synonym = result_innerHits_exact_synonym.length();
+			
+                for (int method_index_exact_synonym = 0 ; method_index_exact_synonym < num_of_matched_methods_exact_synonym ; method_index_exact_synonym++) {
+				
+                    String method =  result_innerHits_exact_synonym.getJSONObject(method_index_exact_synonym).getJSONObject("_source").get("method_id").toString();
+                    if(!list_of_methods.contains(method)) {
+                    
+                        list_of_methods.add(method);		
+			
+                    }    
+                }
+                current_index_of_exact_synonym_innerHits ++;
+            }
+            
+
+            
             JSONArray result_innerHits_parent_child =  esResult.getJSONObject("inner_hits").getJSONObject("parent_child").getJSONObject("hits").getJSONArray("hits");
 			
             //Parse the number of matched methods of the current blueprint from Elastic Search response
