@@ -5,7 +5,7 @@
       "anomaly",
       "detection"
     ],
-    "vdcTags": []
+    "vdcTags": ["machines"]
   },
   "attributes": {
     "dataUtility": [

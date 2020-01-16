@@ -426,7 +426,8 @@ public class PurchaseHandlerService {
         ArrayList<String> requirementsUrls= new ArrayList<String>();
         //requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-diagnostics.json");
         //requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-streaming.json");
-        requirementsUrls.add("https://github.com/DITAS-Project/osr-use-case/raw/master/scenario13/applicationRequirements/appreq-scenario-13.json");
+        //requirementsUrls.add("https://github.com/DITAS-Project/osr-use-case/raw/master/scenario13/applicationRequirements/appreq-scenario-13.json");
+		requirementsUrls.add("https://github.com/DITAS-Project/VDC-Resolution-Engine/raw/master/ApplicationRequirements/app_reqs.json");
         Random rand = new Random();
         int pickedIndex = rand.nextInt(requirementsUrls.size());
         JSONObject randomUR = randomizeRemoteRequirements(requirementsUrls.get(pickedIndex));
