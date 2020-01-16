@@ -1,0 +1,143 @@
+{
+  "applicationType": "batch",
+  "functionalRequirements": {
+    "methodTags": [
+      "anomaly",
+      "detection"
+    ],
+    "vdcTags": []
+  },
+  "attributes": {
+    "dataUtility": [
+      {
+        "id": "availability",
+        "description": "Availability",
+        "type": "Availability",
+        "properties": {
+          "availability": {
+            "unit": "percentage",
+            "minimum": 99
+          }
+        }
+      },
+      {
+        "id": "responseTime",
+        "description": "ResponseTime",
+        "type": "ResponseTime",
+        "properties": {
+          "responseTime": {
+            "maximum": 4,
+            "unit": "second"
+          }
+        }
+      },
+      {
+        "id": "timeliness",
+        "description": "Timeliness",
+        "type": "Timeliness",
+        "properties": {
+          "timeliness": {
+            "minimum": 90,
+            "unit": "percentage"
+          }
+        }
+      },
+      {
+        "id": "volume",
+        "description": "number of tuples",
+        "type": "Volume",
+        "properties": {
+          "volume": {
+            "minimum": 7776000,
+            "unit": "tuple"
+          }
+        }
+      }
+    ],
+    "security": [],
+    "privacy": []
+  },
+  "goalTrees": {
+    "dataUtility": {
+      "description": "Requirements achieved",
+      "type": "AND",
+      "children": [
+        {
+          "description": "High QoS",
+          "type": "AND",
+          "leaves": [
+            {
+              "id": "serviceAvailable",
+              "description": "Service Available",
+              "weight": 1,
+              "attributes": [
+                "availability"
+              ]
+            },
+            {
+              "id": "fastProcess",
+              "description": "Fast Process",
+              "weight": 1,
+              "attributes": [
+                "responseTime"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "High Data Quality",
+          "type": "AND",
+          "leaves": [
+            {
+              "id": "freshData",
+              "description": "Fresh Data",
+              "weight": 1,
+              "attributes": [
+                "timeliness"
+              ]
+            },
+            {
+              "id": "EnoughData",
+              "description": "Enough Amount Of Data",
+              "weight": 1,
+              "attributes": [
+                "volume"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "methodsOutput": {
+    "methods": [
+      {
+        "method_id": "",
+        "attributes": []
+      }
+    ]
+  },
+  "providedResources": {
+    "infrastructures": [
+      {
+        "name": "",
+        "type": "",
+        "extra_properties": {
+          "owner": "ApplicationDeveloper",
+          "ditas_default": ""
+        },
+        "provider": {
+          "api_endpoint": "",
+          "credentials": {
+            "username": "",
+            "password": "",
+            "config": "",
+            "registries_secret": ""
+          },
+          "api_type": "cloudsigma"
+        },
+        "resources": []
+      }
+    ]
+  }
+}
