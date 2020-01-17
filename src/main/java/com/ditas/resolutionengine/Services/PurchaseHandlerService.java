@@ -452,7 +452,16 @@ public class PurchaseHandlerService {
             }
             String[] userIDs={"5be598ca17af09d17d6085ef","5be598b917af09d17d6085e6","5be598df17af09d17d6085f8","5be5989017af09d17d6085d4","5be5993b17af09d17d608608","5be598a417af09d17d6085dd"};
 
-            return push(new Purchase(userIDs[rand.nextInt(userIDs.length-1)],results.getJSONObject(rand.nextInt(results.length())).getJSONObject("blueprint").getString("_id"),rand.nextFloat(),randomUR));
+            String pickedUserID = userIDs[rand.nextInt(userIDs.length-1)];
+            String pickedBlueprintID = results.getJSONObject(rand.nextInt(results.length())).getJSONObject("blueprint").getString("_id");
+            float userFeedback;
+            if(pickedBlueprintID.equals("5e21803c2de11db00e9024c5")){
+                userFeedback = (float)(0.8+(rand.nextFloat()*0.2));
+            }else{
+                userFeedback = (float)(rand.nextFloat()*0.7);
+            }
+
+            return push(new Purchase(pickedUserID,pickedBlueprintID,userFeedback,randomUR));
         }catch(Exception ex){
             ex.printStackTrace();
             return ex.getStackTrace().toString();
