@@ -20,14 +20,9 @@
  */
 package com.ditas.resolutionengine.Controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import com.ditas.resolutionengine.Services.PurchaseHandlerService;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

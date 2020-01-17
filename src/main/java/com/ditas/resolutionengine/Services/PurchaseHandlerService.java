@@ -20,7 +20,6 @@
  */
 package com.ditas.resolutionengine.Services;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -34,16 +33,11 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import static java.lang.Math.min;
 
 @Service
@@ -254,13 +248,13 @@ public class PurchaseHandlerService {
         Random rand = new Random();
         JSONObject flags = new JSONObject();
         flags.put("volume",true);
-        flags.put("accuracy",true);
-        flags.put("completeness",true);
-        flags.put("responseTime",false);
+        flags.put("accuracy",false);
+        flags.put("completeness",false);
+        flags.put("responseTime",true);
         flags.put("throughtput",false);
         flags.put("precision",false);
-        flags.put("timeliness",false);
-        flags.put("availability",false);
+        flags.put("timeliness",true);
+        flags.put("availability",true);
         flags.put("ramGain",false);
         flags.put("ramLimit",false);
         flags.put("spaceGain",false);
@@ -274,7 +268,7 @@ public class PurchaseHandlerService {
                         if(props.has("volume") && flags.getBoolean("volume")){
                             System.err.println("Found Volume");
                             JSONObject vol = props.getJSONObject("volume");
-                            int min = (6000+rand.nextInt(1001));
+                            int min = (1201+rand.nextInt(7000000));
                             int max = (min+rand.nextInt(2001));
                             if(vol.has("minimum")){
                                 vol.put("minimum",min);
@@ -287,7 +281,7 @@ public class PurchaseHandlerService {
                         if(props.has("responseTime") && flags.getBoolean("responseTime")){
                             JSONObject rspt = props.getJSONObject("responseTime");
                             int min = (1+rand.nextInt(4));
-                            int max = (min+rand.nextInt(4));
+                            int max = (4+rand.nextInt(2));
                             if(rspt.has("minimum")){
                                 rspt.put("minimum",min);
                             }
@@ -354,7 +348,7 @@ public class PurchaseHandlerService {
                         }
                         if(props.has("timeliness") && flags.getBoolean("timeliness")){
                             JSONObject timl = props.getJSONObject("timeliness");
-                            int min = (50+rand.nextInt(51));
+                            int min = (10+rand.nextInt(81));
                             min = min(min,100);
                             int max = (min+rand.nextInt(51));
                             max = min(max,100);
@@ -368,7 +362,7 @@ public class PurchaseHandlerService {
                         }
                         if(props.has("availability") && flags.getBoolean("availability")){
                             JSONObject avl = props.getJSONObject("availability");
-                            int min = (50+rand.nextInt(51));
+                            int min = (91+rand.nextInt(9));
                             min = min(min,100);
                             int max = (min+rand.nextInt(51));
                             max = min(max,100);
@@ -427,7 +421,7 @@ public class PurchaseHandlerService {
         //requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-diagnostics.json");
         //requirementsUrls.add("https://github.com/DITAS-Project/ideko-use-case/raw/master/applicationRequirements/appreq-streaming.json");
         //requirementsUrls.add("https://github.com/DITAS-Project/osr-use-case/raw/master/scenario13/applicationRequirements/appreq-scenario-13.json");
-		requirementsUrls.add("https://github.com/DITAS-Project/VDC-Resolution-Engine/raw/master/ApplicationRequirements/app_reqs.json");
+        requirementsUrls.add("https://github.com/DITAS-Project/VDC-Resolution-Engine/raw/master/ApplicationRequirements/app_reqs.json");
         Random rand = new Random();
         int pickedIndex = rand.nextInt(requirementsUrls.size());
         JSONObject randomUR = randomizeRemoteRequirements(requirementsUrls.get(pickedIndex));
