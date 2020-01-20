@@ -197,9 +197,26 @@ public class SimilarityRatingService {
                     httpClient = HttpClientBuilder.create()
                             .build();
                 }
+                
+                int total = 20000;
 
                 try {
                     HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search");
+                    request.addHeader("content-type", "application/json");
+                    HttpResponse response = httpClient.execute(request);
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    String data = new BasicResponseHandler().handleResponse(response);
+                    if (statusCode != 200) {
+                        System.err.println(data);
+                    } else {
+                        JSONObject respJSON = new JSONObject(data);
+                        JSONArray hits = respJSON.getJSONObject("hits").getJSONArray("hits");
+                        total = respJSON.getJSONObject("hits").getJSONObject("total").getInt("value");
+                    }
+                }catch(Exception exe){}
+
+                try {
+                    HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2);
                     request.addHeader("content-type", "application/json");
                     StringEntity params = new StringEntity(reqBody);
                     request.setEntity(params);
