@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a76cc86-fd85-46ea-8173-ac980b55c317" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Controllers/BlueprintController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Controllers/BlueprintController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Entities/Requirements.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Entities/Requirements.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/DURERequestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/DURERequestService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/EsSearchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/EsSearchService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService$Purchase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService$Purchase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/RepositoryRequestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/RepositoryRequestService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/SimilarityRatingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/SimilarityRatingService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
@@ -48,22 +38,14 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="259" column="30" lean-forward="true" selection-start-line="259" selection-start-column="30" selection-end-line="259" selection-end-column="30" />
+            <state relative-caret-position="476">
+              <caret line="315" column="66" selection-start-line="315" selection-start-column="66" selection-end-line="315" selection-end-column="66" />
               <folding>
-                <element signature="e#1898#1922#1" expanded="true" />
-                <element signature="e#1964#1983#1" expanded="true" />
-                <element signature="e#2028#2051#1" expanded="true" />
-                <element signature="e#2092#2115#1" expanded="true" />
-                <element signature="e#2156#2179#1" expanded="true" />
-                <element signature="e#2220#2231#1" expanded="true" />
-                <element signature="e#2272#2295#1" expanded="true" />
-                <element signature="e#3421#3451#0" expanded="true" />
-                <element signature="e#16039#16055#0" expanded="true" />
+                <element signature="e#3420#3449#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -72,8 +54,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+            <state>
+              <caret column="18" selection-start-column="9" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -81,10 +63,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1076">
-              <caret line="314" column="29" lean-forward="true" selection-start-line="314" selection-start-column="29" selection-end-line="314" selection-end-column="29" />
+            <state relative-caret-position="573">
+              <caret line="314" column="29" selection-start-line="314" selection-start-column="29" selection-end-line="314" selection-end-column="29" />
               <folding>
+                <element signature="e#32659#32660#0" expanded="true" />
                 <element signature="e#32699#32700#0" expanded="true" />
+                <element signature="e#32738#32739#0" expanded="true" />
                 <element signature="e#32774#32775#0" expanded="true" />
               </folding>
             </state>
@@ -139,8 +123,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -208,6 +192,14 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -274,49 +266,51 @@
       <workItem from="1572980170516" duration="191000" />
       <workItem from="1573141636976" duration="6719000" />
       <workItem from="1579629806988" duration="12990000" />
+      <workItem from="1579709692370" duration="1639000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12990000" />
+    <option name="totallyTimeSpent" value="14629000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Image Layers" />
-      <window_info id="UI Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info id="Capture Tool" />
-      <window_info id="Web" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25266525" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Spring" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
-      <window_info anchor="bottom" id="Java Enterprise" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.29035753" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29035753" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Gradle" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="14" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Gradle" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" id="Bean Validation" order="10" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,10 +407,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1076">
-          <caret line="314" column="29" lean-forward="true" selection-start-line="314" selection-start-column="29" selection-end-line="314" selection-end-column="29" />
+        <state relative-caret-position="573">
+          <caret line="314" column="29" selection-start-line="314" selection-start-column="29" selection-end-line="314" selection-end-column="29" />
           <folding>
+            <element signature="e#32659#32660#0" expanded="true" />
             <element signature="e#32699#32700#0" expanded="true" />
+            <element signature="e#32738#32739#0" expanded="true" />
             <element signature="e#32774#32775#0" expanded="true" />
           </folding>
         </state>
@@ -424,26 +420,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="259" column="30" lean-forward="true" selection-start-line="259" selection-start-column="30" selection-end-line="259" selection-end-column="30" />
+        <state relative-caret-position="476">
+          <caret line="315" column="66" selection-start-line="315" selection-start-column="66" selection-end-line="315" selection-end-column="66" />
           <folding>
-            <element signature="e#1898#1922#1" expanded="true" />
-            <element signature="e#1964#1983#1" expanded="true" />
-            <element signature="e#2028#2051#1" expanded="true" />
-            <element signature="e#2092#2115#1" expanded="true" />
-            <element signature="e#2156#2179#1" expanded="true" />
-            <element signature="e#2220#2231#1" expanded="true" />
-            <element signature="e#2272#2295#1" expanded="true" />
-            <element signature="e#3421#3451#0" expanded="true" />
-            <element signature="e#16039#16055#0" expanded="true" />
+            <element signature="e#3420#3449#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        <state>
+          <caret column="18" selection-start-column="9" selection-end-column="18" />
         </state>
       </provider>
     </entry>

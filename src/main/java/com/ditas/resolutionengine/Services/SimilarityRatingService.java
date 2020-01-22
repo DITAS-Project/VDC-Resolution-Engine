@@ -94,7 +94,7 @@ public class SimilarityRatingService {
                 return blueprintArray.toString();
             }
             if(blueprintArray.length() > 0) {
-                HashMap<String, Pair<Float, Integer>> ratings = new HashMap<String, Pair<Float, Integer>>();
+                HashMap<String, Pair<Float, Double>> ratings = new HashMap<String, Pair<Float, Double>>();
                 String blueprintIdList = "[\"";
                 for (int i = 0; i < blueprintArray.length(); i++) {
                     blueprintIdList += blueprintArray.getJSONObject(i).getJSONObject("blueprint").getString("_id") + "\",\"";
@@ -308,8 +308,9 @@ public class SimilarityRatingService {
                             JSONObject hit = hits.getJSONObject(i);
                             JSONObject source = hit.getJSONObject("_source");
                             double score = hit.getDouble("_score");
+                            double userscore = hit.getJSONObject("_source").getDouble("score");
                             String bId = source.getString("blueprintID");
-                            ratings.merge(bId, new Pair<Float, Integer>((float) score, 1), (v1, v2) -> new Pair<Float, Integer>(v1.getKey() + v2.getKey(), v1.getValue() + v2.getValue()));
+                            ratings.merge(bId, new Pair<Float, Double>((float) score, score/userscore), (v1, v2) -> new Pair<Float, Double>(v1.getKey() + v2.getKey(), v1.getValue() + v2.getValue()));
                         }
                     } else {
                         System.err.println(new BasicResponseHandler().handleResponse(response));
@@ -319,7 +320,7 @@ public class SimilarityRatingService {
                         JSONObject obj = blueprintArray.getJSONObject(i);
                         String id = obj.getJSONObject("blueprint").getString("_id");
                         if (ratings.containsKey(id)) {
-                            obj.put("userRating", ratings.get(id).getKey() / (float) ratings.get(id).getValue());
+                            obj.put("userRating", ratings.get(id).getKey() / (double) ratings.get(id).getValue());
                             blueprintArray.put(i, obj);
                         }else{
                             obj.put("userRating", 0.0);
