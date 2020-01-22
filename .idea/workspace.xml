@@ -2,24 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a76cc86-fd85-46ea-8173-ac980b55c317" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Controllers/BlueprintController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Controllers/BlueprintController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Entities/Requirements.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Entities/Requirements.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/DURERequestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/DURERequestService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/EsSearchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/EsSearchService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService$Purchase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService$Purchase.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/PurchaseHandlerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/ResolutionEngineService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/ResolutionEngineService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/RepositoryRequestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/RepositoryRequestService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/SimilarityRatingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/ditas/resolutionengine/Services/SimilarityRatingService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Controllers/BlueprintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Controllers/BlueprintController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +47,52 @@
       </state>
     </system>
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="369">
+              <caret line="259" column="30" lean-forward="true" selection-start-line="259" selection-start-column="30" selection-end-line="259" selection-end-column="30" />
+              <folding>
+                <element signature="e#1898#1922#1" expanded="true" />
+                <element signature="e#1964#1983#1" expanded="true" />
+                <element signature="e#2028#2051#1" expanded="true" />
+                <element signature="e#2092#2115#1" expanded="true" />
+                <element signature="e#2156#2179#1" expanded="true" />
+                <element signature="e#2220#2231#1" expanded="true" />
+                <element signature="e#2272#2295#1" expanded="true" />
+                <element signature="e#3421#3451#0" expanded="true" />
+                <element signature="e#16039#16055#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1076">
+              <caret line="314" column="29" lean-forward="true" selection-start-line="314" selection-start-column="29" selection-end-line="314" selection-end-column="29" />
+              <folding>
+                <element signature="e#32699#32700#0" expanded="true" />
+                <element signature="e#32774#32775#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>EsAuth</find>
@@ -62,6 +104,8 @@
       <find>Random</find>
       <find>.err</find>
       <find>.out</find>
+      <find>normalizeRequirements</find>
+      <find>System.out</find>
     </findStrings>
     <replaceStrings>
       <replace>.put</replace>
@@ -73,7 +117,103 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/EsSearchService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="125" />
+    <option name="y" value="-22" />
+    <option name="width" value="933" />
+    <option name="height" value="946" />
+  </component>
   <component name="ProjectId" id="1TIJMvjvwMmmHHLSy0PECjfJ6A1" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="resolutionengine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="resolutionengine" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="resolutionengine" type="462c0819:PsiDirectoryNode" />
+              <item name="Entities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="resolutionengine" type="462c0819:PsiDirectoryNode" />
+              <item name="Services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Resolution-Engine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VDC-Resolution-Engine" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
   <component name="PropertiesComponent">
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
@@ -133,8 +273,51 @@
       <workItem from="1571473813406" duration="15300000" />
       <workItem from="1572980170516" duration="191000" />
       <workItem from="1573141636976" duration="6719000" />
+      <workItem from="1579629806988" duration="12990000" />
     </task>
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="12990000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Capture Tool" />
+      <window_info id="Web" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Java Enterprise" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.29035753" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -144,11 +327,126 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/EsSearchService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="68" column="22" selection-start-line="68" selection-start-column="12" selection-end-line="68" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/RepositoryRequestService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="30" column="8" lean-forward="true" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/ResolutionEngineService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="27" column="8" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SemanticManagerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="325" column="38" selection-start-line="325" selection-start-column="28" selection-end-line="325" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/ResolutionEngineApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Controllers/BlueprintController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Entities/Requirements.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/DURERequestService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="74" column="31" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/PurchaseHandlerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1076">
+          <caret line="314" column="29" lean-forward="true" selection-start-line="314" selection-start-column="29" selection-end-line="314" selection-end-column="29" />
+          <folding>
+            <element signature="e#32699#32700#0" expanded="true" />
+            <element signature="e#32774#32775#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/ditas/resolutionengine/Services/SimilarityRatingService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="259" column="30" lean-forward="true" selection-start-line="259" selection-start-column="30" selection-end-line="259" selection-end-column="30" />
+          <folding>
+            <element signature="e#1898#1922#1" expanded="true" />
+            <element signature="e#1964#1983#1" expanded="true" />
+            <element signature="e#2028#2051#1" expanded="true" />
+            <element signature="e#2092#2115#1" expanded="true" />
+            <element signature="e#2156#2179#1" expanded="true" />
+            <element signature="e#2220#2231#1" expanded="true" />
+            <element signature="e#2272#2295#1" expanded="true" />
+            <element signature="e#3421#3451#0" expanded="true" />
+            <element signature="e#16039#16055#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />

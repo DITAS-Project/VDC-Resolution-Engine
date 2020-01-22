@@ -20,6 +20,7 @@
  */
 package com.ditas.resolutionengine.Services;
 
+import javafx.util.Pair;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -35,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -236,6 +238,145 @@ public class PurchaseHandlerService {
      * @return The converted JSON object.
      */
     public JSONObject arrayToObject(JSONObject obj){
+        return null;
+    }
+
+    /**
+     * Normalizes the value of the pair in the 0-1 range if it is a numeric value.
+     * @param original The original key-value pair to be normalized.
+     * @return The normalized value.
+     */
+    public static Pair<String,Object> normalize(Pair<String,Object> original) throws Exception{
+        if(original.getValue() instanceof String){
+            return original;
+        }else{
+            //Set Min-Max range for each possible key based on the randomizeDataUtilityArray function.
+            JSONObject ranges = new JSONObject();
+            JSONObject range = new JSONObject();
+            range.put("min",1201.0);
+            range.put("max",7000000.0+1200.0+2000.0);
+            ranges.put("volume",range);
+
+            range = new JSONObject();
+            range.put("min",1.0);
+            range.put("max",5.0);
+            ranges.put("responseTime",range);
+
+            range = new JSONObject();
+            range.put("min",10.0);
+            range.put("max",100.0);
+            ranges.put("timeliness",range);
+
+            range = new JSONObject();
+            range.put("min",91.0);
+            range.put("max",100.0);
+            ranges.put("availability",range);
+
+            //Pick the correct range from the ranges and normalize the value.
+            Iterator<String> keys = ranges.keys();
+            Pair<String,Object> normalized = null;
+            while(keys.hasNext()) {
+                String key = keys.next();
+                if (original.getKey().contains(key)) {
+                    double value;
+                    try{
+                        value = (double)original.getValue();
+                    }catch(java.lang.ClassCastException classExc){
+                        value = ((int)original.getValue())*1.0;
+                    }
+                    JSONObject minMax = ranges.getJSONObject(key);
+                    double normalizedValue = (value-minMax.getDouble("min"))/(minMax.getDouble("max")-minMax.getDouble("min"));
+                    normalized = new Pair<String,Object>(original.getKey(),normalizedValue);
+                    return normalized;
+                }
+            }
+            if(normalized == null){
+                throw new Exception("Key not found in "+original.getKey()+" so normalization is impossible without the min-max range.");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Normalizes a user requirements file in order for it to be stored as a normalized version in the elasticSearch db.
+     * @param ur The original user requirements json.
+     * @return The normalized user requirements json.
+     */
+    private static JSONObject normalizeRequirements(JSONObject ur){
+        //Set Min-Max range for each possible key based on the randomizeDataUtilityArray function.
+        JSONObject ranges = new JSONObject();
+        JSONObject range = new JSONObject();
+        range.put("min",1201.0);
+        range.put("max",7000000.0+1200.0+2000.0);
+        ranges.put("volume",range);
+
+        range = new JSONObject();
+        range.put("min",1.0);
+        range.put("max",5.0);
+        ranges.put("responseTime",range);
+
+        range = new JSONObject();
+        range.put("min",10.0);
+        range.put("max",100.0);
+        ranges.put("timeliness",range);
+
+        range = new JSONObject();
+        range.put("min",91.0);
+        range.put("max",100.0);
+        ranges.put("availability",range);
+
+        try{
+            JSONObject attr = ur.getJSONObject("attributes");
+            JSONArray dataUtilities = attr.getJSONArray("dataUtility");
+            for (int i =0;i<dataUtilities.length();i++) {
+                if (dataUtilities.get(i) instanceof JSONObject) {
+                    JSONObject cur = dataUtilities.getJSONObject(i);
+                    if (cur.has("properties")) {
+                        JSONObject props = cur.getJSONObject("properties");
+                        System.out.println("Original Props: "+props.toString());
+                        Iterator<String> keys = ranges.keys();
+                        while(keys.hasNext()) {
+                            String key = keys.next();
+                            if(props.has(key)){
+                                JSONObject curKey = props.getJSONObject(key);
+                                if(curKey.has("minimum")){
+                                    double value;
+                                    try{
+                                        value = curKey.getDouble("minimum");
+                                    }catch(java.lang.ClassCastException classExc){
+                                        value = ((int)curKey.get("minimum"))*1.0;
+                                    }
+                                    JSONObject minMax = ranges.getJSONObject(key);
+                                    double normalized = (value-minMax.getDouble("min"))/(minMax.getDouble("max")-minMax.getDouble("min"));
+                                    curKey.put("minimum",normalized);
+                                }
+                                if(curKey.has("maximum")){
+                                    double value;
+                                    try{
+                                        value = curKey.getDouble("maximum");
+                                    }catch(java.lang.ClassCastException classExc){
+                                        value = ((int)curKey.get("maximum"))*1.0;
+                                    }
+                                    JSONObject minMax = ranges.getJSONObject(key);
+                                    double normalized = (value-minMax.getDouble("min"))/(minMax.getDouble("max")-minMax.getDouble("min"));
+                                    curKey.put("maximum",normalized);
+                                }
+                                props.put(key,curKey);
+                                break;
+                            }
+                        }
+                        System.out.println("Normaliz Props: "+props.toString());
+                        cur.put("properties",props);
+                        dataUtilities.put(i,cur);
+                    }
+                }
+            }
+            attr.put("dataUtility",dataUtilities);
+            ur.put("attributes",attr);
+            return ur;
+        }catch(Exception ex){
+            ex.printStackTrace(System.err);
+        }
         return null;
     }
 
@@ -461,7 +602,8 @@ public class PurchaseHandlerService {
                 userFeedback = (float)(rand.nextFloat()*0.7);
             }
 
-            return push(new Purchase(pickedUserID,pickedBlueprintID,userFeedback,randomUR));
+            JSONObject randomNormalizedUR = normalizeRequirements(randomUR);
+            return push(new Purchase(pickedUserID,pickedBlueprintID,userFeedback,randomNormalizedUR));
         }catch(Exception ex){
             ex.printStackTrace();
             return ex.getStackTrace().toString();

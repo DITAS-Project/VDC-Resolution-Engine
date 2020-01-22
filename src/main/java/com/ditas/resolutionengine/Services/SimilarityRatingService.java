@@ -103,7 +103,7 @@ public class SimilarityRatingService {
                 ;
                 Pair<String, String> vector = this.createVector(requirements);
 
-                String reqBody = "{\"query\": " +
+                String reqBodyCosine = "{\"query\": " +
                         "{\"function_score\": {" +
                         "\"query\": { \"bool\": { \"filter\": { \"terms\":{" +
                         "\"blueprintID\": " + blueprintIdList + "}}}}," +
@@ -185,6 +185,84 @@ public class SimilarityRatingService {
                         "} else{ return 0.0; }" +
                         "\"}}}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
 
+                String reqBodyEuclidian = "{\"query\": " +
+                        "{\"function_score\": {" +
+                        "\"query\": { \"bool\": { \"filter\": { \"terms\":{" +
+                        "\"blueprintID\": " + blueprintIdList + "}}}}," +
+                        "\"functions\": [" +
+                        "{\"script_score\" : {" +
+                        "\"script\":{" +
+                        "\"params\":{" +
+                        "\"vector\": " + vector.getValue() + "," +
+                        "\"field_labels\":" + vector.getKey() + "}," +
+                        "\"source\":\""+
+                        "double distance(String s1, String s2) { " +
+                        "if (s1.equals(s2)) { return 0; } " +
+                        "if (s1.length() == 0) { return s2.length(); } " +
+                        "if (s2.length() == 0) { return s1.length(); } " +
+                        "double[] v0 = new double[s2.length() + 1]; " +
+                        "double[] v1 = new double[s2.length() + 1]; " +
+                        "double[] vtemp; " +
+                        "for (int i = 0; i < v0.length; i++) { v0[i] = i; } " +
+                        "for (int i = 0; i < s1.length(); i++) { " +
+                        "v1[0] = i + 1; " +
+                        "double minv1 = v1[0]; " +
+                        "for (int j = 0; j < s2.length(); j++) { " +
+                        "double cost = 1; " +
+                        "if (s1.charAt(i) == s2.charAt(j)) { cost = 0; } " +
+                        "v1[j + 1] = Math.min(v1[j] + 1,Math.min(v0[j + 1] + 1, v0[j] + cost)); " +
+                        "minv1 = Math.min(minv1, v1[j + 1]); " +
+                        "} " +
+                        "vtemp = v0; v0 = v1; v1 = vtemp; " +
+                        "} " +
+                        "return v0[s2.length()]; " +
+                        "} " +
+                        "def drop(def obj,def index){ " +
+                        "def new_obj=[]; " +
+                        "for(int dr=0;dr<obj.length;dr++){ " +
+                        "if(dr!=index){ new_obj.add(obj[dr]);} " +
+                        "} " +
+                        "return new_obj; } " +
+                        "def getProperty(def obj,def prop){ " +
+                        "def new_obj = obj; " +
+                        "if((obj != null) && (prop.length > 0)){ " +
+                        "if(prop[0] instanceof Double){ " +
+                        "for(int elems=0;elems<obj.length;elems++){ " +
+                        "new_obj = getProperty(obj[elems],drop(prop,0)); " +
+                        "if(new_obj!=null){ break; } " +
+                        "} " +
+                        "} else{ " +
+                        "new_obj = getProperty(obj[prop[0]],drop(prop,0)); " +
+                        "} " +
+                        "} " +
+                        "return new_obj; " +
+                        "} " +
+                        "def vector_B=[]; " +
+                        "for(int i=0;i<params.field_labels.length;i++){ " +
+                        "def path = []; " +
+                        "String[] splits = /\\\\./.split('requirements.'+params.field_labels[i]); " +
+                        "for(int j=0;j<splits.length;j++){ " +
+                        "def cur = splits[j]; " +
+                        "try{ cur = Double.parseDouble(splits[j]); }" +
+                        "catch(Exception ex){} " +
+                        "path.add(cur); " +
+                        "} " +
+                        "def cur2=getProperty(params._source,path); " +
+                        "if(cur2 instanceof String){ cur2=distance(params.vector[i],cur2); } " +
+                        "vector_B.add(cur2); " +
+                        "} " +
+                        "double rawDist=0.0; " +
+                        "for(int i=0;i<params.vector.length;i++){ " +
+                        "def cur=params.vector[i]; " +
+                        "if(cur instanceof String){ cur=distance(params.vector[i],params.vector[i]); } " +
+                        "if(vector_B[i] != null){ " +
+                        "rawDist+=(cur-vector_B[i])*(cur-vector_B[i]); " +
+                        "} " +
+                        "} " +
+                        "def distanceScore = Math.sqrt(rawDist)/Math.sqrt(params.vector.length);"+
+                        "return (1.0-distanceScore)*params._source['score'];" +
+                        "\"}}}],\"boost_mode\": \"replace\"}},\"sort\" : [\"_score\"]}";
+
                 HttpClient httpClient;
                 if (EsAuth.equals("basic")) {
                     CredentialsProvider provider = new BasicCredentialsProvider();
@@ -218,11 +296,11 @@ public class SimilarityRatingService {
                 try {
                     HttpPost request = new HttpPost("http://" + EsHost + ":" + EsPort + "/" + PurchIndex + "/_search?size=" + total + 2);
                     request.addHeader("content-type", "application/json");
-                    StringEntity params = new StringEntity(reqBody);
+                    StringEntity params = new StringEntity(reqBodyEuclidian);
                     request.setEntity(params);
                     HttpResponse response = httpClient.execute(request);
                     int statusCode = response.getStatusLine().getStatusCode();
-                    System.out.println(reqBody);
+                    System.out.println(reqBodyEuclidian);
                     if (statusCode == 200) {
                         String bodys = new BasicResponseHandler().handleResponse(response);
                         JSONArray hits = (new JSONObject(bodys)).getJSONObject("hits").getJSONArray("hits");
@@ -234,7 +312,7 @@ public class SimilarityRatingService {
                             ratings.merge(bId, new Pair<Float, Integer>((float) score, 1), (v1, v2) -> new Pair<Float, Integer>(v1.getKey() + v2.getKey(), v1.getValue() + v2.getValue()));
                         }
                     } else {
-                        System.out.println(new BasicResponseHandler().handleResponse(response));
+                        System.err.println(new BasicResponseHandler().handleResponse(response));
                     }
 
                     for (int i = 0; i < blueprintArray.length(); i++) {
@@ -273,7 +351,15 @@ public class SimilarityRatingService {
         for (int i =0;i<dataUtility.length();i++){
             ArrayList<Pair<String,Object>> inner = getPaths(dataUtility.getJSONObject(i));
             for (int j =0;j<inner.size();j++){
-                paths.add(new Pair<String,Object>("dataUtility."+i+"."+inner.get(j).getKey(),inner.get(j).getValue()));
+                try {
+                    Pair<String, Object> original = new Pair<String, Object>("dataUtility." + i + "." + inner.get(j).getKey(), inner.get(j).getValue());
+                    Pair<String, Object> normalized = PurchaseHandlerService.normalize(original);
+                    System.out.println("Original :"+original.toString());
+                    System.out.println("Normaliz :"+normalized.toString());
+                    paths.add(normalized);
+                }catch(Exception ex){
+                    ex.printStackTrace(System.err);
+                }
             }
         }
         String names = "[\"";
