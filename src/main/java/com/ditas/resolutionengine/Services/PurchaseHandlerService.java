@@ -596,7 +596,7 @@ public class PurchaseHandlerService {
             String pickedUserID = userIDs[rand.nextInt(userIDs.length-1)];
             String pickedBlueprintID = results.getJSONObject(rand.nextInt(results.length())).getJSONObject("blueprint").getString("_id");
             float userFeedback;
-            if(pickedBlueprintID.equals("5e2598df2de11db00e90b0bd")){
+            if(pickedBlueprintID.equals("5e36eafd2de11db00e929a2e")){
                 userFeedback = (float)(0.8+(rand.nextFloat()*0.2));
             }else{
                 userFeedback = (float)(rand.nextFloat()*0.7);
