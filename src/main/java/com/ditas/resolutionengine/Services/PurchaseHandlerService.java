@@ -259,7 +259,7 @@ public class PurchaseHandlerService {
 
             range = new JSONObject();
             range.put("min",1.0);
-            range.put("max",5.0);
+            range.put("max",60.0);
             ranges.put("responseTime",range);
 
             range = new JSONObject();
@@ -312,7 +312,7 @@ public class PurchaseHandlerService {
 
         range = new JSONObject();
         range.put("min",1.0);
-        range.put("max",5.0);
+        range.put("max",60.0);
         ranges.put("responseTime",range);
 
         range = new JSONObject();
@@ -422,7 +422,7 @@ public class PurchaseHandlerService {
                         if(props.has("responseTime") && flags.getBoolean("responseTime")){
                             JSONObject rspt = props.getJSONObject("responseTime");
                             int min = (1+rand.nextInt(4));
-                            int max = (4+rand.nextInt(2));
+                            int max = (4+rand.nextInt(57));
                             if(rspt.has("minimum")){
                                 rspt.put("minimum",min);
                             }
