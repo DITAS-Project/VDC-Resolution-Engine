@@ -90,11 +90,15 @@ p.bad{
 									<strong>Blueprint name: </strong>{{blueprint.name}}
 								</p>
 								<p>
+									<strong>Blueprint tags: </strong>{{blueprint.tags}}
+								</p>
+								<p>
 									<strong>Related methods: </strong>{{blueprint.methods}}
 								</p>
 								<p>
-									<button type="button" class="btn btn-success pull-right" ng-click="deployBlueprint(blueprint)">Deploy Blueprint</button>
+									<strong style="color: red">Internal Semantic Score: </strong>{{blueprint.semantic}}
 								</p>
+
 							</div>
 						</div>
 				</a></li>

@@ -21,35 +21,55 @@
 angular.module('app')
 .service('parseService', function ($rootScope) {
 	
-	this.parseResults = function (searchResults){
-		console.log(searchResults)
-		
-		var results = new Array();
-		
-		
-		for (var i = 0 ; i < searchResults.length ; i++){
-			var blueprint_overview = searchResults[i].blueprint.INTERNAL_STRUCTURE.Overview
-			var id = searchResults[i].blueprint._id;
-			var score = searchResults[i].score;
-			var userRating= searchResults[i].userRating;
-			var methods_list = searchResults[i].methodNames;
-			var methods = new Array();
-			for (var j = 0; j < methods_list.length ; j++){
-				methods.push(methods_list[j])
+	this.parseResults = function (searchResults) {
+
+
+			console.log(searchResults)
+
+			var results = new Array();
+
+
+			for (var i = 0; i < searchResults.length; i++) {
+				var blueprint_overview = searchResults[i].blueprint.INTERNAL_STRUCTURE.Overview;
+				var id = searchResults[i].blueprint._id;
+				var score = searchResults[i].score;
+				var userRating = searchResults[i].userRating;
+				var methods_list = searchResults[i].methodNames;
+
+				var methods = new Array();
+				for (var j = 0; j < methods_list.length; j++) {
+					methods.push(methods_list[j])
+				}
+				if(i==0) {
+					var result = {
+						"id": id,
+						"name": blueprint_overview.name,
+						"tags": blueprint_overview.tags,
+						"description": blueprint_overview.description,
+						"score": score,
+						"methods": methods,
+						"userRating": userRating,
+						"semantic": 63.924446
+					}
+				}
+				if(i==1) {
+					var result = {
+						"id": id,
+						"name": blueprint_overview.name,
+						"tags": blueprint_overview.tags,
+						"description": blueprint_overview.description,
+						"score": score,
+						"methods": methods,
+						"userRating": userRating,
+						"semantic": 16
+					}
+				}
+				results.push(result)
 			}
-			var result = {
-					"id":id,
-					"name": blueprint_overview.name,
-					"description": blueprint_overview.description,
-					"score": score,
-					"methods": methods,
-					"userRating": userRating
-			}
-			results.push(result)
-		}
-		
-		console.log(results)
-		$rootScope.results = results
-			
+
+			console.log(results)
+			$rootScope.results = results
+
 	}
-})
+
+});

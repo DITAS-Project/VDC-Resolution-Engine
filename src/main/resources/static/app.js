@@ -32,13 +32,14 @@ app.controller("searchController", function($scope, $http, $rootScope, parseServ
 			headers: {'Content-Type': 'application/json'}
 		})
 		.then(function successCallback(response) {
-			$rootScope.search = true
+			$rootScope.search = true;
 			//console.log(response.data)
-			parseService.parseResults(response.data)
+			parseService.parseResults(response.data,1);
 		}, function errorCallback(response) {
 			console.log(response)
 		});
 	};
+
 	$scope.deployBlueprint = function (blueprint) {
 		//method to deploy blueprint
         /*$http({
